@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  buku      Buku[] // Relasi dengan Buku (one-to-many)
+}
+
+model Buku {
+  id           Int            @id @default(autoincrement())
+  judul        String
+  pengarang    String
+  penerbit     String
+  tahunTerbit  Int
+  userId       Int
+  user         User           @relation(fields: [userId], references: [id])
+  statusBukuId Int
+  statusBuku   StatusBuku     @relation(fields: [statusBukuId], references: [id])
+  kategori     BukuKategori[] // Relasi many-to-many melalui BukuKategori
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Kategori {
+  id        Int            @id @default(autoincrement())
+  nama      String
+  buku      BukuKategori[] // Relasi many-to-many melalui BukuKategori
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model StatusBuku {
+  id        Int     @id @default(autoincrement())
+  nama      String
+  buku      Buku[] // Relasi dengan Buku (one-to-many)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BukuKategori {
+  id         Int      @id @default(autoincrement())
+  idBuku     Int
+  kategoriId Int
+  buku       Buku     @relation(fields: [idBuku], references: [id])
+  kategori   Kategori @relation(fields: [kategoriId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
