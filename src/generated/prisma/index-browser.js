@@ -132,7 +132,6 @@ exports.Prisma.BukuScalarFieldEnum = {
   pengarang: 'pengarang',
   penerbit: 'penerbit',
   tahunTerbit: 'tahunTerbit',
-  userId: 'userId',
   statusBukuId: 'statusBukuId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

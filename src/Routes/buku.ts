@@ -6,13 +6,15 @@ const buku = new Hono();
 // membuat buku
 buku.post("/", async (c) => {
   try {
-    const { judul, pengarang, penerbit, tahunTerbit, userId, statusBukuId } = await c.req.json();
-    
-    // Validasi apakah userId dan statusBukuId valid
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-    const statusBuku = await prisma.statusBuku.findUnique({ where: { id: statusBukuId } });
+    const { judul, pengarang, penerbit, tahunTerbit, statusBukuId } =
+      await c.req.json();
 
-    if (!user || !statusBuku) {
+    // Validasi apakah userId dan statusBukuId valid
+    const statusBuku = await prisma.statusBuku.findUnique({
+      where: { id: statusBukuId }
+    });
+
+    if (!statusBuku) {
       return c.json({ message: "User atau Status Buku tidak ditemukan" }, 404);
     }
 
@@ -22,7 +24,6 @@ buku.post("/", async (c) => {
         pengarang,
         penerbit,
         tahunTerbit,
-        userId,
         statusBukuId
       }
     });
@@ -47,7 +48,10 @@ buku.get("/:kategoriId", async (c) => {
     });
 
     if (!dataBuku || dataBuku.length === 0) {
-      return c.json({ message: "buku tidak ditemukan berdasarkan kategori" }, 404);
+      return c.json(
+        { message: "buku tidak ditemukan berdasarkan kategori" },
+        404
+      );
     }
 
     return c.json({
@@ -55,7 +59,10 @@ buku.get("/:kategoriId", async (c) => {
       data: dataBuku
     });
   } catch (error) {
-    return c.json({ message: "Gagal mendapatkan buku berdasarkan kategori", error }, 500);
+    return c.json(
+      { message: "Gagal mendapatkan buku berdasarkan kategori", error },
+      500
+    );
   }
 });
 
@@ -78,7 +85,10 @@ buku.get("/:userId", async (c) => {
       data: dataBuku
     });
   } catch (error) {
-    return c.json({ message: "Gagal mendapatkan buku berdasarkan user", error }, 500);
+    return c.json(
+      { message: "Gagal mendapatkan buku berdasarkan user", error },
+      500
+    );
   }
 });
 
@@ -99,10 +109,13 @@ buku.get("/", async (c) => {
       return c.json({ message: "data buku kosong" }, 404);
     }
 
-    return c.json({
-      message: "berhasil mendapatkan semua buku",
-      data: dataBuku
-    }, 200);
+    return c.json(
+      {
+        message: "berhasil mendapatkan semua buku",
+        data: dataBuku
+      },
+      200
+    );
   } catch (error) {
     return c.json({ message: "Gagal mendapatkan semua buku", error }, 500);
   }
@@ -127,7 +140,10 @@ buku.get("/:bukuId", async (c) => {
       data: dataBuku
     });
   } catch (error) {
-    return c.json({ message: "Gagal mendapatkan buku berdasarkan id", error }, 500);
+    return c.json(
+      { message: "Gagal mendapatkan buku berdasarkan id", error },
+      500
+    );
   }
 });
 
@@ -142,7 +158,10 @@ buku.get("/:statusBukuId", async (c) => {
     });
 
     if (!dataBuku || dataBuku.length === 0) {
-      return c.json({ message: "buku tidak ditemukan berdasarkan status" }, 404);
+      return c.json(
+        { message: "buku tidak ditemukan berdasarkan status" },
+        404
+      );
     }
 
     return c.json({
@@ -150,7 +169,10 @@ buku.get("/:statusBukuId", async (c) => {
       data: dataBuku
     });
   } catch (error) {
-    return c.json({ message: "Gagal mendapatkan buku berdasarkan status", error }, 500);
+    return c.json(
+      { message: "Gagal mendapatkan buku berdasarkan status", error },
+      500
+    );
   }
 });
 
@@ -158,7 +180,8 @@ buku.get("/:statusBukuId", async (c) => {
 buku.put("/:bukuId", async (c) => {
   try {
     const bukuId = c.req.param("bukuId");
-    const { judul, pengarang, penerbit, tahunTerbit, userId, statusBukuId } = await c.req.json();
+    const { judul, pengarang, penerbit, tahunTerbit, userId, statusBukuId } =
+      await c.req.json();
 
     const checkBuku = await prisma.buku.findUnique({
       where: {
@@ -167,12 +190,17 @@ buku.put("/:bukuId", async (c) => {
     });
 
     if (!checkBuku) {
-      return c.json({ message: "buku yang akan diupdate tidak ditemukan" }, 404);
+      return c.json(
+        { message: "buku yang akan diupdate tidak ditemukan" },
+        404
+      );
     }
 
     // Validasi apakah userId dan statusBukuId valid
     const user = await prisma.user.findUnique({ where: { id: userId } });
-    const statusBuku = await prisma.statusBuku.findUnique({ where: { id: statusBukuId } });
+    const statusBuku = await prisma.statusBuku.findUnique({
+      where: { id: statusBukuId }
+    });
 
     if (!user || !statusBuku) {
       return c.json({ message: "User atau Status Buku tidak ditemukan" }, 404);
@@ -192,10 +220,13 @@ buku.put("/:bukuId", async (c) => {
       }
     });
 
-    return c.json({
-      message: "berhasil mengupdate buku",
-      data: updateBuku
-    }, 201);
+    return c.json(
+      {
+        message: "berhasil mengupdate buku",
+        data: updateBuku
+      },
+      201
+    );
   } catch (error) {
     return c.json({ message: "Gagal mengupdate buku", error }, 500);
   }
@@ -222,14 +253,16 @@ buku.delete("/:bukuId", async (c) => {
       }
     });
 
-    return c.json({
-      message: "berhasil menghapus buku",
-      data: dataBuku
-    }, 200);
+    return c.json(
+      {
+        message: "berhasil menghapus buku",
+        data: dataBuku
+      },
+      200
+    );
   } catch (error) {
     return c.json({ message: "Gagal menghapus buku", error }, 500);
   }
 });
-
 
 export default buku;

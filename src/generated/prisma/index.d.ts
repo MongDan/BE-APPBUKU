@@ -1229,37 +1229,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserCountOutputType
-   */
-
-  export type UserCountOutputType = {
-    buku: number
-  }
-
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    buku?: boolean | UserCountOutputTypeCountBukuArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserCountOutputType
-     */
-    select?: UserCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountBukuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BukuWhereInput
-  }
-
-
-  /**
    * Count Type BukuCountOutputType
    */
 
@@ -1562,8 +1531,6 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    buku?: boolean | User$bukuArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1594,18 +1561,10 @@ export namespace Prisma {
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
-  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    buku?: boolean | User$bukuArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {
-      buku: Prisma.$BukuPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
@@ -2007,7 +1966,6 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    buku<T extends User$bukuArgs<ExtArgs> = {}>(args?: Subset<T, User$bukuArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BukuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2060,10 +2018,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2082,10 +2036,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2103,10 +2053,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -2156,10 +2102,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -2208,10 +2150,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -2254,10 +2192,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to create a User.
      */
@@ -2306,10 +2240,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -2377,10 +2307,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -2407,10 +2333,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -2431,30 +2353,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.buku
-   */
-  export type User$bukuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Buku
-     */
-    select?: BukuSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Buku
-     */
-    omit?: BukuOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BukuInclude<ExtArgs> | null
-    where?: BukuWhereInput
-    orderBy?: BukuOrderByWithRelationInput | BukuOrderByWithRelationInput[]
-    cursor?: BukuWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BukuScalarFieldEnum | BukuScalarFieldEnum[]
-  }
-
-  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2466,10 +2364,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -2488,14 +2382,12 @@ export namespace Prisma {
   export type BukuAvgAggregateOutputType = {
     id: number | null
     tahunTerbit: number | null
-    userId: number | null
     statusBukuId: number | null
   }
 
   export type BukuSumAggregateOutputType = {
     id: number | null
     tahunTerbit: number | null
-    userId: number | null
     statusBukuId: number | null
   }
 
@@ -2505,7 +2397,6 @@ export namespace Prisma {
     pengarang: string | null
     penerbit: string | null
     tahunTerbit: number | null
-    userId: number | null
     statusBukuId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2517,7 +2408,6 @@ export namespace Prisma {
     pengarang: string | null
     penerbit: string | null
     tahunTerbit: number | null
-    userId: number | null
     statusBukuId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2529,7 +2419,6 @@ export namespace Prisma {
     pengarang: number
     penerbit: number
     tahunTerbit: number
-    userId: number
     statusBukuId: number
     createdAt: number
     updatedAt: number
@@ -2540,14 +2429,12 @@ export namespace Prisma {
   export type BukuAvgAggregateInputType = {
     id?: true
     tahunTerbit?: true
-    userId?: true
     statusBukuId?: true
   }
 
   export type BukuSumAggregateInputType = {
     id?: true
     tahunTerbit?: true
-    userId?: true
     statusBukuId?: true
   }
 
@@ -2557,7 +2444,6 @@ export namespace Prisma {
     pengarang?: true
     penerbit?: true
     tahunTerbit?: true
-    userId?: true
     statusBukuId?: true
     createdAt?: true
     updatedAt?: true
@@ -2569,7 +2455,6 @@ export namespace Prisma {
     pengarang?: true
     penerbit?: true
     tahunTerbit?: true
-    userId?: true
     statusBukuId?: true
     createdAt?: true
     updatedAt?: true
@@ -2581,7 +2466,6 @@ export namespace Prisma {
     pengarang?: true
     penerbit?: true
     tahunTerbit?: true
-    userId?: true
     statusBukuId?: true
     createdAt?: true
     updatedAt?: true
@@ -2680,7 +2564,6 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    userId: number
     statusBukuId: number
     createdAt: Date
     updatedAt: Date
@@ -2711,11 +2594,9 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    userId?: boolean
     statusBukuId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
     kategori?: boolean | Buku$kategoriArgs<ExtArgs>
     _count?: boolean | BukuCountOutputTypeDefaultArgs<ExtArgs>
@@ -2727,11 +2608,9 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    userId?: boolean
     statusBukuId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["buku"]>
 
@@ -2741,11 +2620,9 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    userId?: boolean
     statusBukuId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["buku"]>
 
@@ -2755,32 +2632,27 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    userId?: boolean
     statusBukuId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "judul" | "pengarang" | "penerbit" | "tahunTerbit" | "userId" | "statusBukuId" | "createdAt" | "updatedAt", ExtArgs["result"]["buku"]>
+  export type BukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "judul" | "pengarang" | "penerbit" | "tahunTerbit" | "statusBukuId" | "createdAt" | "updatedAt", ExtArgs["result"]["buku"]>
   export type BukuInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
     kategori?: boolean | Buku$kategoriArgs<ExtArgs>
     _count?: boolean | BukuCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BukuIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
   }
   export type BukuIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
   }
 
   export type $BukuPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Buku"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       statusBuku: Prisma.$StatusBukuPayload<ExtArgs>
       kategori: Prisma.$BukuKategoriPayload<ExtArgs>[]
     }
@@ -2790,7 +2662,6 @@ export namespace Prisma {
       pengarang: string
       penerbit: string
       tahunTerbit: number
-      userId: number
       statusBukuId: number
       createdAt: Date
       updatedAt: Date
@@ -3188,7 +3059,6 @@ export namespace Prisma {
    */
   export interface Prisma__BukuClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     statusBuku<T extends StatusBukuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StatusBukuDefaultArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     kategori<T extends Buku$kategoriArgs<ExtArgs> = {}>(args?: Subset<T, Buku$kategoriArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BukuKategoriPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -3225,7 +3095,6 @@ export namespace Prisma {
     readonly pengarang: FieldRef<"Buku", 'String'>
     readonly penerbit: FieldRef<"Buku", 'String'>
     readonly tahunTerbit: FieldRef<"Buku", 'Int'>
-    readonly userId: FieldRef<"Buku", 'Int'>
     readonly statusBukuId: FieldRef<"Buku", 'Int'>
     readonly createdAt: FieldRef<"Buku", 'DateTime'>
     readonly updatedAt: FieldRef<"Buku", 'DateTime'>
@@ -6989,7 +6858,6 @@ export namespace Prisma {
     pengarang: 'pengarang',
     penerbit: 'penerbit',
     tahunTerbit: 'tahunTerbit',
-    userId: 'userId',
     statusBukuId: 'statusBukuId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -7119,7 +6987,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    buku?: BukuListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7129,7 +6996,6 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    buku?: BukuOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7142,7 +7008,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    buku?: BukuListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7180,11 +7045,9 @@ export namespace Prisma {
     pengarang?: StringFilter<"Buku"> | string
     penerbit?: StringFilter<"Buku"> | string
     tahunTerbit?: IntFilter<"Buku"> | number
-    userId?: IntFilter<"Buku"> | number
     statusBukuId?: IntFilter<"Buku"> | number
     createdAt?: DateTimeFilter<"Buku"> | Date | string
     updatedAt?: DateTimeFilter<"Buku"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     statusBuku?: XOR<StatusBukuScalarRelationFilter, StatusBukuWhereInput>
     kategori?: BukuKategoriListRelationFilter
   }
@@ -7195,11 +7058,9 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     statusBuku?: StatusBukuOrderByWithRelationInput
     kategori?: BukuKategoriOrderByRelationAggregateInput
   }
@@ -7213,11 +7074,9 @@ export namespace Prisma {
     pengarang?: StringFilter<"Buku"> | string
     penerbit?: StringFilter<"Buku"> | string
     tahunTerbit?: IntFilter<"Buku"> | number
-    userId?: IntFilter<"Buku"> | number
     statusBukuId?: IntFilter<"Buku"> | number
     createdAt?: DateTimeFilter<"Buku"> | Date | string
     updatedAt?: DateTimeFilter<"Buku"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     statusBuku?: XOR<StatusBukuScalarRelationFilter, StatusBukuWhereInput>
     kategori?: BukuKategoriListRelationFilter
   }, "id">
@@ -7228,7 +7087,6 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7248,7 +7106,6 @@ export namespace Prisma {
     pengarang?: StringWithAggregatesFilter<"Buku"> | string
     penerbit?: StringWithAggregatesFilter<"Buku"> | string
     tahunTerbit?: IntWithAggregatesFilter<"Buku"> | number
-    userId?: IntWithAggregatesFilter<"Buku"> | number
     statusBukuId?: IntWithAggregatesFilter<"Buku"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Buku"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Buku"> | Date | string
@@ -7424,7 +7281,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    buku?: BukuCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7434,7 +7290,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    buku?: BukuUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7443,7 +7298,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    buku?: BukuUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7453,7 +7307,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    buku?: BukuUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7489,7 +7342,6 @@ export namespace Prisma {
     tahunTerbit: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutBukuInput
     statusBuku: StatusBukuCreateNestedOneWithoutBukuInput
     kategori?: BukuKategoriCreateNestedManyWithoutBukuInput
   }
@@ -7500,7 +7352,6 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    userId: number
     statusBukuId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7514,7 +7365,6 @@ export namespace Prisma {
     tahunTerbit?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutBukuNestedInput
     statusBuku?: StatusBukuUpdateOneRequiredWithoutBukuNestedInput
     kategori?: BukuKategoriUpdateManyWithoutBukuNestedInput
   }
@@ -7525,7 +7375,6 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     statusBukuId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7538,7 +7387,6 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    userId: number
     statusBukuId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7559,7 +7407,6 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     statusBukuId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7753,16 +7600,6 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type BukuListRelationFilter = {
-    every?: BukuWhereInput
-    some?: BukuWhereInput
-    none?: BukuWhereInput
-  }
-
-  export type BukuOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -7846,11 +7683,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type StatusBukuScalarRelationFilter = {
     is?: StatusBukuWhereInput
     isNot?: StatusBukuWhereInput
@@ -7872,7 +7704,6 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7881,7 +7712,6 @@ export namespace Prisma {
   export type BukuAvgOrderByAggregateInput = {
     id?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
   }
 
@@ -7891,7 +7721,6 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7903,7 +7732,6 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7912,7 +7740,6 @@ export namespace Prisma {
   export type BukuSumOrderByAggregateInput = {
     id?: SortOrder
     tahunTerbit?: SortOrder
-    userId?: SortOrder
     statusBukuId?: SortOrder
   }
 
@@ -7943,6 +7770,16 @@ export namespace Prisma {
 
   export type KategoriSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type BukuListRelationFilter = {
+    every?: BukuWhereInput
+    some?: BukuWhereInput
+    none?: BukuWhereInput
+  }
+
+  export type BukuOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type StatusBukuCountOrderByAggregateInput = {
@@ -8020,20 +7857,6 @@ export namespace Prisma {
     kategoriId?: SortOrder
   }
 
-  export type BukuCreateNestedManyWithoutUserInput = {
-    create?: XOR<BukuCreateWithoutUserInput, BukuUncheckedCreateWithoutUserInput> | BukuCreateWithoutUserInput[] | BukuUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutUserInput | BukuCreateOrConnectWithoutUserInput[]
-    createMany?: BukuCreateManyUserInputEnvelope
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-  }
-
-  export type BukuUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<BukuCreateWithoutUserInput, BukuUncheckedCreateWithoutUserInput> | BukuCreateWithoutUserInput[] | BukuUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutUserInput | BukuCreateOrConnectWithoutUserInput[]
-    createMany?: BukuCreateManyUserInputEnvelope
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -8042,46 +7865,12 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type BukuUpdateManyWithoutUserNestedInput = {
-    create?: XOR<BukuCreateWithoutUserInput, BukuUncheckedCreateWithoutUserInput> | BukuCreateWithoutUserInput[] | BukuUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutUserInput | BukuCreateOrConnectWithoutUserInput[]
-    upsert?: BukuUpsertWithWhereUniqueWithoutUserInput | BukuUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: BukuCreateManyUserInputEnvelope
-    set?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    disconnect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    delete?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    update?: BukuUpdateWithWhereUniqueWithoutUserInput | BukuUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: BukuUpdateManyWithWhereWithoutUserInput | BukuUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: BukuScalarWhereInput | BukuScalarWhereInput[]
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type BukuUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<BukuCreateWithoutUserInput, BukuUncheckedCreateWithoutUserInput> | BukuCreateWithoutUserInput[] | BukuUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutUserInput | BukuCreateOrConnectWithoutUserInput[]
-    upsert?: BukuUpsertWithWhereUniqueWithoutUserInput | BukuUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: BukuCreateManyUserInputEnvelope
-    set?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    disconnect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    delete?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    update?: BukuUpdateWithWhereUniqueWithoutUserInput | BukuUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: BukuUpdateManyWithWhereWithoutUserInput | BukuUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: BukuScalarWhereInput | BukuScalarWhereInput[]
-  }
-
-  export type UserCreateNestedOneWithoutBukuInput = {
-    create?: XOR<UserCreateWithoutBukuInput, UserUncheckedCreateWithoutBukuInput>
-    connectOrCreate?: UserCreateOrConnectWithoutBukuInput
-    connect?: UserWhereUniqueInput
   }
 
   export type StatusBukuCreateNestedOneWithoutBukuInput = {
@@ -8102,14 +7891,6 @@ export namespace Prisma {
     connectOrCreate?: BukuKategoriCreateOrConnectWithoutBukuInput | BukuKategoriCreateOrConnectWithoutBukuInput[]
     createMany?: BukuKategoriCreateManyBukuInputEnvelope
     connect?: BukuKategoriWhereUniqueInput | BukuKategoriWhereUniqueInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutBukuNestedInput = {
-    create?: XOR<UserCreateWithoutBukuInput, UserUncheckedCreateWithoutBukuInput>
-    connectOrCreate?: UserCreateOrConnectWithoutBukuInput
-    upsert?: UserUpsertWithoutBukuInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBukuInput, UserUpdateWithoutBukuInput>, UserUncheckedUpdateWithoutBukuInput>
   }
 
   export type StatusBukuUpdateOneRequiredWithoutBukuNestedInput = {
@@ -8354,92 +8135,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type BukuCreateWithoutUserInput = {
-    judul: string
-    pengarang: string
-    penerbit: string
-    tahunTerbit: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    statusBuku: StatusBukuCreateNestedOneWithoutBukuInput
-    kategori?: BukuKategoriCreateNestedManyWithoutBukuInput
-  }
-
-  export type BukuUncheckedCreateWithoutUserInput = {
-    id?: number
-    judul: string
-    pengarang: string
-    penerbit: string
-    tahunTerbit: number
-    statusBukuId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    kategori?: BukuKategoriUncheckedCreateNestedManyWithoutBukuInput
-  }
-
-  export type BukuCreateOrConnectWithoutUserInput = {
-    where: BukuWhereUniqueInput
-    create: XOR<BukuCreateWithoutUserInput, BukuUncheckedCreateWithoutUserInput>
-  }
-
-  export type BukuCreateManyUserInputEnvelope = {
-    data: BukuCreateManyUserInput | BukuCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type BukuUpsertWithWhereUniqueWithoutUserInput = {
-    where: BukuWhereUniqueInput
-    update: XOR<BukuUpdateWithoutUserInput, BukuUncheckedUpdateWithoutUserInput>
-    create: XOR<BukuCreateWithoutUserInput, BukuUncheckedCreateWithoutUserInput>
-  }
-
-  export type BukuUpdateWithWhereUniqueWithoutUserInput = {
-    where: BukuWhereUniqueInput
-    data: XOR<BukuUpdateWithoutUserInput, BukuUncheckedUpdateWithoutUserInput>
-  }
-
-  export type BukuUpdateManyWithWhereWithoutUserInput = {
-    where: BukuScalarWhereInput
-    data: XOR<BukuUpdateManyMutationInput, BukuUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type BukuScalarWhereInput = {
-    AND?: BukuScalarWhereInput | BukuScalarWhereInput[]
-    OR?: BukuScalarWhereInput[]
-    NOT?: BukuScalarWhereInput | BukuScalarWhereInput[]
-    id?: IntFilter<"Buku"> | number
-    judul?: StringFilter<"Buku"> | string
-    pengarang?: StringFilter<"Buku"> | string
-    penerbit?: StringFilter<"Buku"> | string
-    tahunTerbit?: IntFilter<"Buku"> | number
-    userId?: IntFilter<"Buku"> | number
-    statusBukuId?: IntFilter<"Buku"> | number
-    createdAt?: DateTimeFilter<"Buku"> | Date | string
-    updatedAt?: DateTimeFilter<"Buku"> | Date | string
-  }
-
-  export type UserCreateWithoutBukuInput = {
-    name: string
-    email: string
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserUncheckedCreateWithoutBukuInput = {
-    id?: number
-    name: string
-    email: string
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserCreateOrConnectWithoutBukuInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutBukuInput, UserUncheckedCreateWithoutBukuInput>
-  }
-
   export type StatusBukuCreateWithoutBukuInput = {
     nama: string
     createdAt?: Date | string
@@ -8479,34 +8174,6 @@ export namespace Prisma {
   export type BukuKategoriCreateManyBukuInputEnvelope = {
     data: BukuKategoriCreateManyBukuInput | BukuKategoriCreateManyBukuInput[]
     skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutBukuInput = {
-    update: XOR<UserUpdateWithoutBukuInput, UserUncheckedUpdateWithoutBukuInput>
-    create: XOR<UserCreateWithoutBukuInput, UserUncheckedCreateWithoutBukuInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutBukuInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutBukuInput, UserUncheckedUpdateWithoutBukuInput>
-  }
-
-  export type UserUpdateWithoutBukuInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateWithoutBukuInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StatusBukuUpsertWithoutBukuInput = {
@@ -8606,7 +8273,6 @@ export namespace Prisma {
     tahunTerbit: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutBukuInput
     kategori?: BukuKategoriCreateNestedManyWithoutBukuInput
   }
 
@@ -8616,7 +8282,6 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     kategori?: BukuKategoriUncheckedCreateNestedManyWithoutBukuInput
@@ -8648,6 +8313,20 @@ export namespace Prisma {
     data: XOR<BukuUpdateManyMutationInput, BukuUncheckedUpdateManyWithoutStatusBukuInput>
   }
 
+  export type BukuScalarWhereInput = {
+    AND?: BukuScalarWhereInput | BukuScalarWhereInput[]
+    OR?: BukuScalarWhereInput[]
+    NOT?: BukuScalarWhereInput | BukuScalarWhereInput[]
+    id?: IntFilter<"Buku"> | number
+    judul?: StringFilter<"Buku"> | string
+    pengarang?: StringFilter<"Buku"> | string
+    penerbit?: StringFilter<"Buku"> | string
+    tahunTerbit?: IntFilter<"Buku"> | number
+    statusBukuId?: IntFilter<"Buku"> | number
+    createdAt?: DateTimeFilter<"Buku"> | Date | string
+    updatedAt?: DateTimeFilter<"Buku"> | Date | string
+  }
+
   export type BukuCreateWithoutKategoriInput = {
     judul: string
     pengarang: string
@@ -8655,7 +8334,6 @@ export namespace Prisma {
     tahunTerbit: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutBukuInput
     statusBuku: StatusBukuCreateNestedOneWithoutBukuInput
   }
 
@@ -8665,7 +8343,6 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    userId: number
     statusBukuId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8712,7 +8389,6 @@ export namespace Prisma {
     tahunTerbit?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutBukuNestedInput
     statusBuku?: StatusBukuUpdateOneRequiredWithoutBukuNestedInput
   }
 
@@ -8722,7 +8398,6 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     statusBukuId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8748,51 +8423,6 @@ export namespace Prisma {
   export type KategoriUncheckedUpdateWithoutBukuInput = {
     id?: IntFieldUpdateOperationsInput | number
     nama?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BukuCreateManyUserInput = {
-    id?: number
-    judul: string
-    pengarang: string
-    penerbit: string
-    tahunTerbit: number
-    statusBukuId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type BukuUpdateWithoutUserInput = {
-    judul?: StringFieldUpdateOperationsInput | string
-    pengarang?: StringFieldUpdateOperationsInput | string
-    penerbit?: StringFieldUpdateOperationsInput | string
-    tahunTerbit?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    statusBuku?: StatusBukuUpdateOneRequiredWithoutBukuNestedInput
-    kategori?: BukuKategoriUpdateManyWithoutBukuNestedInput
-  }
-
-  export type BukuUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    judul?: StringFieldUpdateOperationsInput | string
-    pengarang?: StringFieldUpdateOperationsInput | string
-    penerbit?: StringFieldUpdateOperationsInput | string
-    tahunTerbit?: IntFieldUpdateOperationsInput | number
-    statusBukuId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kategori?: BukuKategoriUncheckedUpdateManyWithoutBukuNestedInput
-  }
-
-  export type BukuUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    judul?: StringFieldUpdateOperationsInput | string
-    pengarang?: StringFieldUpdateOperationsInput | string
-    penerbit?: StringFieldUpdateOperationsInput | string
-    tahunTerbit?: IntFieldUpdateOperationsInput | number
-    statusBukuId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8857,7 +8487,6 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8869,7 +8498,6 @@ export namespace Prisma {
     tahunTerbit?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutBukuNestedInput
     kategori?: BukuKategoriUpdateManyWithoutBukuNestedInput
   }
 
@@ -8879,7 +8507,6 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kategori?: BukuKategoriUncheckedUpdateManyWithoutBukuNestedInput
@@ -8891,7 +8518,6 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
