@@ -30,19 +30,21 @@ login.post("/", async (c) => {
     const expiresIn = 60 * 60; // 1 jam
     const token = jwt.sign(Payload, secretKey, { expiresIn });
 
-    //  Simpan token ke cookie
+    // Simpan token ke cookie + atur header CORS
     c.header(
       "Set-Cookie",
       `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=Lax`
     );
+    c.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    c.header("Access-Control-Allow-Credentials", "true");
 
     return c.json(
       {
         message: "Berhasil login",
         data: {
           id: dataLogin.id,
-          email: dataLogin.email,
-        },
+          email: dataLogin.email
+        }
       },
       200
     );
@@ -50,6 +52,5 @@ login.post("/", async (c) => {
     return c.json({ message: "Internal Server Error", error }, 500);
   }
 });
-
 
 export default login;

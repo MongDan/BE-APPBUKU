@@ -67,30 +67,6 @@ buku.get("/:kategoriId", async (c) => {
 });
 
 // melihat buku by userId
-buku.get("/:userId", async (c) => {
-  try {
-    const userId = c.req.param("userId");
-    const dataBuku = await prisma.buku.findMany({
-      where: {
-        userId: Number(userId)
-      }
-    });
-
-    if (!dataBuku || dataBuku.length === 0) {
-      return c.json({ message: "buku tidak ditemukan berdasarkan user" }, 404);
-    }
-
-    return c.json({
-      message: "berhasil mendapatkan buku",
-      data: dataBuku
-    });
-  } catch (error) {
-    return c.json(
-      { message: "Gagal mendapatkan buku berdasarkan user", error },
-      500
-    );
-  }
-});
 
 // melihat semua buku
 buku.get("/", async (c) => {
@@ -215,7 +191,6 @@ buku.put("/:bukuId", async (c) => {
         pengarang,
         penerbit,
         tahunTerbit,
-        userId: Number(userId),
         statusBukuId
       }
     });
