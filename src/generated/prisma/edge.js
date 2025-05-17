@@ -160,7 +160,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\KEBUTUHAN KULIAH\\KEPENTINGAN KULIAH\\SEMESTER 4\\PW\\Pbuku\\src\\generated\\prisma",
+      "value": "E:\\KEBUTUHAN KULIAH\\KEPENTINGAN KULIAH\\SEMESTER 4\\PW\\UAS\\BE-BUKU\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -174,7 +174,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\KEBUTUHAN KULIAH\\KEPENTINGAN KULIAH\\SEMESTER 4\\PW\\Pbuku\\prisma\\schema.prisma",
+    "sourceFilePath": "E:\\KEBUTUHAN KULIAH\\KEPENTINGAN KULIAH\\SEMESTER 4\\PW\\UAS\\BE-BUKU\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -188,7 +188,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -197,8 +197,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  name      String\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Buku {\n  id           Int            @id @default(autoincrement())\n  judul        String\n  pengarang    String\n  penerbit     String\n  tahunTerbit  Int\n  statusBukuId Int\n  statusBuku   StatusBuku     @relation(fields: [statusBukuId], references: [id])\n  kategori     BukuKategori[] // Relasi many-to-many melalui BukuKategori\n  createdAt    DateTime       @default(now())\n  updatedAt    DateTime       @updatedAt\n}\n\nmodel Kategori {\n  id        Int            @id @default(autoincrement())\n  nama      String\n  buku      BukuKategori[] // Relasi many-to-many melalui BukuKategori\n  createdAt DateTime       @default(now())\n  updatedAt DateTime       @updatedAt\n}\n\nmodel StatusBuku {\n  id        Int      @id @default(autoincrement())\n  nama      String\n  buku      Buku[] // Relasi dengan Buku (one-to-many)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel BukuKategori {\n  id         Int      @id @default(autoincrement())\n  idBuku     Int\n  kategoriId Int\n  buku       Buku     @relation(fields: [idBuku], references: [id])\n  kategori   Kategori @relation(fields: [kategoriId], references: [id])\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "c400863c96b0ffb6e4354df7e8f302a59a8724c3a2101a17ff09b83402dd9b33",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  name      String\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Buku {\n  id           Int            @id @default(autoincrement())\n  judul        String\n  pengarang    String\n  penerbit     String\n  tahunTerbit  Int\n  statusBukuId Int\n  statusBuku   StatusBuku     @relation(fields: [statusBukuId], references: [id])\n  kategori     BukuKategori[] // Relasi many-to-many melalui BukuKategori\n  createdAt    DateTime       @default(now())\n  updatedAt    DateTime       @updatedAt\n}\n\nmodel Kategori {\n  id        Int            @id @default(autoincrement())\n  nama      String\n  buku      BukuKategori[] // Relasi many-to-many melalui BukuKategori\n  createdAt DateTime       @default(now())\n  updatedAt DateTime       @updatedAt\n}\n\nmodel StatusBuku {\n  id        Int      @id @default(autoincrement())\n  nama      String\n  buku      Buku[] // Relasi dengan Buku (one-to-many)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel BukuKategori {\n  id         Int      @id @default(autoincrement())\n  idBuku     Int\n  kategoriId Int\n  buku       Buku     @relation(fields: [idBuku], references: [id])\n  kategori   Kategori @relation(fields: [kategoriId], references: [id])\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n}\n",
+  "inlineSchemaHash": "6a5b97ef6fe64d0ee9e215bc94112a91b24e55808e5d344ec060b9cfc746c5fa",
   "copyEngine": true
 }
 config.dirname = '/'
