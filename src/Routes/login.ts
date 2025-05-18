@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import prisma from "../db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Role } from "../generated/prisma";
 
 const login = new Hono();
 
@@ -21,7 +22,7 @@ login.post("/", async (c) => {
       return c.json({ message: "Password salah" }, 401);
     }
 
-    const Payload = { email, id: dataLogin.id };
+    const Payload = { email, id: dataLogin.id, role: dataLogin.role };
     const secretKey = process.env.JWT_SECRET;
     if (!secretKey) {
       return c.json({ message: "Secret key tidak ditemukan" }, 500);
@@ -43,7 +44,8 @@ login.post("/", async (c) => {
         message: "Berhasil login",
         data: {
           id: dataLogin.id,
-          email: dataLogin.email
+          email: dataLogin.email,
+          role: dataLogin.role
         }
       },
       200

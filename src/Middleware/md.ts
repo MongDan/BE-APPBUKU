@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 import { getCookie } from "hono/cookie";
 
 const accessValidation: MiddlewareHandler = async (c, next) => {
-  const token = await getCookie(c, "token"); // ← Diperbaiki
+  const token = await getCookie(c, "token");
   const secret = process.env.JWT_SECRET;
 
   if (!token) {
@@ -17,7 +17,7 @@ const accessValidation: MiddlewareHandler = async (c, next) => {
   try {
     const decoded = verify(token, secret);
     c.set("user", decoded); // Simpan user ke context jika diperlukan
-    await next(); // ← jangan lupa await juga ini
+    await next(); //
   } catch (err) {
     return c.json({ message: "Token tidak valid atau expired" }, 403);
   }

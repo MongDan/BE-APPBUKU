@@ -167,7 +167,7 @@ buku.put("/:bukuId", async (c) => {
 
     if (!checkBuku) {
       return c.json(
-        { message: "buku yang akan diupdate tidak ditemukan" },
+        { message: "Buku yang akan diupdate tidak ditemukan" },
         404
       );
     }
@@ -197,13 +197,14 @@ buku.put("/:bukuId", async (c) => {
 
     return c.json(
       {
-        message: "berhasil mengupdate buku",
+        message: "Berhasil mengupdate buku",
         data: updateBuku
       },
-      201
+      200 // ubah jadi 200 OK
     );
-  } catch (error) {
-    return c.json({ message: "Gagal mengupdate buku", error }, 500);
+  } catch {
+    // Kirim message error yang lebih bersih
+    return c.json({ message: "Gagal mengupdate buku" }, 500);
   }
 });
 
