@@ -11,6 +11,7 @@ import kategori from "./Routes/kategori";
 import statusBuku from "./Routes/statusBuku";
 import bukuKategori from "./Routes/bukuKategori";
 import accessValidation from "./Middleware/md";
+import adminOnly from "./Middleware/adminOnly";
 
 const app = new Hono();
 
@@ -40,10 +41,9 @@ app.route("/login", login);
 app.use("/buku", accessValidation);
 app.route("/buku", buku);
 app.route("/buku/kategori", buku);
-app.route("/buku/user", buku);
 app.route("/buku/statusBuku", buku);
 
-app.use("/kategori", accessValidation);
+app.use("/kategori", accessValidation, adminOnly);
 app.route("/kategori", kategori);
 
 app.use("/statusBuku", accessValidation);

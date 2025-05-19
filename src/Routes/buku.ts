@@ -1,10 +1,11 @@
 import { Hono } from "hono";
 import prisma from "../db";
+import adminOnly from "../Middleware/adminOnly";
 
 const buku = new Hono();
 
 // membuat buku
-buku.post("/", async (c) => {
+buku.post("/", adminOnly, async (c) => {
   try {
     const { judul, pengarang, penerbit, tahunTerbit, statusBukuId } =
       await c.req.json();
@@ -153,7 +154,7 @@ buku.get("/:statusBukuId", async (c) => {
 });
 
 // mengupdate buku
-buku.put("/:bukuId", async (c) => {
+buku.put("/:bukuId", adminOnly, async (c) => {
   try {
     const bukuId = c.req.param("bukuId");
     const { judul, pengarang, penerbit, tahunTerbit, userId, statusBukuId } =
@@ -209,7 +210,7 @@ buku.put("/:bukuId", async (c) => {
 });
 
 // menghapus buku
-buku.delete("/:bukuId", async (c) => {
+buku.delete("/:bukuId", adminOnly, async (c) => {
   try {
     const bukuId = c.req.param("bukuId");
 
