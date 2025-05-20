@@ -67,8 +67,6 @@ buku.get("/:kategoriId", async (c) => {
   }
 });
 
-// melihat buku by userId
-
 // melihat semua buku
 buku.get("/", async (c) => {
   try {
