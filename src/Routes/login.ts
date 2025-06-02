@@ -1,8 +1,7 @@
+import { compare } from "bcryptjs";
 import { Hono } from "hono";
-import prisma from "../db";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Role } from "../generated/prisma";
+import prisma from "../db";
 
 const login = new Hono();
 
@@ -13,11 +12,15 @@ login.post("/", async (c) => {
       where: { email }
     });
 
+    if (!email || !password) {
+      return c.json({ message: "Email dan password wajib diisi" }, 400);
+    }
+
     if (!dataLogin) {
       return c.json({ message: "User tidak ditemukan" }, 404);
     }
 
-    const isPasswordValid = await bcrypt.compare(password, dataLogin.password);
+    const isPasswordValid = await compare(password, dataLogin.password);
     if (!isPasswordValid) {
       return c.json({ message: "Password salah" }, 401);
     }

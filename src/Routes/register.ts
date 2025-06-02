@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import prisma from "../db";
-import bcrypt from "bcrypt";
+import {hash} from "bcryptjs";
 
 const register = new Hono();
 
@@ -34,7 +34,7 @@ register.post("/", async (c) => {
       return c.json({ message: "Email sudah digunakan" }, 400);
     }
 
-    const hashedPass = await bcrypt.hash(password, 10);
+    const hashedPass = await hash(password, 10);
 
     const dataUser = await prisma.user.create({
       data: {
@@ -46,7 +46,7 @@ register.post("/", async (c) => {
     });
 
     return c.json({
-      message: `Berhasil membuat user dengan role ${userRole}`,
+      message: `Berhasil membuat Account dengan role ${userRole}`,
       data: dataUser
     });
   } catch (error) {

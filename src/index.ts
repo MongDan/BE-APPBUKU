@@ -8,10 +8,10 @@ import register from "./Routes/register";
 import login from "./Routes/login";
 import buku from "./Routes/buku";
 import kategori from "./Routes/kategori";
-import statusBuku from "./Routes/statusBuku";
 import bukuKategori from "./Routes/bukuKategori";
 import accessValidation from "./Middleware/md";
-import adminOnly from "./Middleware/adminOnly";
+import peminjaman from "./Routes/peminjaman";
+import eksemplar from "./Routes/eksemplar";
 
 const app = new Hono();
 
@@ -22,7 +22,6 @@ app.use(
   })
 );
 
-//  Tangani preflight OPTIONS request
 app.options("*", (c) => {
   c.header("Access-Control-Allow-Origin", "http://localhost:5173");
   c.header("Access-Control-Allow-Credentials", "true");
@@ -43,11 +42,13 @@ app.route("/buku", buku);
 app.route("/buku/kategori", buku);
 app.route("/buku/statusBuku", buku);
 
-app.use("/kategori", accessValidation, adminOnly);
+app.use("/kategori", accessValidation,);
 app.route("/kategori", kategori);
 
-app.use("/statusBuku", accessValidation);
-app.route("/statusBuku", statusBuku);
+app.use("/eksemplarBuku", accessValidation);
+app.route("/eksemplarBuku", eksemplar);
+
+app.route("/peminjaman", peminjaman);
 
 app.use("/bukuKategori", accessValidation);
 app.route("/bukuKategori", bukuKategori);

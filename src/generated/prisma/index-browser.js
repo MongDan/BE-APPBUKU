@@ -133,7 +133,7 @@ exports.Prisma.BukuScalarFieldEnum = {
   pengarang: 'pengarang',
   penerbit: 'penerbit',
   tahunTerbit: 'tahunTerbit',
-  statusBukuId: 'statusBukuId',
+  jumlahBuku: 'jumlahBuku',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -145,9 +145,22 @@ exports.Prisma.KategoriScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.StatusBukuScalarFieldEnum = {
+exports.Prisma.EksemplarBukuScalarFieldEnum = {
   id: 'id',
-  nama: 'nama',
+  kodeEksemplar: 'kodeEksemplar',
+  bukuId: 'bukuId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PeminjamanScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  eksemplarId: 'eksemplarId',
+  tanggalPinjam: 'tanggalPinjam',
+  tanggalKembali: 'tanggalKembali',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -174,11 +187,21 @@ exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN'
 };
 
+exports.Status = exports.$Enums.Status = {
+  TERSEDIA: 'TERSEDIA',
+  DIPINJAM: 'DIPINJAM',
+  PENDING: 'PENDING',
+  DITOLAK: 'DITOLAK',
+  PENDING_KEMBALI: 'PENDING_KEMBALI',
+  SELESAI: 'SELESAI'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Buku: 'Buku',
   Kategori: 'Kategori',
-  StatusBuku: 'StatusBuku',
+  EksemplarBuku: 'EksemplarBuku',
+  Peminjaman: 'Peminjaman',
   BukuKategori: 'BukuKategori'
 };
 

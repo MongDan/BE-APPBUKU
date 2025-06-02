@@ -1,10 +1,11 @@
 import { Hono } from "hono";
 import prisma from "../db";
+import adminOnly from "../Middleware/adminOnly";
 
 const kategori = new Hono();
 
 // membuat kategori
-kategori.post("/", async (c) => {
+kategori.post("/", adminOnly ,  async (c) => {
   try {
     const { nama } = await c.req.json();
     if (!nama) {
@@ -60,7 +61,7 @@ kategori.get("/:kategoriId", async (c) => {
 });
 
 // mengupdate kategori
-kategori.put("/:kategoriId", async (c) => {
+kategori.put("/:kategoriId", adminOnly, async (c) => {
   try {
     const kategoriId = Number(c.req.param("kategoriId"));
     const { nama } = await c.req.json();
@@ -92,7 +93,7 @@ kategori.put("/:kategoriId", async (c) => {
 });
 
 // menghapus kategori
-kategori.delete("/:kategoriId", async (c) => {
+kategori.delete("/:kategoriId", adminOnly, async (c) => {
   try {
     const kategoriId = Number(c.req.param("kategoriId"));
 

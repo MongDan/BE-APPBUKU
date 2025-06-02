@@ -13,27 +13,37 @@ enum Role {
   ADMIN
 }
 
+enum Status {
+  TERSEDIA
+  DIPINJAM
+  PENDING
+  DITOLAK
+  PENDING_KEMBALI
+  SELESAI
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int          @id @default(autoincrement())
+  name       String
+  email      String       @unique
+  password   String
+  role       Role         @default(USER)
+  peminjaman Peminjaman[] // Relasi
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
 model Buku {
-  id           Int            @id @default(autoincrement())
-  judul        String
-  pengarang    String
-  penerbit     String
-  tahunTerbit  Int
-  statusBukuId Int
-  statusBuku   StatusBuku     @relation(fields: [statusBukuId], references: [id])
-  kategori     BukuKategori[] // Relasi many-to-many melalui BukuKategori
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id            Int             @id @default(autoincrement())
+  judul         String
+  pengarang     String
+  penerbit      String
+  eksemplarBuku EksemplarBuku[] // Relasi one-to-many dengan EksemplarBuku
+  tahunTerbit   Int
+  jumlahBuku    Int
+  kategori      BukuKategori[] // Relasi many-to-many melalui BukuKategori
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
 
 model Kategori {
@@ -44,12 +54,28 @@ model Kategori {
   updatedAt DateTime       @updatedAt
 }
 
-model StatusBuku {
-  id        Int      @id @default(autoincrement())
-  nama      String
-  buku      Buku[] // Relasi dengan Buku (one-to-many)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model EksemplarBuku {
+  id            Int          @id @default(autoincrement())
+  kodeEksemplar String       @unique
+  bukuId        Int
+  status        Status       @default(TERSEDIA)
+  buku          Buku         @relation(fields: [bukuId], references: [id])
+  peminjaman    Peminjaman[] // new: optional, for reverse relation
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Peminjaman {
+  id             Int           @id @default(autoincrement())
+  userId         Int
+  eksemplarId    Int
+  tanggalPinjam  DateTime      @default(now())
+  tanggalKembali DateTime
+  status         Status        @default(PENDING)
+  user           User          @relation(fields: [userId], references: [id])
+  eksemplar      EksemplarBuku @relation(fields: [eksemplarId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 }
 
 model BukuKategori {

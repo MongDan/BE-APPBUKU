@@ -29,10 +29,15 @@ export type Buku = $Result.DefaultSelection<Prisma.$BukuPayload>
  */
 export type Kategori = $Result.DefaultSelection<Prisma.$KategoriPayload>
 /**
- * Model StatusBuku
+ * Model EksemplarBuku
  * 
  */
-export type StatusBuku = $Result.DefaultSelection<Prisma.$StatusBukuPayload>
+export type EksemplarBuku = $Result.DefaultSelection<Prisma.$EksemplarBukuPayload>
+/**
+ * Model Peminjaman
+ * 
+ */
+export type Peminjaman = $Result.DefaultSelection<Prisma.$PeminjamanPayload>
 /**
  * Model BukuKategori
  * 
@@ -50,11 +55,27 @@ export namespace $Enums {
 
 export type Role = (typeof Role)[keyof typeof Role]
 
+
+export const Status: {
+  TERSEDIA: 'TERSEDIA',
+  DIPINJAM: 'DIPINJAM',
+  PENDING: 'PENDING',
+  DITOLAK: 'DITOLAK',
+  PENDING_KEMBALI: 'PENDING_KEMBALI',
+  SELESAI: 'SELESAI'
+};
+
+export type Status = (typeof Status)[keyof typeof Status]
+
 }
 
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type Status = $Enums.Status
+
+export const Status: typeof $Enums.Status
 
 /**
  * ##  Prisma Client ʲˢ
@@ -212,14 +233,24 @@ export class PrismaClient<
   get kategori(): Prisma.KategoriDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.statusBuku`: Exposes CRUD operations for the **StatusBuku** model.
+   * `prisma.eksemplarBuku`: Exposes CRUD operations for the **EksemplarBuku** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more StatusBukus
-    * const statusBukus = await prisma.statusBuku.findMany()
+    * // Fetch zero or more EksemplarBukus
+    * const eksemplarBukus = await prisma.eksemplarBuku.findMany()
     * ```
     */
-  get statusBuku(): Prisma.StatusBukuDelegate<ExtArgs, ClientOptions>;
+  get eksemplarBuku(): Prisma.EksemplarBukuDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.peminjaman`: Exposes CRUD operations for the **Peminjaman** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Peminjamen
+    * const peminjamen = await prisma.peminjaman.findMany()
+    * ```
+    */
+  get peminjaman(): Prisma.PeminjamanDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.bukuKategori`: Exposes CRUD operations for the **BukuKategori** model.
@@ -673,7 +704,8 @@ export namespace Prisma {
     User: 'User',
     Buku: 'Buku',
     Kategori: 'Kategori',
-    StatusBuku: 'StatusBuku',
+    EksemplarBuku: 'EksemplarBuku',
+    Peminjaman: 'Peminjaman',
     BukuKategori: 'BukuKategori'
   };
 
@@ -693,7 +725,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "buku" | "kategori" | "statusBuku" | "bukuKategori"
+      modelProps: "user" | "buku" | "kategori" | "eksemplarBuku" | "peminjaman" | "bukuKategori"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -919,77 +951,151 @@ export namespace Prisma {
           }
         }
       }
-      StatusBuku: {
-        payload: Prisma.$StatusBukuPayload<ExtArgs>
-        fields: Prisma.StatusBukuFieldRefs
+      EksemplarBuku: {
+        payload: Prisma.$EksemplarBukuPayload<ExtArgs>
+        fields: Prisma.EksemplarBukuFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.StatusBukuFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload> | null
+            args: Prisma.EksemplarBukuFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.StatusBukuFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>
+            args: Prisma.EksemplarBukuFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>
           }
           findFirst: {
-            args: Prisma.StatusBukuFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload> | null
+            args: Prisma.EksemplarBukuFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.StatusBukuFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>
+            args: Prisma.EksemplarBukuFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>
           }
           findMany: {
-            args: Prisma.StatusBukuFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>[]
+            args: Prisma.EksemplarBukuFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>[]
           }
           create: {
-            args: Prisma.StatusBukuCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>
+            args: Prisma.EksemplarBukuCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>
           }
           createMany: {
-            args: Prisma.StatusBukuCreateManyArgs<ExtArgs>
+            args: Prisma.EksemplarBukuCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.StatusBukuCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>[]
+            args: Prisma.EksemplarBukuCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>[]
           }
           delete: {
-            args: Prisma.StatusBukuDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>
+            args: Prisma.EksemplarBukuDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>
           }
           update: {
-            args: Prisma.StatusBukuUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>
+            args: Prisma.EksemplarBukuUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>
           }
           deleteMany: {
-            args: Prisma.StatusBukuDeleteManyArgs<ExtArgs>
+            args: Prisma.EksemplarBukuDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.StatusBukuUpdateManyArgs<ExtArgs>
+            args: Prisma.EksemplarBukuUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.StatusBukuUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>[]
+            args: Prisma.EksemplarBukuUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>[]
           }
           upsert: {
-            args: Prisma.StatusBukuUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$StatusBukuPayload>
+            args: Prisma.EksemplarBukuUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EksemplarBukuPayload>
           }
           aggregate: {
-            args: Prisma.StatusBukuAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateStatusBuku>
+            args: Prisma.EksemplarBukuAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEksemplarBuku>
           }
           groupBy: {
-            args: Prisma.StatusBukuGroupByArgs<ExtArgs>
-            result: $Utils.Optional<StatusBukuGroupByOutputType>[]
+            args: Prisma.EksemplarBukuGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EksemplarBukuGroupByOutputType>[]
           }
           count: {
-            args: Prisma.StatusBukuCountArgs<ExtArgs>
-            result: $Utils.Optional<StatusBukuCountAggregateOutputType> | number
+            args: Prisma.EksemplarBukuCountArgs<ExtArgs>
+            result: $Utils.Optional<EksemplarBukuCountAggregateOutputType> | number
+          }
+        }
+      }
+      Peminjaman: {
+        payload: Prisma.$PeminjamanPayload<ExtArgs>
+        fields: Prisma.PeminjamanFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PeminjamanFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PeminjamanFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>
+          }
+          findFirst: {
+            args: Prisma.PeminjamanFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PeminjamanFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>
+          }
+          findMany: {
+            args: Prisma.PeminjamanFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>[]
+          }
+          create: {
+            args: Prisma.PeminjamanCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>
+          }
+          createMany: {
+            args: Prisma.PeminjamanCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PeminjamanCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>[]
+          }
+          delete: {
+            args: Prisma.PeminjamanDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>
+          }
+          update: {
+            args: Prisma.PeminjamanUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>
+          }
+          deleteMany: {
+            args: Prisma.PeminjamanDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PeminjamanUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PeminjamanUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>[]
+          }
+          upsert: {
+            args: Prisma.PeminjamanUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PeminjamanPayload>
+          }
+          aggregate: {
+            args: Prisma.PeminjamanAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePeminjaman>
+          }
+          groupBy: {
+            args: Prisma.PeminjamanGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PeminjamanGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PeminjamanCountArgs<ExtArgs>
+            result: $Utils.Optional<PeminjamanCountAggregateOutputType> | number
           }
         }
       }
@@ -1154,7 +1260,8 @@ export namespace Prisma {
     user?: UserOmit
     buku?: BukuOmit
     kategori?: KategoriOmit
-    statusBuku?: StatusBukuOmit
+    eksemplarBuku?: EksemplarBukuOmit
+    peminjaman?: PeminjamanOmit
     bukuKategori?: BukuKategoriOmit
   }
 
@@ -1246,14 +1353,47 @@ export namespace Prisma {
 
 
   /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    peminjaman: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    peminjaman?: boolean | UserCountOutputTypeCountPeminjamanArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPeminjamanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PeminjamanWhereInput
+  }
+
+
+  /**
    * Count Type BukuCountOutputType
    */
 
   export type BukuCountOutputType = {
+    eksemplarBuku: number
     kategori: number
   }
 
   export type BukuCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    eksemplarBuku?: boolean | BukuCountOutputTypeCountEksemplarBukuArgs
     kategori?: boolean | BukuCountOutputTypeCountKategoriArgs
   }
 
@@ -1266,6 +1406,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the BukuCountOutputType
      */
     select?: BukuCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BukuCountOutputType without action
+   */
+  export type BukuCountOutputTypeCountEksemplarBukuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EksemplarBukuWhereInput
   }
 
   /**
@@ -1308,33 +1455,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type StatusBukuCountOutputType
+   * Count Type EksemplarBukuCountOutputType
    */
 
-  export type StatusBukuCountOutputType = {
-    buku: number
+  export type EksemplarBukuCountOutputType = {
+    peminjaman: number
   }
 
-  export type StatusBukuCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    buku?: boolean | StatusBukuCountOutputTypeCountBukuArgs
+  export type EksemplarBukuCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    peminjaman?: boolean | EksemplarBukuCountOutputTypeCountPeminjamanArgs
   }
 
   // Custom InputTypes
   /**
-   * StatusBukuCountOutputType without action
+   * EksemplarBukuCountOutputType without action
    */
-  export type StatusBukuCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBukuCountOutputType
+     * Select specific fields to fetch from the EksemplarBukuCountOutputType
      */
-    select?: StatusBukuCountOutputTypeSelect<ExtArgs> | null
+    select?: EksemplarBukuCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * StatusBukuCountOutputType without action
+   * EksemplarBukuCountOutputType without action
    */
-  export type StatusBukuCountOutputTypeCountBukuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BukuWhereInput
+  export type EksemplarBukuCountOutputTypeCountPeminjamanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PeminjamanWhereInput
   }
 
 
@@ -1556,6 +1703,8 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    peminjaman?: boolean | User$peminjamanArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1589,10 +1738,18 @@ export namespace Prisma {
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    peminjaman?: boolean | User$peminjamanArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      peminjaman: Prisma.$PeminjamanPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
@@ -1995,6 +2152,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    peminjaman<T extends User$peminjamanArgs<ExtArgs> = {}>(args?: Subset<T, User$peminjamanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2048,6 +2206,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2066,6 +2228,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2083,6 +2249,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -2132,6 +2302,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -2180,6 +2354,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -2222,6 +2400,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to create a User.
      */
@@ -2270,6 +2452,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -2337,6 +2523,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -2363,6 +2553,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -2383,6 +2577,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.peminjaman
+   */
+  export type User$peminjamanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    where?: PeminjamanWhereInput
+    orderBy?: PeminjamanOrderByWithRelationInput | PeminjamanOrderByWithRelationInput[]
+    cursor?: PeminjamanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PeminjamanScalarFieldEnum | PeminjamanScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2394,6 +2612,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -2412,13 +2634,13 @@ export namespace Prisma {
   export type BukuAvgAggregateOutputType = {
     id: number | null
     tahunTerbit: number | null
-    statusBukuId: number | null
+    jumlahBuku: number | null
   }
 
   export type BukuSumAggregateOutputType = {
     id: number | null
     tahunTerbit: number | null
-    statusBukuId: number | null
+    jumlahBuku: number | null
   }
 
   export type BukuMinAggregateOutputType = {
@@ -2427,7 +2649,7 @@ export namespace Prisma {
     pengarang: string | null
     penerbit: string | null
     tahunTerbit: number | null
-    statusBukuId: number | null
+    jumlahBuku: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2438,7 +2660,7 @@ export namespace Prisma {
     pengarang: string | null
     penerbit: string | null
     tahunTerbit: number | null
-    statusBukuId: number | null
+    jumlahBuku: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2449,7 +2671,7 @@ export namespace Prisma {
     pengarang: number
     penerbit: number
     tahunTerbit: number
-    statusBukuId: number
+    jumlahBuku: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2459,13 +2681,13 @@ export namespace Prisma {
   export type BukuAvgAggregateInputType = {
     id?: true
     tahunTerbit?: true
-    statusBukuId?: true
+    jumlahBuku?: true
   }
 
   export type BukuSumAggregateInputType = {
     id?: true
     tahunTerbit?: true
-    statusBukuId?: true
+    jumlahBuku?: true
   }
 
   export type BukuMinAggregateInputType = {
@@ -2474,7 +2696,7 @@ export namespace Prisma {
     pengarang?: true
     penerbit?: true
     tahunTerbit?: true
-    statusBukuId?: true
+    jumlahBuku?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2485,7 +2707,7 @@ export namespace Prisma {
     pengarang?: true
     penerbit?: true
     tahunTerbit?: true
-    statusBukuId?: true
+    jumlahBuku?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2496,7 +2718,7 @@ export namespace Prisma {
     pengarang?: true
     penerbit?: true
     tahunTerbit?: true
-    statusBukuId?: true
+    jumlahBuku?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2594,7 +2816,7 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    statusBukuId: number
+    jumlahBuku: number
     createdAt: Date
     updatedAt: Date
     _count: BukuCountAggregateOutputType | null
@@ -2624,10 +2846,10 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    statusBukuId?: boolean
+    jumlahBuku?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
+    eksemplarBuku?: boolean | Buku$eksemplarBukuArgs<ExtArgs>
     kategori?: boolean | Buku$kategoriArgs<ExtArgs>
     _count?: boolean | BukuCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["buku"]>
@@ -2638,10 +2860,9 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    statusBukuId?: boolean
+    jumlahBuku?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["buku"]>
 
   export type BukuSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2650,10 +2871,9 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    statusBukuId?: boolean
+    jumlahBuku?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["buku"]>
 
   export type BukuSelectScalar = {
@@ -2662,28 +2882,24 @@ export namespace Prisma {
     pengarang?: boolean
     penerbit?: boolean
     tahunTerbit?: boolean
-    statusBukuId?: boolean
+    jumlahBuku?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "judul" | "pengarang" | "penerbit" | "tahunTerbit" | "statusBukuId" | "createdAt" | "updatedAt", ExtArgs["result"]["buku"]>
+  export type BukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "judul" | "pengarang" | "penerbit" | "tahunTerbit" | "jumlahBuku" | "createdAt" | "updatedAt", ExtArgs["result"]["buku"]>
   export type BukuInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
+    eksemplarBuku?: boolean | Buku$eksemplarBukuArgs<ExtArgs>
     kategori?: boolean | Buku$kategoriArgs<ExtArgs>
     _count?: boolean | BukuCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type BukuIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
-  }
-  export type BukuIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    statusBuku?: boolean | StatusBukuDefaultArgs<ExtArgs>
-  }
+  export type BukuIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type BukuIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $BukuPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Buku"
     objects: {
-      statusBuku: Prisma.$StatusBukuPayload<ExtArgs>
+      eksemplarBuku: Prisma.$EksemplarBukuPayload<ExtArgs>[]
       kategori: Prisma.$BukuKategoriPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2692,7 +2908,7 @@ export namespace Prisma {
       pengarang: string
       penerbit: string
       tahunTerbit: number
-      statusBukuId: number
+      jumlahBuku: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["buku"]>
@@ -3089,7 +3305,7 @@ export namespace Prisma {
    */
   export interface Prisma__BukuClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    statusBuku<T extends StatusBukuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StatusBukuDefaultArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    eksemplarBuku<T extends Buku$eksemplarBukuArgs<ExtArgs> = {}>(args?: Subset<T, Buku$eksemplarBukuArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     kategori<T extends Buku$kategoriArgs<ExtArgs> = {}>(args?: Subset<T, Buku$kategoriArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BukuKategoriPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3125,7 +3341,7 @@ export namespace Prisma {
     readonly pengarang: FieldRef<"Buku", 'String'>
     readonly penerbit: FieldRef<"Buku", 'String'>
     readonly tahunTerbit: FieldRef<"Buku", 'Int'>
-    readonly statusBukuId: FieldRef<"Buku", 'Int'>
+    readonly jumlahBuku: FieldRef<"Buku", 'Int'>
     readonly createdAt: FieldRef<"Buku", 'DateTime'>
     readonly updatedAt: FieldRef<"Buku", 'DateTime'>
   }
@@ -3377,10 +3593,6 @@ export namespace Prisma {
      */
     data: BukuCreateManyInput | BukuCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BukuIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3451,10 +3663,6 @@ export namespace Prisma {
      * Limit how many Bukus to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BukuIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3521,6 +3729,30 @@ export namespace Prisma {
      * Limit how many Bukus to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Buku.eksemplarBuku
+   */
+  export type Buku$eksemplarBukuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EksemplarBuku
+     */
+    select?: EksemplarBukuSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EksemplarBuku
+     */
+    omit?: EksemplarBukuOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EksemplarBukuInclude<ExtArgs> | null
+    where?: EksemplarBukuWhereInput
+    orderBy?: EksemplarBukuOrderByWithRelationInput | EksemplarBukuOrderByWithRelationInput[]
+    cursor?: EksemplarBukuWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EksemplarBukuScalarFieldEnum | EksemplarBukuScalarFieldEnum[]
   }
 
   /**
@@ -4658,368 +4890,405 @@ export namespace Prisma {
 
 
   /**
-   * Model StatusBuku
+   * Model EksemplarBuku
    */
 
-  export type AggregateStatusBuku = {
-    _count: StatusBukuCountAggregateOutputType | null
-    _avg: StatusBukuAvgAggregateOutputType | null
-    _sum: StatusBukuSumAggregateOutputType | null
-    _min: StatusBukuMinAggregateOutputType | null
-    _max: StatusBukuMaxAggregateOutputType | null
+  export type AggregateEksemplarBuku = {
+    _count: EksemplarBukuCountAggregateOutputType | null
+    _avg: EksemplarBukuAvgAggregateOutputType | null
+    _sum: EksemplarBukuSumAggregateOutputType | null
+    _min: EksemplarBukuMinAggregateOutputType | null
+    _max: EksemplarBukuMaxAggregateOutputType | null
   }
 
-  export type StatusBukuAvgAggregateOutputType = {
+  export type EksemplarBukuAvgAggregateOutputType = {
     id: number | null
+    bukuId: number | null
   }
 
-  export type StatusBukuSumAggregateOutputType = {
+  export type EksemplarBukuSumAggregateOutputType = {
     id: number | null
+    bukuId: number | null
   }
 
-  export type StatusBukuMinAggregateOutputType = {
+  export type EksemplarBukuMinAggregateOutputType = {
     id: number | null
-    nama: string | null
+    kodeEksemplar: string | null
+    bukuId: number | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type StatusBukuMaxAggregateOutputType = {
+  export type EksemplarBukuMaxAggregateOutputType = {
     id: number | null
-    nama: string | null
+    kodeEksemplar: string | null
+    bukuId: number | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type StatusBukuCountAggregateOutputType = {
+  export type EksemplarBukuCountAggregateOutputType = {
     id: number
-    nama: number
+    kodeEksemplar: number
+    bukuId: number
+    status: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type StatusBukuAvgAggregateInputType = {
+  export type EksemplarBukuAvgAggregateInputType = {
     id?: true
+    bukuId?: true
   }
 
-  export type StatusBukuSumAggregateInputType = {
+  export type EksemplarBukuSumAggregateInputType = {
     id?: true
+    bukuId?: true
   }
 
-  export type StatusBukuMinAggregateInputType = {
+  export type EksemplarBukuMinAggregateInputType = {
     id?: true
-    nama?: true
+    kodeEksemplar?: true
+    bukuId?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type StatusBukuMaxAggregateInputType = {
+  export type EksemplarBukuMaxAggregateInputType = {
     id?: true
-    nama?: true
+    kodeEksemplar?: true
+    bukuId?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type StatusBukuCountAggregateInputType = {
+  export type EksemplarBukuCountAggregateInputType = {
     id?: true
-    nama?: true
+    kodeEksemplar?: true
+    bukuId?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type StatusBukuAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which StatusBuku to aggregate.
+     * Filter which EksemplarBuku to aggregate.
      */
-    where?: StatusBukuWhereInput
+    where?: EksemplarBukuWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of StatusBukus to fetch.
+     * Determine the order of EksemplarBukus to fetch.
      */
-    orderBy?: StatusBukuOrderByWithRelationInput | StatusBukuOrderByWithRelationInput[]
+    orderBy?: EksemplarBukuOrderByWithRelationInput | EksemplarBukuOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: StatusBukuWhereUniqueInput
+    cursor?: EksemplarBukuWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` StatusBukus from the position of the cursor.
+     * Take `±n` EksemplarBukus from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` StatusBukus.
+     * Skip the first `n` EksemplarBukus.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned StatusBukus
+     * Count returned EksemplarBukus
     **/
-    _count?: true | StatusBukuCountAggregateInputType
+    _count?: true | EksemplarBukuCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: StatusBukuAvgAggregateInputType
+    _avg?: EksemplarBukuAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: StatusBukuSumAggregateInputType
+    _sum?: EksemplarBukuSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: StatusBukuMinAggregateInputType
+    _min?: EksemplarBukuMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: StatusBukuMaxAggregateInputType
+    _max?: EksemplarBukuMaxAggregateInputType
   }
 
-  export type GetStatusBukuAggregateType<T extends StatusBukuAggregateArgs> = {
-        [P in keyof T & keyof AggregateStatusBuku]: P extends '_count' | 'count'
+  export type GetEksemplarBukuAggregateType<T extends EksemplarBukuAggregateArgs> = {
+        [P in keyof T & keyof AggregateEksemplarBuku]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateStatusBuku[P]>
-      : GetScalarType<T[P], AggregateStatusBuku[P]>
+        : GetScalarType<T[P], AggregateEksemplarBuku[P]>
+      : GetScalarType<T[P], AggregateEksemplarBuku[P]>
   }
 
 
 
 
-  export type StatusBukuGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: StatusBukuWhereInput
-    orderBy?: StatusBukuOrderByWithAggregationInput | StatusBukuOrderByWithAggregationInput[]
-    by: StatusBukuScalarFieldEnum[] | StatusBukuScalarFieldEnum
-    having?: StatusBukuScalarWhereWithAggregatesInput
+  export type EksemplarBukuGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EksemplarBukuWhereInput
+    orderBy?: EksemplarBukuOrderByWithAggregationInput | EksemplarBukuOrderByWithAggregationInput[]
+    by: EksemplarBukuScalarFieldEnum[] | EksemplarBukuScalarFieldEnum
+    having?: EksemplarBukuScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: StatusBukuCountAggregateInputType | true
-    _avg?: StatusBukuAvgAggregateInputType
-    _sum?: StatusBukuSumAggregateInputType
-    _min?: StatusBukuMinAggregateInputType
-    _max?: StatusBukuMaxAggregateInputType
+    _count?: EksemplarBukuCountAggregateInputType | true
+    _avg?: EksemplarBukuAvgAggregateInputType
+    _sum?: EksemplarBukuSumAggregateInputType
+    _min?: EksemplarBukuMinAggregateInputType
+    _max?: EksemplarBukuMaxAggregateInputType
   }
 
-  export type StatusBukuGroupByOutputType = {
+  export type EksemplarBukuGroupByOutputType = {
     id: number
-    nama: string
+    kodeEksemplar: string
+    bukuId: number
+    status: $Enums.Status
     createdAt: Date
     updatedAt: Date
-    _count: StatusBukuCountAggregateOutputType | null
-    _avg: StatusBukuAvgAggregateOutputType | null
-    _sum: StatusBukuSumAggregateOutputType | null
-    _min: StatusBukuMinAggregateOutputType | null
-    _max: StatusBukuMaxAggregateOutputType | null
+    _count: EksemplarBukuCountAggregateOutputType | null
+    _avg: EksemplarBukuAvgAggregateOutputType | null
+    _sum: EksemplarBukuSumAggregateOutputType | null
+    _min: EksemplarBukuMinAggregateOutputType | null
+    _max: EksemplarBukuMaxAggregateOutputType | null
   }
 
-  type GetStatusBukuGroupByPayload<T extends StatusBukuGroupByArgs> = Prisma.PrismaPromise<
+  type GetEksemplarBukuGroupByPayload<T extends EksemplarBukuGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<StatusBukuGroupByOutputType, T['by']> &
+      PickEnumerable<EksemplarBukuGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof StatusBukuGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof EksemplarBukuGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], StatusBukuGroupByOutputType[P]>
-            : GetScalarType<T[P], StatusBukuGroupByOutputType[P]>
+              : GetScalarType<T[P], EksemplarBukuGroupByOutputType[P]>
+            : GetScalarType<T[P], EksemplarBukuGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type StatusBukuSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type EksemplarBukuSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nama?: boolean
+    kodeEksemplar?: boolean
+    bukuId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    buku?: boolean | StatusBuku$bukuArgs<ExtArgs>
-    _count?: boolean | StatusBukuCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["statusBuku"]>
+    buku?: boolean | BukuDefaultArgs<ExtArgs>
+    peminjaman?: boolean | EksemplarBuku$peminjamanArgs<ExtArgs>
+    _count?: boolean | EksemplarBukuCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eksemplarBuku"]>
 
-  export type StatusBukuSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type EksemplarBukuSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nama?: boolean
+    kodeEksemplar?: boolean
+    bukuId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["statusBuku"]>
+    buku?: boolean | BukuDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eksemplarBuku"]>
 
-  export type StatusBukuSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type EksemplarBukuSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nama?: boolean
+    kodeEksemplar?: boolean
+    bukuId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["statusBuku"]>
+    buku?: boolean | BukuDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eksemplarBuku"]>
 
-  export type StatusBukuSelectScalar = {
+  export type EksemplarBukuSelectScalar = {
     id?: boolean
-    nama?: boolean
+    kodeEksemplar?: boolean
+    bukuId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StatusBukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "createdAt" | "updatedAt", ExtArgs["result"]["statusBuku"]>
-  export type StatusBukuInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    buku?: boolean | StatusBuku$bukuArgs<ExtArgs>
-    _count?: boolean | StatusBukuCountOutputTypeDefaultArgs<ExtArgs>
+  export type EksemplarBukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kodeEksemplar" | "bukuId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["eksemplarBuku"]>
+  export type EksemplarBukuInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    buku?: boolean | BukuDefaultArgs<ExtArgs>
+    peminjaman?: boolean | EksemplarBuku$peminjamanArgs<ExtArgs>
+    _count?: boolean | EksemplarBukuCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type StatusBukuIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type StatusBukuIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type EksemplarBukuIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    buku?: boolean | BukuDefaultArgs<ExtArgs>
+  }
+  export type EksemplarBukuIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    buku?: boolean | BukuDefaultArgs<ExtArgs>
+  }
 
-  export type $StatusBukuPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "StatusBuku"
+  export type $EksemplarBukuPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EksemplarBuku"
     objects: {
-      buku: Prisma.$BukuPayload<ExtArgs>[]
+      buku: Prisma.$BukuPayload<ExtArgs>
+      peminjaman: Prisma.$PeminjamanPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      nama: string
+      kodeEksemplar: string
+      bukuId: number
+      status: $Enums.Status
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["statusBuku"]>
+    }, ExtArgs["result"]["eksemplarBuku"]>
     composites: {}
   }
 
-  type StatusBukuGetPayload<S extends boolean | null | undefined | StatusBukuDefaultArgs> = $Result.GetResult<Prisma.$StatusBukuPayload, S>
+  type EksemplarBukuGetPayload<S extends boolean | null | undefined | EksemplarBukuDefaultArgs> = $Result.GetResult<Prisma.$EksemplarBukuPayload, S>
 
-  type StatusBukuCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<StatusBukuFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: StatusBukuCountAggregateInputType | true
+  type EksemplarBukuCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EksemplarBukuFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EksemplarBukuCountAggregateInputType | true
     }
 
-  export interface StatusBukuDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StatusBuku'], meta: { name: 'StatusBuku' } }
+  export interface EksemplarBukuDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EksemplarBuku'], meta: { name: 'EksemplarBuku' } }
     /**
-     * Find zero or one StatusBuku that matches the filter.
-     * @param {StatusBukuFindUniqueArgs} args - Arguments to find a StatusBuku
+     * Find zero or one EksemplarBuku that matches the filter.
+     * @param {EksemplarBukuFindUniqueArgs} args - Arguments to find a EksemplarBuku
      * @example
-     * // Get one StatusBuku
-     * const statusBuku = await prisma.statusBuku.findUnique({
+     * // Get one EksemplarBuku
+     * const eksemplarBuku = await prisma.eksemplarBuku.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends StatusBukuFindUniqueArgs>(args: SelectSubset<T, StatusBukuFindUniqueArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends EksemplarBukuFindUniqueArgs>(args: SelectSubset<T, EksemplarBukuFindUniqueArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one StatusBuku that matches the filter or throw an error with `error.code='P2025'`
+     * Find one EksemplarBuku that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {StatusBukuFindUniqueOrThrowArgs} args - Arguments to find a StatusBuku
+     * @param {EksemplarBukuFindUniqueOrThrowArgs} args - Arguments to find a EksemplarBuku
      * @example
-     * // Get one StatusBuku
-     * const statusBuku = await prisma.statusBuku.findUniqueOrThrow({
+     * // Get one EksemplarBuku
+     * const eksemplarBuku = await prisma.eksemplarBuku.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends StatusBukuFindUniqueOrThrowArgs>(args: SelectSubset<T, StatusBukuFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends EksemplarBukuFindUniqueOrThrowArgs>(args: SelectSubset<T, EksemplarBukuFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first StatusBuku that matches the filter.
+     * Find the first EksemplarBuku that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuFindFirstArgs} args - Arguments to find a StatusBuku
+     * @param {EksemplarBukuFindFirstArgs} args - Arguments to find a EksemplarBuku
      * @example
-     * // Get one StatusBuku
-     * const statusBuku = await prisma.statusBuku.findFirst({
+     * // Get one EksemplarBuku
+     * const eksemplarBuku = await prisma.eksemplarBuku.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends StatusBukuFindFirstArgs>(args?: SelectSubset<T, StatusBukuFindFirstArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends EksemplarBukuFindFirstArgs>(args?: SelectSubset<T, EksemplarBukuFindFirstArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first StatusBuku that matches the filter or
+     * Find the first EksemplarBuku that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuFindFirstOrThrowArgs} args - Arguments to find a StatusBuku
+     * @param {EksemplarBukuFindFirstOrThrowArgs} args - Arguments to find a EksemplarBuku
      * @example
-     * // Get one StatusBuku
-     * const statusBuku = await prisma.statusBuku.findFirstOrThrow({
+     * // Get one EksemplarBuku
+     * const eksemplarBuku = await prisma.eksemplarBuku.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends StatusBukuFindFirstOrThrowArgs>(args?: SelectSubset<T, StatusBukuFindFirstOrThrowArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends EksemplarBukuFindFirstOrThrowArgs>(args?: SelectSubset<T, EksemplarBukuFindFirstOrThrowArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more StatusBukus that matches the filter.
+     * Find zero or more EksemplarBukus that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {EksemplarBukuFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all StatusBukus
-     * const statusBukus = await prisma.statusBuku.findMany()
+     * // Get all EksemplarBukus
+     * const eksemplarBukus = await prisma.eksemplarBuku.findMany()
      * 
-     * // Get first 10 StatusBukus
-     * const statusBukus = await prisma.statusBuku.findMany({ take: 10 })
+     * // Get first 10 EksemplarBukus
+     * const eksemplarBukus = await prisma.eksemplarBuku.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const statusBukuWithIdOnly = await prisma.statusBuku.findMany({ select: { id: true } })
+     * const eksemplarBukuWithIdOnly = await prisma.eksemplarBuku.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends StatusBukuFindManyArgs>(args?: SelectSubset<T, StatusBukuFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends EksemplarBukuFindManyArgs>(args?: SelectSubset<T, EksemplarBukuFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a StatusBuku.
-     * @param {StatusBukuCreateArgs} args - Arguments to create a StatusBuku.
+     * Create a EksemplarBuku.
+     * @param {EksemplarBukuCreateArgs} args - Arguments to create a EksemplarBuku.
      * @example
-     * // Create one StatusBuku
-     * const StatusBuku = await prisma.statusBuku.create({
+     * // Create one EksemplarBuku
+     * const EksemplarBuku = await prisma.eksemplarBuku.create({
      *   data: {
-     *     // ... data to create a StatusBuku
+     *     // ... data to create a EksemplarBuku
      *   }
      * })
      * 
      */
-    create<T extends StatusBukuCreateArgs>(args: SelectSubset<T, StatusBukuCreateArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends EksemplarBukuCreateArgs>(args: SelectSubset<T, EksemplarBukuCreateArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many StatusBukus.
-     * @param {StatusBukuCreateManyArgs} args - Arguments to create many StatusBukus.
+     * Create many EksemplarBukus.
+     * @param {EksemplarBukuCreateManyArgs} args - Arguments to create many EksemplarBukus.
      * @example
-     * // Create many StatusBukus
-     * const statusBuku = await prisma.statusBuku.createMany({
+     * // Create many EksemplarBukus
+     * const eksemplarBuku = await prisma.eksemplarBuku.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends StatusBukuCreateManyArgs>(args?: SelectSubset<T, StatusBukuCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends EksemplarBukuCreateManyArgs>(args?: SelectSubset<T, EksemplarBukuCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many StatusBukus and returns the data saved in the database.
-     * @param {StatusBukuCreateManyAndReturnArgs} args - Arguments to create many StatusBukus.
+     * Create many EksemplarBukus and returns the data saved in the database.
+     * @param {EksemplarBukuCreateManyAndReturnArgs} args - Arguments to create many EksemplarBukus.
      * @example
-     * // Create many StatusBukus
-     * const statusBuku = await prisma.statusBuku.createManyAndReturn({
+     * // Create many EksemplarBukus
+     * const eksemplarBuku = await prisma.eksemplarBuku.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many StatusBukus and only return the `id`
-     * const statusBukuWithIdOnly = await prisma.statusBuku.createManyAndReturn({
+     * // Create many EksemplarBukus and only return the `id`
+     * const eksemplarBukuWithIdOnly = await prisma.eksemplarBuku.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -5029,28 +5298,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends StatusBukuCreateManyAndReturnArgs>(args?: SelectSubset<T, StatusBukuCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends EksemplarBukuCreateManyAndReturnArgs>(args?: SelectSubset<T, EksemplarBukuCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a StatusBuku.
-     * @param {StatusBukuDeleteArgs} args - Arguments to delete one StatusBuku.
+     * Delete a EksemplarBuku.
+     * @param {EksemplarBukuDeleteArgs} args - Arguments to delete one EksemplarBuku.
      * @example
-     * // Delete one StatusBuku
-     * const StatusBuku = await prisma.statusBuku.delete({
+     * // Delete one EksemplarBuku
+     * const EksemplarBuku = await prisma.eksemplarBuku.delete({
      *   where: {
-     *     // ... filter to delete one StatusBuku
+     *     // ... filter to delete one EksemplarBuku
      *   }
      * })
      * 
      */
-    delete<T extends StatusBukuDeleteArgs>(args: SelectSubset<T, StatusBukuDeleteArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends EksemplarBukuDeleteArgs>(args: SelectSubset<T, EksemplarBukuDeleteArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one StatusBuku.
-     * @param {StatusBukuUpdateArgs} args - Arguments to update one StatusBuku.
+     * Update one EksemplarBuku.
+     * @param {EksemplarBukuUpdateArgs} args - Arguments to update one EksemplarBuku.
      * @example
-     * // Update one StatusBuku
-     * const statusBuku = await prisma.statusBuku.update({
+     * // Update one EksemplarBuku
+     * const eksemplarBuku = await prisma.eksemplarBuku.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5060,30 +5329,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends StatusBukuUpdateArgs>(args: SelectSubset<T, StatusBukuUpdateArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends EksemplarBukuUpdateArgs>(args: SelectSubset<T, EksemplarBukuUpdateArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more StatusBukus.
-     * @param {StatusBukuDeleteManyArgs} args - Arguments to filter StatusBukus to delete.
+     * Delete zero or more EksemplarBukus.
+     * @param {EksemplarBukuDeleteManyArgs} args - Arguments to filter EksemplarBukus to delete.
      * @example
-     * // Delete a few StatusBukus
-     * const { count } = await prisma.statusBuku.deleteMany({
+     * // Delete a few EksemplarBukus
+     * const { count } = await prisma.eksemplarBuku.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends StatusBukuDeleteManyArgs>(args?: SelectSubset<T, StatusBukuDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends EksemplarBukuDeleteManyArgs>(args?: SelectSubset<T, EksemplarBukuDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more StatusBukus.
+     * Update zero or more EksemplarBukus.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {EksemplarBukuUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many StatusBukus
-     * const statusBuku = await prisma.statusBuku.updateMany({
+     * // Update many EksemplarBukus
+     * const eksemplarBuku = await prisma.eksemplarBuku.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5093,14 +5362,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends StatusBukuUpdateManyArgs>(args: SelectSubset<T, StatusBukuUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends EksemplarBukuUpdateManyArgs>(args: SelectSubset<T, EksemplarBukuUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more StatusBukus and returns the data updated in the database.
-     * @param {StatusBukuUpdateManyAndReturnArgs} args - Arguments to update many StatusBukus.
+     * Update zero or more EksemplarBukus and returns the data updated in the database.
+     * @param {EksemplarBukuUpdateManyAndReturnArgs} args - Arguments to update many EksemplarBukus.
      * @example
-     * // Update many StatusBukus
-     * const statusBuku = await prisma.statusBuku.updateManyAndReturn({
+     * // Update many EksemplarBukus
+     * const eksemplarBuku = await prisma.eksemplarBuku.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5109,8 +5378,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more StatusBukus and only return the `id`
-     * const statusBukuWithIdOnly = await prisma.statusBuku.updateManyAndReturn({
+     * // Update zero or more EksemplarBukus and only return the `id`
+     * const eksemplarBukuWithIdOnly = await prisma.eksemplarBuku.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -5123,56 +5392,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends StatusBukuUpdateManyAndReturnArgs>(args: SelectSubset<T, StatusBukuUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends EksemplarBukuUpdateManyAndReturnArgs>(args: SelectSubset<T, EksemplarBukuUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one StatusBuku.
-     * @param {StatusBukuUpsertArgs} args - Arguments to update or create a StatusBuku.
+     * Create or update one EksemplarBuku.
+     * @param {EksemplarBukuUpsertArgs} args - Arguments to update or create a EksemplarBuku.
      * @example
-     * // Update or create a StatusBuku
-     * const statusBuku = await prisma.statusBuku.upsert({
+     * // Update or create a EksemplarBuku
+     * const eksemplarBuku = await prisma.eksemplarBuku.upsert({
      *   create: {
-     *     // ... data to create a StatusBuku
+     *     // ... data to create a EksemplarBuku
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the StatusBuku we want to update
+     *     // ... the filter for the EksemplarBuku we want to update
      *   }
      * })
      */
-    upsert<T extends StatusBukuUpsertArgs>(args: SelectSubset<T, StatusBukuUpsertArgs<ExtArgs>>): Prisma__StatusBukuClient<$Result.GetResult<Prisma.$StatusBukuPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends EksemplarBukuUpsertArgs>(args: SelectSubset<T, EksemplarBukuUpsertArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of StatusBukus.
+     * Count the number of EksemplarBukus.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuCountArgs} args - Arguments to filter StatusBukus to count.
+     * @param {EksemplarBukuCountArgs} args - Arguments to filter EksemplarBukus to count.
      * @example
-     * // Count the number of StatusBukus
-     * const count = await prisma.statusBuku.count({
+     * // Count the number of EksemplarBukus
+     * const count = await prisma.eksemplarBuku.count({
      *   where: {
-     *     // ... the filter for the StatusBukus we want to count
+     *     // ... the filter for the EksemplarBukus we want to count
      *   }
      * })
     **/
-    count<T extends StatusBukuCountArgs>(
-      args?: Subset<T, StatusBukuCountArgs>,
+    count<T extends EksemplarBukuCountArgs>(
+      args?: Subset<T, EksemplarBukuCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], StatusBukuCountAggregateOutputType>
+          : GetScalarType<T['select'], EksemplarBukuCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a StatusBuku.
+     * Allows you to perform aggregations operations on a EksemplarBuku.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {EksemplarBukuAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -5192,13 +5461,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends StatusBukuAggregateArgs>(args: Subset<T, StatusBukuAggregateArgs>): Prisma.PrismaPromise<GetStatusBukuAggregateType<T>>
+    aggregate<T extends EksemplarBukuAggregateArgs>(args: Subset<T, EksemplarBukuAggregateArgs>): Prisma.PrismaPromise<GetEksemplarBukuAggregateType<T>>
 
     /**
-     * Group by StatusBuku.
+     * Group by EksemplarBuku.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {StatusBukuGroupByArgs} args - Group by arguments.
+     * @param {EksemplarBukuGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -5213,14 +5482,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends StatusBukuGroupByArgs,
+      T extends EksemplarBukuGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: StatusBukuGroupByArgs['orderBy'] }
-        : { orderBy?: StatusBukuGroupByArgs['orderBy'] },
+        ? { orderBy: EksemplarBukuGroupByArgs['orderBy'] }
+        : { orderBy?: EksemplarBukuGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -5269,22 +5538,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, StatusBukuGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStatusBukuGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, EksemplarBukuGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEksemplarBukuGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the StatusBuku model
+   * Fields of the EksemplarBuku model
    */
-  readonly fields: StatusBukuFieldRefs;
+  readonly fields: EksemplarBukuFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for StatusBuku.
+   * The delegate class that acts as a "Promise-like" for EksemplarBuku.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__StatusBukuClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__EksemplarBukuClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    buku<T extends StatusBuku$bukuArgs<ExtArgs> = {}>(args?: Subset<T, StatusBuku$bukuArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BukuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    buku<T extends BukuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BukuDefaultArgs<ExtArgs>>): Prisma__BukuClient<$Result.GetResult<Prisma.$BukuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    peminjaman<T extends EksemplarBuku$peminjamanArgs<ExtArgs> = {}>(args?: Subset<T, EksemplarBuku$peminjamanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5311,440 +5581,1597 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the StatusBuku model
+   * Fields of the EksemplarBuku model
    */
-  interface StatusBukuFieldRefs {
-    readonly id: FieldRef<"StatusBuku", 'Int'>
-    readonly nama: FieldRef<"StatusBuku", 'String'>
-    readonly createdAt: FieldRef<"StatusBuku", 'DateTime'>
-    readonly updatedAt: FieldRef<"StatusBuku", 'DateTime'>
+  interface EksemplarBukuFieldRefs {
+    readonly id: FieldRef<"EksemplarBuku", 'Int'>
+    readonly kodeEksemplar: FieldRef<"EksemplarBuku", 'String'>
+    readonly bukuId: FieldRef<"EksemplarBuku", 'Int'>
+    readonly status: FieldRef<"EksemplarBuku", 'Status'>
+    readonly createdAt: FieldRef<"EksemplarBuku", 'DateTime'>
+    readonly updatedAt: FieldRef<"EksemplarBuku", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * StatusBuku findUnique
+   * EksemplarBuku findUnique
    */
-  export type StatusBukuFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
     /**
-     * Filter, which StatusBuku to fetch.
+     * Filter, which EksemplarBuku to fetch.
      */
-    where: StatusBukuWhereUniqueInput
+    where: EksemplarBukuWhereUniqueInput
   }
 
   /**
-   * StatusBuku findUniqueOrThrow
+   * EksemplarBuku findUniqueOrThrow
    */
-  export type StatusBukuFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
     /**
-     * Filter, which StatusBuku to fetch.
+     * Filter, which EksemplarBuku to fetch.
      */
-    where: StatusBukuWhereUniqueInput
+    where: EksemplarBukuWhereUniqueInput
   }
 
   /**
-   * StatusBuku findFirst
+   * EksemplarBuku findFirst
    */
-  export type StatusBukuFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
     /**
-     * Filter, which StatusBuku to fetch.
+     * Filter, which EksemplarBuku to fetch.
      */
-    where?: StatusBukuWhereInput
+    where?: EksemplarBukuWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of StatusBukus to fetch.
+     * Determine the order of EksemplarBukus to fetch.
      */
-    orderBy?: StatusBukuOrderByWithRelationInput | StatusBukuOrderByWithRelationInput[]
+    orderBy?: EksemplarBukuOrderByWithRelationInput | EksemplarBukuOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for StatusBukus.
+     * Sets the position for searching for EksemplarBukus.
      */
-    cursor?: StatusBukuWhereUniqueInput
+    cursor?: EksemplarBukuWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` StatusBukus from the position of the cursor.
+     * Take `±n` EksemplarBukus from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` StatusBukus.
+     * Skip the first `n` EksemplarBukus.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of StatusBukus.
+     * Filter by unique combinations of EksemplarBukus.
      */
-    distinct?: StatusBukuScalarFieldEnum | StatusBukuScalarFieldEnum[]
+    distinct?: EksemplarBukuScalarFieldEnum | EksemplarBukuScalarFieldEnum[]
   }
 
   /**
-   * StatusBuku findFirstOrThrow
+   * EksemplarBuku findFirstOrThrow
    */
-  export type StatusBukuFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
     /**
-     * Filter, which StatusBuku to fetch.
+     * Filter, which EksemplarBuku to fetch.
      */
-    where?: StatusBukuWhereInput
+    where?: EksemplarBukuWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of StatusBukus to fetch.
+     * Determine the order of EksemplarBukus to fetch.
      */
-    orderBy?: StatusBukuOrderByWithRelationInput | StatusBukuOrderByWithRelationInput[]
+    orderBy?: EksemplarBukuOrderByWithRelationInput | EksemplarBukuOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for StatusBukus.
+     * Sets the position for searching for EksemplarBukus.
      */
-    cursor?: StatusBukuWhereUniqueInput
+    cursor?: EksemplarBukuWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` StatusBukus from the position of the cursor.
+     * Take `±n` EksemplarBukus from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` StatusBukus.
+     * Skip the first `n` EksemplarBukus.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of StatusBukus.
+     * Filter by unique combinations of EksemplarBukus.
      */
-    distinct?: StatusBukuScalarFieldEnum | StatusBukuScalarFieldEnum[]
+    distinct?: EksemplarBukuScalarFieldEnum | EksemplarBukuScalarFieldEnum[]
   }
 
   /**
-   * StatusBuku findMany
+   * EksemplarBuku findMany
    */
-  export type StatusBukuFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
     /**
-     * Filter, which StatusBukus to fetch.
+     * Filter, which EksemplarBukus to fetch.
      */
-    where?: StatusBukuWhereInput
+    where?: EksemplarBukuWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of StatusBukus to fetch.
+     * Determine the order of EksemplarBukus to fetch.
      */
-    orderBy?: StatusBukuOrderByWithRelationInput | StatusBukuOrderByWithRelationInput[]
+    orderBy?: EksemplarBukuOrderByWithRelationInput | EksemplarBukuOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing StatusBukus.
+     * Sets the position for listing EksemplarBukus.
      */
-    cursor?: StatusBukuWhereUniqueInput
+    cursor?: EksemplarBukuWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` StatusBukus from the position of the cursor.
+     * Take `±n` EksemplarBukus from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` StatusBukus.
+     * Skip the first `n` EksemplarBukus.
      */
     skip?: number
-    distinct?: StatusBukuScalarFieldEnum | StatusBukuScalarFieldEnum[]
+    distinct?: EksemplarBukuScalarFieldEnum | EksemplarBukuScalarFieldEnum[]
   }
 
   /**
-   * StatusBuku create
+   * EksemplarBuku create
    */
-  export type StatusBukuCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
     /**
-     * The data needed to create a StatusBuku.
+     * The data needed to create a EksemplarBuku.
      */
-    data: XOR<StatusBukuCreateInput, StatusBukuUncheckedCreateInput>
+    data: XOR<EksemplarBukuCreateInput, EksemplarBukuUncheckedCreateInput>
   }
 
   /**
-   * StatusBuku createMany
+   * EksemplarBuku createMany
    */
-  export type StatusBukuCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many StatusBukus.
+     * The data used to create many EksemplarBukus.
      */
-    data: StatusBukuCreateManyInput | StatusBukuCreateManyInput[]
+    data: EksemplarBukuCreateManyInput | EksemplarBukuCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * StatusBuku createManyAndReturn
+   * EksemplarBuku createManyAndReturn
    */
-  export type StatusBukuCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelectCreateManyAndReturn<ExtArgs> | null
+    select?: EksemplarBukuSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
-     * The data used to create many StatusBukus.
+     * The data used to create many EksemplarBukus.
      */
-    data: StatusBukuCreateManyInput | StatusBukuCreateManyInput[]
+    data: EksemplarBukuCreateManyInput | EksemplarBukuCreateManyInput[]
     skipDuplicates?: boolean
-  }
-
-  /**
-   * StatusBuku update
-   */
-  export type StatusBukuUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the StatusBuku
-     */
-    select?: StatusBukuSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the StatusBuku
-     */
-    omit?: StatusBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
-    /**
-     * The data needed to update a StatusBuku.
-     */
-    data: XOR<StatusBukuUpdateInput, StatusBukuUncheckedUpdateInput>
-    /**
-     * Choose, which StatusBuku to update.
-     */
-    where: StatusBukuWhereUniqueInput
+    include?: EksemplarBukuIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * StatusBuku updateMany
+   * EksemplarBuku update
    */
-  export type StatusBukuUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update StatusBukus.
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    data: XOR<StatusBukuUpdateManyMutationInput, StatusBukuUncheckedUpdateManyInput>
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Filter which StatusBukus to update
+     * Omit specific fields from the EksemplarBuku
      */
-    where?: StatusBukuWhereInput
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
-     * Limit how many StatusBukus to update.
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EksemplarBukuInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EksemplarBuku.
+     */
+    data: XOR<EksemplarBukuUpdateInput, EksemplarBukuUncheckedUpdateInput>
+    /**
+     * Choose, which EksemplarBuku to update.
+     */
+    where: EksemplarBukuWhereUniqueInput
+  }
+
+  /**
+   * EksemplarBuku updateMany
+   */
+  export type EksemplarBukuUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EksemplarBukus.
+     */
+    data: XOR<EksemplarBukuUpdateManyMutationInput, EksemplarBukuUncheckedUpdateManyInput>
+    /**
+     * Filter which EksemplarBukus to update
+     */
+    where?: EksemplarBukuWhereInput
+    /**
+     * Limit how many EksemplarBukus to update.
      */
     limit?: number
   }
 
   /**
-   * StatusBuku updateManyAndReturn
+   * EksemplarBuku updateManyAndReturn
    */
-  export type StatusBukuUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: EksemplarBukuSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
-     * The data used to update StatusBukus.
+     * The data used to update EksemplarBukus.
      */
-    data: XOR<StatusBukuUpdateManyMutationInput, StatusBukuUncheckedUpdateManyInput>
+    data: XOR<EksemplarBukuUpdateManyMutationInput, EksemplarBukuUncheckedUpdateManyInput>
     /**
-     * Filter which StatusBukus to update
+     * Filter which EksemplarBukus to update
      */
-    where?: StatusBukuWhereInput
+    where?: EksemplarBukuWhereInput
     /**
-     * Limit how many StatusBukus to update.
+     * Limit how many EksemplarBukus to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EksemplarBukuIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EksemplarBuku upsert
+   */
+  export type EksemplarBukuUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EksemplarBuku
+     */
+    select?: EksemplarBukuSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EksemplarBuku
+     */
+    omit?: EksemplarBukuOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EksemplarBukuInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EksemplarBuku to update in case it exists.
+     */
+    where: EksemplarBukuWhereUniqueInput
+    /**
+     * In case the EksemplarBuku found by the `where` argument doesn't exist, create a new EksemplarBuku with this data.
+     */
+    create: XOR<EksemplarBukuCreateInput, EksemplarBukuUncheckedCreateInput>
+    /**
+     * In case the EksemplarBuku was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EksemplarBukuUpdateInput, EksemplarBukuUncheckedUpdateInput>
+  }
+
+  /**
+   * EksemplarBuku delete
+   */
+  export type EksemplarBukuDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EksemplarBuku
+     */
+    select?: EksemplarBukuSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EksemplarBuku
+     */
+    omit?: EksemplarBukuOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EksemplarBukuInclude<ExtArgs> | null
+    /**
+     * Filter which EksemplarBuku to delete.
+     */
+    where: EksemplarBukuWhereUniqueInput
+  }
+
+  /**
+   * EksemplarBuku deleteMany
+   */
+  export type EksemplarBukuDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EksemplarBukus to delete
+     */
+    where?: EksemplarBukuWhereInput
+    /**
+     * Limit how many EksemplarBukus to delete.
      */
     limit?: number
   }
 
   /**
-   * StatusBuku upsert
+   * EksemplarBuku.peminjaman
    */
-  export type StatusBukuUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBuku$peminjamanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the Peminjaman
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: PeminjamanSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the Peminjaman
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: PeminjamanOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
-    /**
-     * The filter to search for the StatusBuku to update in case it exists.
-     */
-    where: StatusBukuWhereUniqueInput
-    /**
-     * In case the StatusBuku found by the `where` argument doesn't exist, create a new StatusBuku with this data.
-     */
-    create: XOR<StatusBukuCreateInput, StatusBukuUncheckedCreateInput>
-    /**
-     * In case the StatusBuku was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<StatusBukuUpdateInput, StatusBukuUncheckedUpdateInput>
-  }
-
-  /**
-   * StatusBuku delete
-   */
-  export type StatusBukuDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the StatusBuku
-     */
-    select?: StatusBukuSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the StatusBuku
-     */
-    omit?: StatusBukuOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StatusBukuInclude<ExtArgs> | null
-    /**
-     * Filter which StatusBuku to delete.
-     */
-    where: StatusBukuWhereUniqueInput
-  }
-
-  /**
-   * StatusBuku deleteMany
-   */
-  export type StatusBukuDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which StatusBukus to delete
-     */
-    where?: StatusBukuWhereInput
-    /**
-     * Limit how many StatusBukus to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * StatusBuku.buku
-   */
-  export type StatusBuku$bukuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Buku
-     */
-    select?: BukuSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Buku
-     */
-    omit?: BukuOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BukuInclude<ExtArgs> | null
-    where?: BukuWhereInput
-    orderBy?: BukuOrderByWithRelationInput | BukuOrderByWithRelationInput[]
-    cursor?: BukuWhereUniqueInput
+    include?: PeminjamanInclude<ExtArgs> | null
+    where?: PeminjamanWhereInput
+    orderBy?: PeminjamanOrderByWithRelationInput | PeminjamanOrderByWithRelationInput[]
+    cursor?: PeminjamanWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: BukuScalarFieldEnum | BukuScalarFieldEnum[]
+    distinct?: PeminjamanScalarFieldEnum | PeminjamanScalarFieldEnum[]
   }
 
   /**
-   * StatusBuku without action
+   * EksemplarBuku without action
    */
-  export type StatusBukuDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EksemplarBukuDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the StatusBuku
+     * Select specific fields to fetch from the EksemplarBuku
      */
-    select?: StatusBukuSelect<ExtArgs> | null
+    select?: EksemplarBukuSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the StatusBuku
+     * Omit specific fields from the EksemplarBuku
      */
-    omit?: StatusBukuOmit<ExtArgs> | null
+    omit?: EksemplarBukuOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StatusBukuInclude<ExtArgs> | null
+    include?: EksemplarBukuInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Peminjaman
+   */
+
+  export type AggregatePeminjaman = {
+    _count: PeminjamanCountAggregateOutputType | null
+    _avg: PeminjamanAvgAggregateOutputType | null
+    _sum: PeminjamanSumAggregateOutputType | null
+    _min: PeminjamanMinAggregateOutputType | null
+    _max: PeminjamanMaxAggregateOutputType | null
+  }
+
+  export type PeminjamanAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    eksemplarId: number | null
+  }
+
+  export type PeminjamanSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    eksemplarId: number | null
+  }
+
+  export type PeminjamanMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    eksemplarId: number | null
+    tanggalPinjam: Date | null
+    tanggalKembali: Date | null
+    status: $Enums.Status | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PeminjamanMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    eksemplarId: number | null
+    tanggalPinjam: Date | null
+    tanggalKembali: Date | null
+    status: $Enums.Status | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PeminjamanCountAggregateOutputType = {
+    id: number
+    userId: number
+    eksemplarId: number
+    tanggalPinjam: number
+    tanggalKembali: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PeminjamanAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    eksemplarId?: true
+  }
+
+  export type PeminjamanSumAggregateInputType = {
+    id?: true
+    userId?: true
+    eksemplarId?: true
+  }
+
+  export type PeminjamanMinAggregateInputType = {
+    id?: true
+    userId?: true
+    eksemplarId?: true
+    tanggalPinjam?: true
+    tanggalKembali?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PeminjamanMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    eksemplarId?: true
+    tanggalPinjam?: true
+    tanggalKembali?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PeminjamanCountAggregateInputType = {
+    id?: true
+    userId?: true
+    eksemplarId?: true
+    tanggalPinjam?: true
+    tanggalKembali?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PeminjamanAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Peminjaman to aggregate.
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Peminjamen to fetch.
+     */
+    orderBy?: PeminjamanOrderByWithRelationInput | PeminjamanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PeminjamanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Peminjamen from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Peminjamen.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Peminjamen
+    **/
+    _count?: true | PeminjamanCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PeminjamanAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PeminjamanSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PeminjamanMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PeminjamanMaxAggregateInputType
+  }
+
+  export type GetPeminjamanAggregateType<T extends PeminjamanAggregateArgs> = {
+        [P in keyof T & keyof AggregatePeminjaman]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePeminjaman[P]>
+      : GetScalarType<T[P], AggregatePeminjaman[P]>
+  }
+
+
+
+
+  export type PeminjamanGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PeminjamanWhereInput
+    orderBy?: PeminjamanOrderByWithAggregationInput | PeminjamanOrderByWithAggregationInput[]
+    by: PeminjamanScalarFieldEnum[] | PeminjamanScalarFieldEnum
+    having?: PeminjamanScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PeminjamanCountAggregateInputType | true
+    _avg?: PeminjamanAvgAggregateInputType
+    _sum?: PeminjamanSumAggregateInputType
+    _min?: PeminjamanMinAggregateInputType
+    _max?: PeminjamanMaxAggregateInputType
+  }
+
+  export type PeminjamanGroupByOutputType = {
+    id: number
+    userId: number
+    eksemplarId: number
+    tanggalPinjam: Date
+    tanggalKembali: Date
+    status: $Enums.Status
+    createdAt: Date
+    updatedAt: Date
+    _count: PeminjamanCountAggregateOutputType | null
+    _avg: PeminjamanAvgAggregateOutputType | null
+    _sum: PeminjamanSumAggregateOutputType | null
+    _min: PeminjamanMinAggregateOutputType | null
+    _max: PeminjamanMaxAggregateOutputType | null
+  }
+
+  type GetPeminjamanGroupByPayload<T extends PeminjamanGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PeminjamanGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PeminjamanGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PeminjamanGroupByOutputType[P]>
+            : GetScalarType<T[P], PeminjamanGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PeminjamanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    eksemplarId?: boolean
+    tanggalPinjam?: boolean
+    tanggalKembali?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    eksemplar?: boolean | EksemplarBukuDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["peminjaman"]>
+
+  export type PeminjamanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    eksemplarId?: boolean
+    tanggalPinjam?: boolean
+    tanggalKembali?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    eksemplar?: boolean | EksemplarBukuDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["peminjaman"]>
+
+  export type PeminjamanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    eksemplarId?: boolean
+    tanggalPinjam?: boolean
+    tanggalKembali?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    eksemplar?: boolean | EksemplarBukuDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["peminjaman"]>
+
+  export type PeminjamanSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    eksemplarId?: boolean
+    tanggalPinjam?: boolean
+    tanggalKembali?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PeminjamanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "eksemplarId" | "tanggalPinjam" | "tanggalKembali" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["peminjaman"]>
+  export type PeminjamanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    eksemplar?: boolean | EksemplarBukuDefaultArgs<ExtArgs>
+  }
+  export type PeminjamanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    eksemplar?: boolean | EksemplarBukuDefaultArgs<ExtArgs>
+  }
+  export type PeminjamanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    eksemplar?: boolean | EksemplarBukuDefaultArgs<ExtArgs>
+  }
+
+  export type $PeminjamanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Peminjaman"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      eksemplar: Prisma.$EksemplarBukuPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      eksemplarId: number
+      tanggalPinjam: Date
+      tanggalKembali: Date
+      status: $Enums.Status
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["peminjaman"]>
+    composites: {}
+  }
+
+  type PeminjamanGetPayload<S extends boolean | null | undefined | PeminjamanDefaultArgs> = $Result.GetResult<Prisma.$PeminjamanPayload, S>
+
+  type PeminjamanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PeminjamanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PeminjamanCountAggregateInputType | true
+    }
+
+  export interface PeminjamanDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Peminjaman'], meta: { name: 'Peminjaman' } }
+    /**
+     * Find zero or one Peminjaman that matches the filter.
+     * @param {PeminjamanFindUniqueArgs} args - Arguments to find a Peminjaman
+     * @example
+     * // Get one Peminjaman
+     * const peminjaman = await prisma.peminjaman.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PeminjamanFindUniqueArgs>(args: SelectSubset<T, PeminjamanFindUniqueArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Peminjaman that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PeminjamanFindUniqueOrThrowArgs} args - Arguments to find a Peminjaman
+     * @example
+     * // Get one Peminjaman
+     * const peminjaman = await prisma.peminjaman.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PeminjamanFindUniqueOrThrowArgs>(args: SelectSubset<T, PeminjamanFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Peminjaman that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanFindFirstArgs} args - Arguments to find a Peminjaman
+     * @example
+     * // Get one Peminjaman
+     * const peminjaman = await prisma.peminjaman.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PeminjamanFindFirstArgs>(args?: SelectSubset<T, PeminjamanFindFirstArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Peminjaman that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanFindFirstOrThrowArgs} args - Arguments to find a Peminjaman
+     * @example
+     * // Get one Peminjaman
+     * const peminjaman = await prisma.peminjaman.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PeminjamanFindFirstOrThrowArgs>(args?: SelectSubset<T, PeminjamanFindFirstOrThrowArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Peminjamen that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Peminjamen
+     * const peminjamen = await prisma.peminjaman.findMany()
+     * 
+     * // Get first 10 Peminjamen
+     * const peminjamen = await prisma.peminjaman.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const peminjamanWithIdOnly = await prisma.peminjaman.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PeminjamanFindManyArgs>(args?: SelectSubset<T, PeminjamanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Peminjaman.
+     * @param {PeminjamanCreateArgs} args - Arguments to create a Peminjaman.
+     * @example
+     * // Create one Peminjaman
+     * const Peminjaman = await prisma.peminjaman.create({
+     *   data: {
+     *     // ... data to create a Peminjaman
+     *   }
+     * })
+     * 
+     */
+    create<T extends PeminjamanCreateArgs>(args: SelectSubset<T, PeminjamanCreateArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Peminjamen.
+     * @param {PeminjamanCreateManyArgs} args - Arguments to create many Peminjamen.
+     * @example
+     * // Create many Peminjamen
+     * const peminjaman = await prisma.peminjaman.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PeminjamanCreateManyArgs>(args?: SelectSubset<T, PeminjamanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Peminjamen and returns the data saved in the database.
+     * @param {PeminjamanCreateManyAndReturnArgs} args - Arguments to create many Peminjamen.
+     * @example
+     * // Create many Peminjamen
+     * const peminjaman = await prisma.peminjaman.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Peminjamen and only return the `id`
+     * const peminjamanWithIdOnly = await prisma.peminjaman.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PeminjamanCreateManyAndReturnArgs>(args?: SelectSubset<T, PeminjamanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Peminjaman.
+     * @param {PeminjamanDeleteArgs} args - Arguments to delete one Peminjaman.
+     * @example
+     * // Delete one Peminjaman
+     * const Peminjaman = await prisma.peminjaman.delete({
+     *   where: {
+     *     // ... filter to delete one Peminjaman
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PeminjamanDeleteArgs>(args: SelectSubset<T, PeminjamanDeleteArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Peminjaman.
+     * @param {PeminjamanUpdateArgs} args - Arguments to update one Peminjaman.
+     * @example
+     * // Update one Peminjaman
+     * const peminjaman = await prisma.peminjaman.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PeminjamanUpdateArgs>(args: SelectSubset<T, PeminjamanUpdateArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Peminjamen.
+     * @param {PeminjamanDeleteManyArgs} args - Arguments to filter Peminjamen to delete.
+     * @example
+     * // Delete a few Peminjamen
+     * const { count } = await prisma.peminjaman.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PeminjamanDeleteManyArgs>(args?: SelectSubset<T, PeminjamanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Peminjamen.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Peminjamen
+     * const peminjaman = await prisma.peminjaman.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PeminjamanUpdateManyArgs>(args: SelectSubset<T, PeminjamanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Peminjamen and returns the data updated in the database.
+     * @param {PeminjamanUpdateManyAndReturnArgs} args - Arguments to update many Peminjamen.
+     * @example
+     * // Update many Peminjamen
+     * const peminjaman = await prisma.peminjaman.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Peminjamen and only return the `id`
+     * const peminjamanWithIdOnly = await prisma.peminjaman.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PeminjamanUpdateManyAndReturnArgs>(args: SelectSubset<T, PeminjamanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Peminjaman.
+     * @param {PeminjamanUpsertArgs} args - Arguments to update or create a Peminjaman.
+     * @example
+     * // Update or create a Peminjaman
+     * const peminjaman = await prisma.peminjaman.upsert({
+     *   create: {
+     *     // ... data to create a Peminjaman
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Peminjaman we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PeminjamanUpsertArgs>(args: SelectSubset<T, PeminjamanUpsertArgs<ExtArgs>>): Prisma__PeminjamanClient<$Result.GetResult<Prisma.$PeminjamanPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Peminjamen.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanCountArgs} args - Arguments to filter Peminjamen to count.
+     * @example
+     * // Count the number of Peminjamen
+     * const count = await prisma.peminjaman.count({
+     *   where: {
+     *     // ... the filter for the Peminjamen we want to count
+     *   }
+     * })
+    **/
+    count<T extends PeminjamanCountArgs>(
+      args?: Subset<T, PeminjamanCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PeminjamanCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Peminjaman.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PeminjamanAggregateArgs>(args: Subset<T, PeminjamanAggregateArgs>): Prisma.PrismaPromise<GetPeminjamanAggregateType<T>>
+
+    /**
+     * Group by Peminjaman.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PeminjamanGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PeminjamanGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PeminjamanGroupByArgs['orderBy'] }
+        : { orderBy?: PeminjamanGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PeminjamanGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPeminjamanGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Peminjaman model
+   */
+  readonly fields: PeminjamanFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Peminjaman.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PeminjamanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    eksemplar<T extends EksemplarBukuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EksemplarBukuDefaultArgs<ExtArgs>>): Prisma__EksemplarBukuClient<$Result.GetResult<Prisma.$EksemplarBukuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Peminjaman model
+   */
+  interface PeminjamanFieldRefs {
+    readonly id: FieldRef<"Peminjaman", 'Int'>
+    readonly userId: FieldRef<"Peminjaman", 'Int'>
+    readonly eksemplarId: FieldRef<"Peminjaman", 'Int'>
+    readonly tanggalPinjam: FieldRef<"Peminjaman", 'DateTime'>
+    readonly tanggalKembali: FieldRef<"Peminjaman", 'DateTime'>
+    readonly status: FieldRef<"Peminjaman", 'Status'>
+    readonly createdAt: FieldRef<"Peminjaman", 'DateTime'>
+    readonly updatedAt: FieldRef<"Peminjaman", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Peminjaman findUnique
+   */
+  export type PeminjamanFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * Filter, which Peminjaman to fetch.
+     */
+    where: PeminjamanWhereUniqueInput
+  }
+
+  /**
+   * Peminjaman findUniqueOrThrow
+   */
+  export type PeminjamanFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * Filter, which Peminjaman to fetch.
+     */
+    where: PeminjamanWhereUniqueInput
+  }
+
+  /**
+   * Peminjaman findFirst
+   */
+  export type PeminjamanFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * Filter, which Peminjaman to fetch.
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Peminjamen to fetch.
+     */
+    orderBy?: PeminjamanOrderByWithRelationInput | PeminjamanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Peminjamen.
+     */
+    cursor?: PeminjamanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Peminjamen from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Peminjamen.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Peminjamen.
+     */
+    distinct?: PeminjamanScalarFieldEnum | PeminjamanScalarFieldEnum[]
+  }
+
+  /**
+   * Peminjaman findFirstOrThrow
+   */
+  export type PeminjamanFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * Filter, which Peminjaman to fetch.
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Peminjamen to fetch.
+     */
+    orderBy?: PeminjamanOrderByWithRelationInput | PeminjamanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Peminjamen.
+     */
+    cursor?: PeminjamanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Peminjamen from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Peminjamen.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Peminjamen.
+     */
+    distinct?: PeminjamanScalarFieldEnum | PeminjamanScalarFieldEnum[]
+  }
+
+  /**
+   * Peminjaman findMany
+   */
+  export type PeminjamanFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * Filter, which Peminjamen to fetch.
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Peminjamen to fetch.
+     */
+    orderBy?: PeminjamanOrderByWithRelationInput | PeminjamanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Peminjamen.
+     */
+    cursor?: PeminjamanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Peminjamen from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Peminjamen.
+     */
+    skip?: number
+    distinct?: PeminjamanScalarFieldEnum | PeminjamanScalarFieldEnum[]
+  }
+
+  /**
+   * Peminjaman create
+   */
+  export type PeminjamanCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Peminjaman.
+     */
+    data: XOR<PeminjamanCreateInput, PeminjamanUncheckedCreateInput>
+  }
+
+  /**
+   * Peminjaman createMany
+   */
+  export type PeminjamanCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Peminjamen.
+     */
+    data: PeminjamanCreateManyInput | PeminjamanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Peminjaman createManyAndReturn
+   */
+  export type PeminjamanCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * The data used to create many Peminjamen.
+     */
+    data: PeminjamanCreateManyInput | PeminjamanCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Peminjaman update
+   */
+  export type PeminjamanUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Peminjaman.
+     */
+    data: XOR<PeminjamanUpdateInput, PeminjamanUncheckedUpdateInput>
+    /**
+     * Choose, which Peminjaman to update.
+     */
+    where: PeminjamanWhereUniqueInput
+  }
+
+  /**
+   * Peminjaman updateMany
+   */
+  export type PeminjamanUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Peminjamen.
+     */
+    data: XOR<PeminjamanUpdateManyMutationInput, PeminjamanUncheckedUpdateManyInput>
+    /**
+     * Filter which Peminjamen to update
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * Limit how many Peminjamen to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Peminjaman updateManyAndReturn
+   */
+  export type PeminjamanUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * The data used to update Peminjamen.
+     */
+    data: XOR<PeminjamanUpdateManyMutationInput, PeminjamanUncheckedUpdateManyInput>
+    /**
+     * Filter which Peminjamen to update
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * Limit how many Peminjamen to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Peminjaman upsert
+   */
+  export type PeminjamanUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Peminjaman to update in case it exists.
+     */
+    where: PeminjamanWhereUniqueInput
+    /**
+     * In case the Peminjaman found by the `where` argument doesn't exist, create a new Peminjaman with this data.
+     */
+    create: XOR<PeminjamanCreateInput, PeminjamanUncheckedCreateInput>
+    /**
+     * In case the Peminjaman was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PeminjamanUpdateInput, PeminjamanUncheckedUpdateInput>
+  }
+
+  /**
+   * Peminjaman delete
+   */
+  export type PeminjamanDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
+    /**
+     * Filter which Peminjaman to delete.
+     */
+    where: PeminjamanWhereUniqueInput
+  }
+
+  /**
+   * Peminjaman deleteMany
+   */
+  export type PeminjamanDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Peminjamen to delete
+     */
+    where?: PeminjamanWhereInput
+    /**
+     * Limit how many Peminjamen to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Peminjaman without action
+   */
+  export type PeminjamanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Peminjaman
+     */
+    select?: PeminjamanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Peminjaman
+     */
+    omit?: PeminjamanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PeminjamanInclude<ExtArgs> | null
   }
 
 
@@ -6889,7 +8316,7 @@ export namespace Prisma {
     pengarang: 'pengarang',
     penerbit: 'penerbit',
     tahunTerbit: 'tahunTerbit',
-    statusBukuId: 'statusBukuId',
+    jumlahBuku: 'jumlahBuku',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -6907,14 +8334,30 @@ export namespace Prisma {
   export type KategoriScalarFieldEnum = (typeof KategoriScalarFieldEnum)[keyof typeof KategoriScalarFieldEnum]
 
 
-  export const StatusBukuScalarFieldEnum: {
+  export const EksemplarBukuScalarFieldEnum: {
     id: 'id',
-    nama: 'nama',
+    kodeEksemplar: 'kodeEksemplar',
+    bukuId: 'bukuId',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type StatusBukuScalarFieldEnum = (typeof StatusBukuScalarFieldEnum)[keyof typeof StatusBukuScalarFieldEnum]
+  export type EksemplarBukuScalarFieldEnum = (typeof EksemplarBukuScalarFieldEnum)[keyof typeof EksemplarBukuScalarFieldEnum]
+
+
+  export const PeminjamanScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    eksemplarId: 'eksemplarId',
+    tanggalPinjam: 'tanggalPinjam',
+    tanggalKembali: 'tanggalKembali',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PeminjamanScalarFieldEnum = (typeof PeminjamanScalarFieldEnum)[keyof typeof PeminjamanScalarFieldEnum]
 
 
   export const BukuKategoriScalarFieldEnum: {
@@ -7006,6 +8449,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status[]'
+   */
+  export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -7033,6 +8490,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    peminjaman?: PeminjamanListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7043,6 +8501,7 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    peminjaman?: PeminjamanOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7056,6 +8515,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    peminjaman?: PeminjamanListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7095,10 +8555,10 @@ export namespace Prisma {
     pengarang?: StringFilter<"Buku"> | string
     penerbit?: StringFilter<"Buku"> | string
     tahunTerbit?: IntFilter<"Buku"> | number
-    statusBukuId?: IntFilter<"Buku"> | number
+    jumlahBuku?: IntFilter<"Buku"> | number
     createdAt?: DateTimeFilter<"Buku"> | Date | string
     updatedAt?: DateTimeFilter<"Buku"> | Date | string
-    statusBuku?: XOR<StatusBukuScalarRelationFilter, StatusBukuWhereInput>
+    eksemplarBuku?: EksemplarBukuListRelationFilter
     kategori?: BukuKategoriListRelationFilter
   }
 
@@ -7108,10 +8568,10 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    statusBuku?: StatusBukuOrderByWithRelationInput
+    eksemplarBuku?: EksemplarBukuOrderByRelationAggregateInput
     kategori?: BukuKategoriOrderByRelationAggregateInput
   }
 
@@ -7124,10 +8584,10 @@ export namespace Prisma {
     pengarang?: StringFilter<"Buku"> | string
     penerbit?: StringFilter<"Buku"> | string
     tahunTerbit?: IntFilter<"Buku"> | number
-    statusBukuId?: IntFilter<"Buku"> | number
+    jumlahBuku?: IntFilter<"Buku"> | number
     createdAt?: DateTimeFilter<"Buku"> | Date | string
     updatedAt?: DateTimeFilter<"Buku"> | Date | string
-    statusBuku?: XOR<StatusBukuScalarRelationFilter, StatusBukuWhereInput>
+    eksemplarBuku?: EksemplarBukuListRelationFilter
     kategori?: BukuKategoriListRelationFilter
   }, "id">
 
@@ -7137,7 +8597,7 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BukuCountOrderByAggregateInput
@@ -7156,7 +8616,7 @@ export namespace Prisma {
     pengarang?: StringWithAggregatesFilter<"Buku"> | string
     penerbit?: StringWithAggregatesFilter<"Buku"> | string
     tahunTerbit?: IntWithAggregatesFilter<"Buku"> | number
-    statusBukuId?: IntWithAggregatesFilter<"Buku"> | number
+    jumlahBuku?: IntWithAggregatesFilter<"Buku"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Buku"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Buku"> | Date | string
   }
@@ -7213,56 +8673,144 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Kategori"> | Date | string
   }
 
-  export type StatusBukuWhereInput = {
-    AND?: StatusBukuWhereInput | StatusBukuWhereInput[]
-    OR?: StatusBukuWhereInput[]
-    NOT?: StatusBukuWhereInput | StatusBukuWhereInput[]
-    id?: IntFilter<"StatusBuku"> | number
-    nama?: StringFilter<"StatusBuku"> | string
-    createdAt?: DateTimeFilter<"StatusBuku"> | Date | string
-    updatedAt?: DateTimeFilter<"StatusBuku"> | Date | string
-    buku?: BukuListRelationFilter
+  export type EksemplarBukuWhereInput = {
+    AND?: EksemplarBukuWhereInput | EksemplarBukuWhereInput[]
+    OR?: EksemplarBukuWhereInput[]
+    NOT?: EksemplarBukuWhereInput | EksemplarBukuWhereInput[]
+    id?: IntFilter<"EksemplarBuku"> | number
+    kodeEksemplar?: StringFilter<"EksemplarBuku"> | string
+    bukuId?: IntFilter<"EksemplarBuku"> | number
+    status?: EnumStatusFilter<"EksemplarBuku"> | $Enums.Status
+    createdAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
+    updatedAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
+    buku?: XOR<BukuScalarRelationFilter, BukuWhereInput>
+    peminjaman?: PeminjamanListRelationFilter
   }
 
-  export type StatusBukuOrderByWithRelationInput = {
+  export type EksemplarBukuOrderByWithRelationInput = {
     id?: SortOrder
-    nama?: SortOrder
+    kodeEksemplar?: SortOrder
+    bukuId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    buku?: BukuOrderByRelationAggregateInput
+    buku?: BukuOrderByWithRelationInput
+    peminjaman?: PeminjamanOrderByRelationAggregateInput
   }
 
-  export type StatusBukuWhereUniqueInput = Prisma.AtLeast<{
+  export type EksemplarBukuWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: StatusBukuWhereInput | StatusBukuWhereInput[]
-    OR?: StatusBukuWhereInput[]
-    NOT?: StatusBukuWhereInput | StatusBukuWhereInput[]
-    nama?: StringFilter<"StatusBuku"> | string
-    createdAt?: DateTimeFilter<"StatusBuku"> | Date | string
-    updatedAt?: DateTimeFilter<"StatusBuku"> | Date | string
-    buku?: BukuListRelationFilter
+    kodeEksemplar?: string
+    AND?: EksemplarBukuWhereInput | EksemplarBukuWhereInput[]
+    OR?: EksemplarBukuWhereInput[]
+    NOT?: EksemplarBukuWhereInput | EksemplarBukuWhereInput[]
+    bukuId?: IntFilter<"EksemplarBuku"> | number
+    status?: EnumStatusFilter<"EksemplarBuku"> | $Enums.Status
+    createdAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
+    updatedAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
+    buku?: XOR<BukuScalarRelationFilter, BukuWhereInput>
+    peminjaman?: PeminjamanListRelationFilter
+  }, "id" | "kodeEksemplar">
+
+  export type EksemplarBukuOrderByWithAggregationInput = {
+    id?: SortOrder
+    kodeEksemplar?: SortOrder
+    bukuId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: EksemplarBukuCountOrderByAggregateInput
+    _avg?: EksemplarBukuAvgOrderByAggregateInput
+    _max?: EksemplarBukuMaxOrderByAggregateInput
+    _min?: EksemplarBukuMinOrderByAggregateInput
+    _sum?: EksemplarBukuSumOrderByAggregateInput
+  }
+
+  export type EksemplarBukuScalarWhereWithAggregatesInput = {
+    AND?: EksemplarBukuScalarWhereWithAggregatesInput | EksemplarBukuScalarWhereWithAggregatesInput[]
+    OR?: EksemplarBukuScalarWhereWithAggregatesInput[]
+    NOT?: EksemplarBukuScalarWhereWithAggregatesInput | EksemplarBukuScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"EksemplarBuku"> | number
+    kodeEksemplar?: StringWithAggregatesFilter<"EksemplarBuku"> | string
+    bukuId?: IntWithAggregatesFilter<"EksemplarBuku"> | number
+    status?: EnumStatusWithAggregatesFilter<"EksemplarBuku"> | $Enums.Status
+    createdAt?: DateTimeWithAggregatesFilter<"EksemplarBuku"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EksemplarBuku"> | Date | string
+  }
+
+  export type PeminjamanWhereInput = {
+    AND?: PeminjamanWhereInput | PeminjamanWhereInput[]
+    OR?: PeminjamanWhereInput[]
+    NOT?: PeminjamanWhereInput | PeminjamanWhereInput[]
+    id?: IntFilter<"Peminjaman"> | number
+    userId?: IntFilter<"Peminjaman"> | number
+    eksemplarId?: IntFilter<"Peminjaman"> | number
+    tanggalPinjam?: DateTimeFilter<"Peminjaman"> | Date | string
+    tanggalKembali?: DateTimeFilter<"Peminjaman"> | Date | string
+    status?: EnumStatusFilter<"Peminjaman"> | $Enums.Status
+    createdAt?: DateTimeFilter<"Peminjaman"> | Date | string
+    updatedAt?: DateTimeFilter<"Peminjaman"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    eksemplar?: XOR<EksemplarBukuScalarRelationFilter, EksemplarBukuWhereInput>
+  }
+
+  export type PeminjamanOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
+    tanggalPinjam?: SortOrder
+    tanggalKembali?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    eksemplar?: EksemplarBukuOrderByWithRelationInput
+  }
+
+  export type PeminjamanWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PeminjamanWhereInput | PeminjamanWhereInput[]
+    OR?: PeminjamanWhereInput[]
+    NOT?: PeminjamanWhereInput | PeminjamanWhereInput[]
+    userId?: IntFilter<"Peminjaman"> | number
+    eksemplarId?: IntFilter<"Peminjaman"> | number
+    tanggalPinjam?: DateTimeFilter<"Peminjaman"> | Date | string
+    tanggalKembali?: DateTimeFilter<"Peminjaman"> | Date | string
+    status?: EnumStatusFilter<"Peminjaman"> | $Enums.Status
+    createdAt?: DateTimeFilter<"Peminjaman"> | Date | string
+    updatedAt?: DateTimeFilter<"Peminjaman"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    eksemplar?: XOR<EksemplarBukuScalarRelationFilter, EksemplarBukuWhereInput>
   }, "id">
 
-  export type StatusBukuOrderByWithAggregationInput = {
+  export type PeminjamanOrderByWithAggregationInput = {
     id?: SortOrder
-    nama?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
+    tanggalPinjam?: SortOrder
+    tanggalKembali?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: StatusBukuCountOrderByAggregateInput
-    _avg?: StatusBukuAvgOrderByAggregateInput
-    _max?: StatusBukuMaxOrderByAggregateInput
-    _min?: StatusBukuMinOrderByAggregateInput
-    _sum?: StatusBukuSumOrderByAggregateInput
+    _count?: PeminjamanCountOrderByAggregateInput
+    _avg?: PeminjamanAvgOrderByAggregateInput
+    _max?: PeminjamanMaxOrderByAggregateInput
+    _min?: PeminjamanMinOrderByAggregateInput
+    _sum?: PeminjamanSumOrderByAggregateInput
   }
 
-  export type StatusBukuScalarWhereWithAggregatesInput = {
-    AND?: StatusBukuScalarWhereWithAggregatesInput | StatusBukuScalarWhereWithAggregatesInput[]
-    OR?: StatusBukuScalarWhereWithAggregatesInput[]
-    NOT?: StatusBukuScalarWhereWithAggregatesInput | StatusBukuScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"StatusBuku"> | number
-    nama?: StringWithAggregatesFilter<"StatusBuku"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"StatusBuku"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"StatusBuku"> | Date | string
+  export type PeminjamanScalarWhereWithAggregatesInput = {
+    AND?: PeminjamanScalarWhereWithAggregatesInput | PeminjamanScalarWhereWithAggregatesInput[]
+    OR?: PeminjamanScalarWhereWithAggregatesInput[]
+    NOT?: PeminjamanScalarWhereWithAggregatesInput | PeminjamanScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Peminjaman"> | number
+    userId?: IntWithAggregatesFilter<"Peminjaman"> | number
+    eksemplarId?: IntWithAggregatesFilter<"Peminjaman"> | number
+    tanggalPinjam?: DateTimeWithAggregatesFilter<"Peminjaman"> | Date | string
+    tanggalKembali?: DateTimeWithAggregatesFilter<"Peminjaman"> | Date | string
+    status?: EnumStatusWithAggregatesFilter<"Peminjaman"> | $Enums.Status
+    createdAt?: DateTimeWithAggregatesFilter<"Peminjaman"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Peminjaman"> | Date | string
   }
 
   export type BukuKategoriWhereInput = {
@@ -7332,6 +8880,7 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    peminjaman?: PeminjamanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7342,6 +8891,7 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    peminjaman?: PeminjamanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7351,6 +8901,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    peminjaman?: PeminjamanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7361,6 +8912,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    peminjaman?: PeminjamanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7397,9 +8949,10 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    statusBuku: StatusBukuCreateNestedOneWithoutBukuInput
+    eksemplarBuku?: EksemplarBukuCreateNestedManyWithoutBukuInput
     kategori?: BukuKategoriCreateNestedManyWithoutBukuInput
   }
 
@@ -7409,9 +8962,10 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    statusBukuId: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    eksemplarBuku?: EksemplarBukuUncheckedCreateNestedManyWithoutBukuInput
     kategori?: BukuKategoriUncheckedCreateNestedManyWithoutBukuInput
   }
 
@@ -7420,9 +8974,10 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    statusBuku?: StatusBukuUpdateOneRequiredWithoutBukuNestedInput
+    eksemplarBuku?: EksemplarBukuUpdateManyWithoutBukuNestedInput
     kategori?: BukuKategoriUpdateManyWithoutBukuNestedInput
   }
 
@@ -7432,9 +8987,10 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    statusBukuId?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eksemplarBuku?: EksemplarBukuUncheckedUpdateManyWithoutBukuNestedInput
     kategori?: BukuKategoriUncheckedUpdateManyWithoutBukuNestedInput
   }
 
@@ -7444,7 +9000,7 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    statusBukuId: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7454,6 +9010,7 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7464,7 +9021,7 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    statusBukuId?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7519,52 +9076,137 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type StatusBukuCreateInput = {
-    nama: string
+  export type EksemplarBukuCreateInput = {
+    kodeEksemplar: string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
-    buku?: BukuCreateNestedManyWithoutStatusBukuInput
+    buku: BukuCreateNestedOneWithoutEksemplarBukuInput
+    peminjaman?: PeminjamanCreateNestedManyWithoutEksemplarInput
   }
 
-  export type StatusBukuUncheckedCreateInput = {
+  export type EksemplarBukuUncheckedCreateInput = {
     id?: number
-    nama: string
+    kodeEksemplar: string
+    bukuId: number
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
-    buku?: BukuUncheckedCreateNestedManyWithoutStatusBukuInput
+    peminjaman?: PeminjamanUncheckedCreateNestedManyWithoutEksemplarInput
   }
 
-  export type StatusBukuUpdateInput = {
-    nama?: StringFieldUpdateOperationsInput | string
+  export type EksemplarBukuUpdateInput = {
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    buku?: BukuUpdateManyWithoutStatusBukuNestedInput
+    buku?: BukuUpdateOneRequiredWithoutEksemplarBukuNestedInput
+    peminjaman?: PeminjamanUpdateManyWithoutEksemplarNestedInput
   }
 
-  export type StatusBukuUncheckedUpdateInput = {
+  export type EksemplarBukuUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nama?: StringFieldUpdateOperationsInput | string
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    bukuId?: IntFieldUpdateOperationsInput | number
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    buku?: BukuUncheckedUpdateManyWithoutStatusBukuNestedInput
+    peminjaman?: PeminjamanUncheckedUpdateManyWithoutEksemplarNestedInput
   }
 
-  export type StatusBukuCreateManyInput = {
+  export type EksemplarBukuCreateManyInput = {
     id?: number
-    nama: string
+    kodeEksemplar: string
+    bukuId: number
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type StatusBukuUpdateManyMutationInput = {
-    nama?: StringFieldUpdateOperationsInput | string
+  export type EksemplarBukuUpdateManyMutationInput = {
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type StatusBukuUncheckedUpdateManyInput = {
+  export type EksemplarBukuUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nama?: StringFieldUpdateOperationsInput | string
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    bukuId?: IntFieldUpdateOperationsInput | number
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PeminjamanCreateInput = {
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPeminjamanInput
+    eksemplar: EksemplarBukuCreateNestedOneWithoutPeminjamanInput
+  }
+
+  export type PeminjamanUncheckedCreateInput = {
+    id?: number
+    userId: number
+    eksemplarId: number
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PeminjamanUpdateInput = {
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPeminjamanNestedInput
+    eksemplar?: EksemplarBukuUpdateOneRequiredWithoutPeminjamanNestedInput
+  }
+
+  export type PeminjamanUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    eksemplarId?: IntFieldUpdateOperationsInput | number
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PeminjamanCreateManyInput = {
+    id?: number
+    userId: number
+    eksemplarId: number
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PeminjamanUpdateManyMutationInput = {
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PeminjamanUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    eksemplarId?: IntFieldUpdateOperationsInput | number
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7664,6 +9306,16 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type PeminjamanListRelationFilter = {
+    every?: PeminjamanWhereInput
+    some?: PeminjamanWhereInput
+    none?: PeminjamanWhereInput
+  }
+
+  export type PeminjamanOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -7760,15 +9412,20 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StatusBukuScalarRelationFilter = {
-    is?: StatusBukuWhereInput
-    isNot?: StatusBukuWhereInput
+  export type EksemplarBukuListRelationFilter = {
+    every?: EksemplarBukuWhereInput
+    some?: EksemplarBukuWhereInput
+    none?: EksemplarBukuWhereInput
   }
 
   export type BukuKategoriListRelationFilter = {
     every?: BukuKategoriWhereInput
     some?: BukuKategoriWhereInput
     none?: BukuKategoriWhereInput
+  }
+
+  export type EksemplarBukuOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type BukuKategoriOrderByRelationAggregateInput = {
@@ -7781,7 +9438,7 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7789,7 +9446,7 @@ export namespace Prisma {
   export type BukuAvgOrderByAggregateInput = {
     id?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
   }
 
   export type BukuMaxOrderByAggregateInput = {
@@ -7798,7 +9455,7 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7809,7 +9466,7 @@ export namespace Prisma {
     pengarang?: SortOrder
     penerbit?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7817,7 +9474,7 @@ export namespace Prisma {
   export type BukuSumOrderByAggregateInput = {
     id?: SortOrder
     tahunTerbit?: SortOrder
-    statusBukuId?: SortOrder
+    jumlahBuku?: SortOrder
   }
 
   export type KategoriCountOrderByAggregateInput = {
@@ -7849,48 +9506,118 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type BukuListRelationFilter = {
-    every?: BukuWhereInput
-    some?: BukuWhereInput
-    none?: BukuWhereInput
-  }
-
-  export type BukuOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type StatusBukuCountOrderByAggregateInput = {
-    id?: SortOrder
-    nama?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type StatusBukuAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type StatusBukuMaxOrderByAggregateInput = {
-    id?: SortOrder
-    nama?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type StatusBukuMinOrderByAggregateInput = {
-    id?: SortOrder
-    nama?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type StatusBukuSumOrderByAggregateInput = {
-    id?: SortOrder
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
   export type BukuScalarRelationFilter = {
     is?: BukuWhereInput
     isNot?: BukuWhereInput
+  }
+
+  export type EksemplarBukuCountOrderByAggregateInput = {
+    id?: SortOrder
+    kodeEksemplar?: SortOrder
+    bukuId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EksemplarBukuAvgOrderByAggregateInput = {
+    id?: SortOrder
+    bukuId?: SortOrder
+  }
+
+  export type EksemplarBukuMaxOrderByAggregateInput = {
+    id?: SortOrder
+    kodeEksemplar?: SortOrder
+    bukuId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EksemplarBukuMinOrderByAggregateInput = {
+    id?: SortOrder
+    kodeEksemplar?: SortOrder
+    bukuId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EksemplarBukuSumOrderByAggregateInput = {
+    id?: SortOrder
+    bukuId?: SortOrder
+  }
+
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type EksemplarBukuScalarRelationFilter = {
+    is?: EksemplarBukuWhereInput
+    isNot?: EksemplarBukuWhereInput
+  }
+
+  export type PeminjamanCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
+    tanggalPinjam?: SortOrder
+    tanggalKembali?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PeminjamanAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
+  }
+
+  export type PeminjamanMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
+    tanggalPinjam?: SortOrder
+    tanggalKembali?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PeminjamanMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
+    tanggalPinjam?: SortOrder
+    tanggalKembali?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PeminjamanSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    eksemplarId?: SortOrder
   }
 
   export type KategoriScalarRelationFilter = {
@@ -7934,6 +9661,20 @@ export namespace Prisma {
     kategoriId?: SortOrder
   }
 
+  export type PeminjamanCreateNestedManyWithoutUserInput = {
+    create?: XOR<PeminjamanCreateWithoutUserInput, PeminjamanUncheckedCreateWithoutUserInput> | PeminjamanCreateWithoutUserInput[] | PeminjamanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutUserInput | PeminjamanCreateOrConnectWithoutUserInput[]
+    createMany?: PeminjamanCreateManyUserInputEnvelope
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+  }
+
+  export type PeminjamanUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PeminjamanCreateWithoutUserInput, PeminjamanUncheckedCreateWithoutUserInput> | PeminjamanCreateWithoutUserInput[] | PeminjamanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutUserInput | PeminjamanCreateOrConnectWithoutUserInput[]
+    createMany?: PeminjamanCreateManyUserInputEnvelope
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -7946,6 +9687,20 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type PeminjamanUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PeminjamanCreateWithoutUserInput, PeminjamanUncheckedCreateWithoutUserInput> | PeminjamanCreateWithoutUserInput[] | PeminjamanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutUserInput | PeminjamanCreateOrConnectWithoutUserInput[]
+    upsert?: PeminjamanUpsertWithWhereUniqueWithoutUserInput | PeminjamanUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PeminjamanCreateManyUserInputEnvelope
+    set?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    disconnect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    delete?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    update?: PeminjamanUpdateWithWhereUniqueWithoutUserInput | PeminjamanUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PeminjamanUpdateManyWithWhereWithoutUserInput | PeminjamanUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PeminjamanScalarWhereInput | PeminjamanScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -7954,10 +9709,25 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type StatusBukuCreateNestedOneWithoutBukuInput = {
-    create?: XOR<StatusBukuCreateWithoutBukuInput, StatusBukuUncheckedCreateWithoutBukuInput>
-    connectOrCreate?: StatusBukuCreateOrConnectWithoutBukuInput
-    connect?: StatusBukuWhereUniqueInput
+  export type PeminjamanUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PeminjamanCreateWithoutUserInput, PeminjamanUncheckedCreateWithoutUserInput> | PeminjamanCreateWithoutUserInput[] | PeminjamanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutUserInput | PeminjamanCreateOrConnectWithoutUserInput[]
+    upsert?: PeminjamanUpsertWithWhereUniqueWithoutUserInput | PeminjamanUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PeminjamanCreateManyUserInputEnvelope
+    set?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    disconnect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    delete?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    update?: PeminjamanUpdateWithWhereUniqueWithoutUserInput | PeminjamanUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PeminjamanUpdateManyWithWhereWithoutUserInput | PeminjamanUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PeminjamanScalarWhereInput | PeminjamanScalarWhereInput[]
+  }
+
+  export type EksemplarBukuCreateNestedManyWithoutBukuInput = {
+    create?: XOR<EksemplarBukuCreateWithoutBukuInput, EksemplarBukuUncheckedCreateWithoutBukuInput> | EksemplarBukuCreateWithoutBukuInput[] | EksemplarBukuUncheckedCreateWithoutBukuInput[]
+    connectOrCreate?: EksemplarBukuCreateOrConnectWithoutBukuInput | EksemplarBukuCreateOrConnectWithoutBukuInput[]
+    createMany?: EksemplarBukuCreateManyBukuInputEnvelope
+    connect?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
   }
 
   export type BukuKategoriCreateNestedManyWithoutBukuInput = {
@@ -7967,6 +9737,13 @@ export namespace Prisma {
     connect?: BukuKategoriWhereUniqueInput | BukuKategoriWhereUniqueInput[]
   }
 
+  export type EksemplarBukuUncheckedCreateNestedManyWithoutBukuInput = {
+    create?: XOR<EksemplarBukuCreateWithoutBukuInput, EksemplarBukuUncheckedCreateWithoutBukuInput> | EksemplarBukuCreateWithoutBukuInput[] | EksemplarBukuUncheckedCreateWithoutBukuInput[]
+    connectOrCreate?: EksemplarBukuCreateOrConnectWithoutBukuInput | EksemplarBukuCreateOrConnectWithoutBukuInput[]
+    createMany?: EksemplarBukuCreateManyBukuInputEnvelope
+    connect?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+  }
+
   export type BukuKategoriUncheckedCreateNestedManyWithoutBukuInput = {
     create?: XOR<BukuKategoriCreateWithoutBukuInput, BukuKategoriUncheckedCreateWithoutBukuInput> | BukuKategoriCreateWithoutBukuInput[] | BukuKategoriUncheckedCreateWithoutBukuInput[]
     connectOrCreate?: BukuKategoriCreateOrConnectWithoutBukuInput | BukuKategoriCreateOrConnectWithoutBukuInput[]
@@ -7974,12 +9751,18 @@ export namespace Prisma {
     connect?: BukuKategoriWhereUniqueInput | BukuKategoriWhereUniqueInput[]
   }
 
-  export type StatusBukuUpdateOneRequiredWithoutBukuNestedInput = {
-    create?: XOR<StatusBukuCreateWithoutBukuInput, StatusBukuUncheckedCreateWithoutBukuInput>
-    connectOrCreate?: StatusBukuCreateOrConnectWithoutBukuInput
-    upsert?: StatusBukuUpsertWithoutBukuInput
-    connect?: StatusBukuWhereUniqueInput
-    update?: XOR<XOR<StatusBukuUpdateToOneWithWhereWithoutBukuInput, StatusBukuUpdateWithoutBukuInput>, StatusBukuUncheckedUpdateWithoutBukuInput>
+  export type EksemplarBukuUpdateManyWithoutBukuNestedInput = {
+    create?: XOR<EksemplarBukuCreateWithoutBukuInput, EksemplarBukuUncheckedCreateWithoutBukuInput> | EksemplarBukuCreateWithoutBukuInput[] | EksemplarBukuUncheckedCreateWithoutBukuInput[]
+    connectOrCreate?: EksemplarBukuCreateOrConnectWithoutBukuInput | EksemplarBukuCreateOrConnectWithoutBukuInput[]
+    upsert?: EksemplarBukuUpsertWithWhereUniqueWithoutBukuInput | EksemplarBukuUpsertWithWhereUniqueWithoutBukuInput[]
+    createMany?: EksemplarBukuCreateManyBukuInputEnvelope
+    set?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    disconnect?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    delete?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    connect?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    update?: EksemplarBukuUpdateWithWhereUniqueWithoutBukuInput | EksemplarBukuUpdateWithWhereUniqueWithoutBukuInput[]
+    updateMany?: EksemplarBukuUpdateManyWithWhereWithoutBukuInput | EksemplarBukuUpdateManyWithWhereWithoutBukuInput[]
+    deleteMany?: EksemplarBukuScalarWhereInput | EksemplarBukuScalarWhereInput[]
   }
 
   export type BukuKategoriUpdateManyWithoutBukuNestedInput = {
@@ -7994,6 +9777,20 @@ export namespace Prisma {
     update?: BukuKategoriUpdateWithWhereUniqueWithoutBukuInput | BukuKategoriUpdateWithWhereUniqueWithoutBukuInput[]
     updateMany?: BukuKategoriUpdateManyWithWhereWithoutBukuInput | BukuKategoriUpdateManyWithWhereWithoutBukuInput[]
     deleteMany?: BukuKategoriScalarWhereInput | BukuKategoriScalarWhereInput[]
+  }
+
+  export type EksemplarBukuUncheckedUpdateManyWithoutBukuNestedInput = {
+    create?: XOR<EksemplarBukuCreateWithoutBukuInput, EksemplarBukuUncheckedCreateWithoutBukuInput> | EksemplarBukuCreateWithoutBukuInput[] | EksemplarBukuUncheckedCreateWithoutBukuInput[]
+    connectOrCreate?: EksemplarBukuCreateOrConnectWithoutBukuInput | EksemplarBukuCreateOrConnectWithoutBukuInput[]
+    upsert?: EksemplarBukuUpsertWithWhereUniqueWithoutBukuInput | EksemplarBukuUpsertWithWhereUniqueWithoutBukuInput[]
+    createMany?: EksemplarBukuCreateManyBukuInputEnvelope
+    set?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    disconnect?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    delete?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    connect?: EksemplarBukuWhereUniqueInput | EksemplarBukuWhereUniqueInput[]
+    update?: EksemplarBukuUpdateWithWhereUniqueWithoutBukuInput | EksemplarBukuUpdateWithWhereUniqueWithoutBukuInput[]
+    updateMany?: EksemplarBukuUpdateManyWithWhereWithoutBukuInput | EksemplarBukuUpdateManyWithWhereWithoutBukuInput[]
+    deleteMany?: EksemplarBukuScalarWhereInput | EksemplarBukuScalarWhereInput[]
   }
 
   export type BukuKategoriUncheckedUpdateManyWithoutBukuNestedInput = {
@@ -8052,46 +9849,92 @@ export namespace Prisma {
     deleteMany?: BukuKategoriScalarWhereInput | BukuKategoriScalarWhereInput[]
   }
 
-  export type BukuCreateNestedManyWithoutStatusBukuInput = {
-    create?: XOR<BukuCreateWithoutStatusBukuInput, BukuUncheckedCreateWithoutStatusBukuInput> | BukuCreateWithoutStatusBukuInput[] | BukuUncheckedCreateWithoutStatusBukuInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutStatusBukuInput | BukuCreateOrConnectWithoutStatusBukuInput[]
-    createMany?: BukuCreateManyStatusBukuInputEnvelope
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
+  export type BukuCreateNestedOneWithoutEksemplarBukuInput = {
+    create?: XOR<BukuCreateWithoutEksemplarBukuInput, BukuUncheckedCreateWithoutEksemplarBukuInput>
+    connectOrCreate?: BukuCreateOrConnectWithoutEksemplarBukuInput
+    connect?: BukuWhereUniqueInput
   }
 
-  export type BukuUncheckedCreateNestedManyWithoutStatusBukuInput = {
-    create?: XOR<BukuCreateWithoutStatusBukuInput, BukuUncheckedCreateWithoutStatusBukuInput> | BukuCreateWithoutStatusBukuInput[] | BukuUncheckedCreateWithoutStatusBukuInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutStatusBukuInput | BukuCreateOrConnectWithoutStatusBukuInput[]
-    createMany?: BukuCreateManyStatusBukuInputEnvelope
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
+  export type PeminjamanCreateNestedManyWithoutEksemplarInput = {
+    create?: XOR<PeminjamanCreateWithoutEksemplarInput, PeminjamanUncheckedCreateWithoutEksemplarInput> | PeminjamanCreateWithoutEksemplarInput[] | PeminjamanUncheckedCreateWithoutEksemplarInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutEksemplarInput | PeminjamanCreateOrConnectWithoutEksemplarInput[]
+    createMany?: PeminjamanCreateManyEksemplarInputEnvelope
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
   }
 
-  export type BukuUpdateManyWithoutStatusBukuNestedInput = {
-    create?: XOR<BukuCreateWithoutStatusBukuInput, BukuUncheckedCreateWithoutStatusBukuInput> | BukuCreateWithoutStatusBukuInput[] | BukuUncheckedCreateWithoutStatusBukuInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutStatusBukuInput | BukuCreateOrConnectWithoutStatusBukuInput[]
-    upsert?: BukuUpsertWithWhereUniqueWithoutStatusBukuInput | BukuUpsertWithWhereUniqueWithoutStatusBukuInput[]
-    createMany?: BukuCreateManyStatusBukuInputEnvelope
-    set?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    disconnect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    delete?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    update?: BukuUpdateWithWhereUniqueWithoutStatusBukuInput | BukuUpdateWithWhereUniqueWithoutStatusBukuInput[]
-    updateMany?: BukuUpdateManyWithWhereWithoutStatusBukuInput | BukuUpdateManyWithWhereWithoutStatusBukuInput[]
-    deleteMany?: BukuScalarWhereInput | BukuScalarWhereInput[]
+  export type PeminjamanUncheckedCreateNestedManyWithoutEksemplarInput = {
+    create?: XOR<PeminjamanCreateWithoutEksemplarInput, PeminjamanUncheckedCreateWithoutEksemplarInput> | PeminjamanCreateWithoutEksemplarInput[] | PeminjamanUncheckedCreateWithoutEksemplarInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutEksemplarInput | PeminjamanCreateOrConnectWithoutEksemplarInput[]
+    createMany?: PeminjamanCreateManyEksemplarInputEnvelope
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
   }
 
-  export type BukuUncheckedUpdateManyWithoutStatusBukuNestedInput = {
-    create?: XOR<BukuCreateWithoutStatusBukuInput, BukuUncheckedCreateWithoutStatusBukuInput> | BukuCreateWithoutStatusBukuInput[] | BukuUncheckedCreateWithoutStatusBukuInput[]
-    connectOrCreate?: BukuCreateOrConnectWithoutStatusBukuInput | BukuCreateOrConnectWithoutStatusBukuInput[]
-    upsert?: BukuUpsertWithWhereUniqueWithoutStatusBukuInput | BukuUpsertWithWhereUniqueWithoutStatusBukuInput[]
-    createMany?: BukuCreateManyStatusBukuInputEnvelope
-    set?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    disconnect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    delete?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    connect?: BukuWhereUniqueInput | BukuWhereUniqueInput[]
-    update?: BukuUpdateWithWhereUniqueWithoutStatusBukuInput | BukuUpdateWithWhereUniqueWithoutStatusBukuInput[]
-    updateMany?: BukuUpdateManyWithWhereWithoutStatusBukuInput | BukuUpdateManyWithWhereWithoutStatusBukuInput[]
-    deleteMany?: BukuScalarWhereInput | BukuScalarWhereInput[]
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
+  }
+
+  export type BukuUpdateOneRequiredWithoutEksemplarBukuNestedInput = {
+    create?: XOR<BukuCreateWithoutEksemplarBukuInput, BukuUncheckedCreateWithoutEksemplarBukuInput>
+    connectOrCreate?: BukuCreateOrConnectWithoutEksemplarBukuInput
+    upsert?: BukuUpsertWithoutEksemplarBukuInput
+    connect?: BukuWhereUniqueInput
+    update?: XOR<XOR<BukuUpdateToOneWithWhereWithoutEksemplarBukuInput, BukuUpdateWithoutEksemplarBukuInput>, BukuUncheckedUpdateWithoutEksemplarBukuInput>
+  }
+
+  export type PeminjamanUpdateManyWithoutEksemplarNestedInput = {
+    create?: XOR<PeminjamanCreateWithoutEksemplarInput, PeminjamanUncheckedCreateWithoutEksemplarInput> | PeminjamanCreateWithoutEksemplarInput[] | PeminjamanUncheckedCreateWithoutEksemplarInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutEksemplarInput | PeminjamanCreateOrConnectWithoutEksemplarInput[]
+    upsert?: PeminjamanUpsertWithWhereUniqueWithoutEksemplarInput | PeminjamanUpsertWithWhereUniqueWithoutEksemplarInput[]
+    createMany?: PeminjamanCreateManyEksemplarInputEnvelope
+    set?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    disconnect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    delete?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    update?: PeminjamanUpdateWithWhereUniqueWithoutEksemplarInput | PeminjamanUpdateWithWhereUniqueWithoutEksemplarInput[]
+    updateMany?: PeminjamanUpdateManyWithWhereWithoutEksemplarInput | PeminjamanUpdateManyWithWhereWithoutEksemplarInput[]
+    deleteMany?: PeminjamanScalarWhereInput | PeminjamanScalarWhereInput[]
+  }
+
+  export type PeminjamanUncheckedUpdateManyWithoutEksemplarNestedInput = {
+    create?: XOR<PeminjamanCreateWithoutEksemplarInput, PeminjamanUncheckedCreateWithoutEksemplarInput> | PeminjamanCreateWithoutEksemplarInput[] | PeminjamanUncheckedCreateWithoutEksemplarInput[]
+    connectOrCreate?: PeminjamanCreateOrConnectWithoutEksemplarInput | PeminjamanCreateOrConnectWithoutEksemplarInput[]
+    upsert?: PeminjamanUpsertWithWhereUniqueWithoutEksemplarInput | PeminjamanUpsertWithWhereUniqueWithoutEksemplarInput[]
+    createMany?: PeminjamanCreateManyEksemplarInputEnvelope
+    set?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    disconnect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    delete?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    connect?: PeminjamanWhereUniqueInput | PeminjamanWhereUniqueInput[]
+    update?: PeminjamanUpdateWithWhereUniqueWithoutEksemplarInput | PeminjamanUpdateWithWhereUniqueWithoutEksemplarInput[]
+    updateMany?: PeminjamanUpdateManyWithWhereWithoutEksemplarInput | PeminjamanUpdateManyWithWhereWithoutEksemplarInput[]
+    deleteMany?: PeminjamanScalarWhereInput | PeminjamanScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutPeminjamanInput = {
+    create?: XOR<UserCreateWithoutPeminjamanInput, UserUncheckedCreateWithoutPeminjamanInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPeminjamanInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EksemplarBukuCreateNestedOneWithoutPeminjamanInput = {
+    create?: XOR<EksemplarBukuCreateWithoutPeminjamanInput, EksemplarBukuUncheckedCreateWithoutPeminjamanInput>
+    connectOrCreate?: EksemplarBukuCreateOrConnectWithoutPeminjamanInput
+    connect?: EksemplarBukuWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPeminjamanNestedInput = {
+    create?: XOR<UserCreateWithoutPeminjamanInput, UserUncheckedCreateWithoutPeminjamanInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPeminjamanInput
+    upsert?: UserUpsertWithoutPeminjamanInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPeminjamanInput, UserUpdateWithoutPeminjamanInput>, UserUncheckedUpdateWithoutPeminjamanInput>
+  }
+
+  export type EksemplarBukuUpdateOneRequiredWithoutPeminjamanNestedInput = {
+    create?: XOR<EksemplarBukuCreateWithoutPeminjamanInput, EksemplarBukuUncheckedCreateWithoutPeminjamanInput>
+    connectOrCreate?: EksemplarBukuCreateOrConnectWithoutPeminjamanInput
+    upsert?: EksemplarBukuUpsertWithoutPeminjamanInput
+    connect?: EksemplarBukuWhereUniqueInput
+    update?: XOR<XOR<EksemplarBukuUpdateToOneWithWhereWithoutPeminjamanInput, EksemplarBukuUpdateWithoutPeminjamanInput>, EksemplarBukuUncheckedUpdateWithoutPeminjamanInput>
   }
 
   export type BukuCreateNestedOneWithoutKategoriInput = {
@@ -8233,22 +10076,107 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StatusBukuCreateWithoutBukuInput = {
-    nama: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
-  export type StatusBukuUncheckedCreateWithoutBukuInput = {
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type PeminjamanCreateWithoutUserInput = {
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eksemplar: EksemplarBukuCreateNestedOneWithoutPeminjamanInput
+  }
+
+  export type PeminjamanUncheckedCreateWithoutUserInput = {
     id?: number
-    nama: string
+    eksemplarId: number
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type StatusBukuCreateOrConnectWithoutBukuInput = {
-    where: StatusBukuWhereUniqueInput
-    create: XOR<StatusBukuCreateWithoutBukuInput, StatusBukuUncheckedCreateWithoutBukuInput>
+  export type PeminjamanCreateOrConnectWithoutUserInput = {
+    where: PeminjamanWhereUniqueInput
+    create: XOR<PeminjamanCreateWithoutUserInput, PeminjamanUncheckedCreateWithoutUserInput>
+  }
+
+  export type PeminjamanCreateManyUserInputEnvelope = {
+    data: PeminjamanCreateManyUserInput | PeminjamanCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PeminjamanUpsertWithWhereUniqueWithoutUserInput = {
+    where: PeminjamanWhereUniqueInput
+    update: XOR<PeminjamanUpdateWithoutUserInput, PeminjamanUncheckedUpdateWithoutUserInput>
+    create: XOR<PeminjamanCreateWithoutUserInput, PeminjamanUncheckedCreateWithoutUserInput>
+  }
+
+  export type PeminjamanUpdateWithWhereUniqueWithoutUserInput = {
+    where: PeminjamanWhereUniqueInput
+    data: XOR<PeminjamanUpdateWithoutUserInput, PeminjamanUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PeminjamanUpdateManyWithWhereWithoutUserInput = {
+    where: PeminjamanScalarWhereInput
+    data: XOR<PeminjamanUpdateManyMutationInput, PeminjamanUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PeminjamanScalarWhereInput = {
+    AND?: PeminjamanScalarWhereInput | PeminjamanScalarWhereInput[]
+    OR?: PeminjamanScalarWhereInput[]
+    NOT?: PeminjamanScalarWhereInput | PeminjamanScalarWhereInput[]
+    id?: IntFilter<"Peminjaman"> | number
+    userId?: IntFilter<"Peminjaman"> | number
+    eksemplarId?: IntFilter<"Peminjaman"> | number
+    tanggalPinjam?: DateTimeFilter<"Peminjaman"> | Date | string
+    tanggalKembali?: DateTimeFilter<"Peminjaman"> | Date | string
+    status?: EnumStatusFilter<"Peminjaman"> | $Enums.Status
+    createdAt?: DateTimeFilter<"Peminjaman"> | Date | string
+    updatedAt?: DateTimeFilter<"Peminjaman"> | Date | string
+  }
+
+  export type EksemplarBukuCreateWithoutBukuInput = {
+    kodeEksemplar: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    peminjaman?: PeminjamanCreateNestedManyWithoutEksemplarInput
+  }
+
+  export type EksemplarBukuUncheckedCreateWithoutBukuInput = {
+    id?: number
+    kodeEksemplar: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    peminjaman?: PeminjamanUncheckedCreateNestedManyWithoutEksemplarInput
+  }
+
+  export type EksemplarBukuCreateOrConnectWithoutBukuInput = {
+    where: EksemplarBukuWhereUniqueInput
+    create: XOR<EksemplarBukuCreateWithoutBukuInput, EksemplarBukuUncheckedCreateWithoutBukuInput>
+  }
+
+  export type EksemplarBukuCreateManyBukuInputEnvelope = {
+    data: EksemplarBukuCreateManyBukuInput | EksemplarBukuCreateManyBukuInput[]
+    skipDuplicates?: boolean
   }
 
   export type BukuKategoriCreateWithoutBukuInput = {
@@ -8274,28 +10202,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type StatusBukuUpsertWithoutBukuInput = {
-    update: XOR<StatusBukuUpdateWithoutBukuInput, StatusBukuUncheckedUpdateWithoutBukuInput>
-    create: XOR<StatusBukuCreateWithoutBukuInput, StatusBukuUncheckedCreateWithoutBukuInput>
-    where?: StatusBukuWhereInput
+  export type EksemplarBukuUpsertWithWhereUniqueWithoutBukuInput = {
+    where: EksemplarBukuWhereUniqueInput
+    update: XOR<EksemplarBukuUpdateWithoutBukuInput, EksemplarBukuUncheckedUpdateWithoutBukuInput>
+    create: XOR<EksemplarBukuCreateWithoutBukuInput, EksemplarBukuUncheckedCreateWithoutBukuInput>
   }
 
-  export type StatusBukuUpdateToOneWithWhereWithoutBukuInput = {
-    where?: StatusBukuWhereInput
-    data: XOR<StatusBukuUpdateWithoutBukuInput, StatusBukuUncheckedUpdateWithoutBukuInput>
+  export type EksemplarBukuUpdateWithWhereUniqueWithoutBukuInput = {
+    where: EksemplarBukuWhereUniqueInput
+    data: XOR<EksemplarBukuUpdateWithoutBukuInput, EksemplarBukuUncheckedUpdateWithoutBukuInput>
   }
 
-  export type StatusBukuUpdateWithoutBukuInput = {
-    nama?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type EksemplarBukuUpdateManyWithWhereWithoutBukuInput = {
+    where: EksemplarBukuScalarWhereInput
+    data: XOR<EksemplarBukuUpdateManyMutationInput, EksemplarBukuUncheckedUpdateManyWithoutBukuInput>
   }
 
-  export type StatusBukuUncheckedUpdateWithoutBukuInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nama?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type EksemplarBukuScalarWhereInput = {
+    AND?: EksemplarBukuScalarWhereInput | EksemplarBukuScalarWhereInput[]
+    OR?: EksemplarBukuScalarWhereInput[]
+    NOT?: EksemplarBukuScalarWhereInput | EksemplarBukuScalarWhereInput[]
+    id?: IntFilter<"EksemplarBuku"> | number
+    kodeEksemplar?: StringFilter<"EksemplarBuku"> | string
+    bukuId?: IntFilter<"EksemplarBuku"> | number
+    status?: EnumStatusFilter<"EksemplarBuku"> | $Enums.Status
+    createdAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
+    updatedAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
   }
 
   export type BukuKategoriUpsertWithWhereUniqueWithoutBukuInput = {
@@ -8364,65 +10296,215 @@ export namespace Prisma {
     data: XOR<BukuKategoriUpdateManyMutationInput, BukuKategoriUncheckedUpdateManyWithoutKategoriInput>
   }
 
-  export type BukuCreateWithoutStatusBukuInput = {
+  export type BukuCreateWithoutEksemplarBukuInput = {
     judul: string
     pengarang: string
     penerbit: string
     tahunTerbit: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
     kategori?: BukuKategoriCreateNestedManyWithoutBukuInput
   }
 
-  export type BukuUncheckedCreateWithoutStatusBukuInput = {
+  export type BukuUncheckedCreateWithoutEksemplarBukuInput = {
     id?: number
     judul: string
     pengarang: string
     penerbit: string
     tahunTerbit: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
     kategori?: BukuKategoriUncheckedCreateNestedManyWithoutBukuInput
   }
 
-  export type BukuCreateOrConnectWithoutStatusBukuInput = {
+  export type BukuCreateOrConnectWithoutEksemplarBukuInput = {
     where: BukuWhereUniqueInput
-    create: XOR<BukuCreateWithoutStatusBukuInput, BukuUncheckedCreateWithoutStatusBukuInput>
+    create: XOR<BukuCreateWithoutEksemplarBukuInput, BukuUncheckedCreateWithoutEksemplarBukuInput>
   }
 
-  export type BukuCreateManyStatusBukuInputEnvelope = {
-    data: BukuCreateManyStatusBukuInput | BukuCreateManyStatusBukuInput[]
+  export type PeminjamanCreateWithoutEksemplarInput = {
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPeminjamanInput
+  }
+
+  export type PeminjamanUncheckedCreateWithoutEksemplarInput = {
+    id?: number
+    userId: number
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PeminjamanCreateOrConnectWithoutEksemplarInput = {
+    where: PeminjamanWhereUniqueInput
+    create: XOR<PeminjamanCreateWithoutEksemplarInput, PeminjamanUncheckedCreateWithoutEksemplarInput>
+  }
+
+  export type PeminjamanCreateManyEksemplarInputEnvelope = {
+    data: PeminjamanCreateManyEksemplarInput | PeminjamanCreateManyEksemplarInput[]
     skipDuplicates?: boolean
   }
 
-  export type BukuUpsertWithWhereUniqueWithoutStatusBukuInput = {
-    where: BukuWhereUniqueInput
-    update: XOR<BukuUpdateWithoutStatusBukuInput, BukuUncheckedUpdateWithoutStatusBukuInput>
-    create: XOR<BukuCreateWithoutStatusBukuInput, BukuUncheckedCreateWithoutStatusBukuInput>
+  export type BukuUpsertWithoutEksemplarBukuInput = {
+    update: XOR<BukuUpdateWithoutEksemplarBukuInput, BukuUncheckedUpdateWithoutEksemplarBukuInput>
+    create: XOR<BukuCreateWithoutEksemplarBukuInput, BukuUncheckedCreateWithoutEksemplarBukuInput>
+    where?: BukuWhereInput
   }
 
-  export type BukuUpdateWithWhereUniqueWithoutStatusBukuInput = {
-    where: BukuWhereUniqueInput
-    data: XOR<BukuUpdateWithoutStatusBukuInput, BukuUncheckedUpdateWithoutStatusBukuInput>
+  export type BukuUpdateToOneWithWhereWithoutEksemplarBukuInput = {
+    where?: BukuWhereInput
+    data: XOR<BukuUpdateWithoutEksemplarBukuInput, BukuUncheckedUpdateWithoutEksemplarBukuInput>
   }
 
-  export type BukuUpdateManyWithWhereWithoutStatusBukuInput = {
-    where: BukuScalarWhereInput
-    data: XOR<BukuUpdateManyMutationInput, BukuUncheckedUpdateManyWithoutStatusBukuInput>
+  export type BukuUpdateWithoutEksemplarBukuInput = {
+    judul?: StringFieldUpdateOperationsInput | string
+    pengarang?: StringFieldUpdateOperationsInput | string
+    penerbit?: StringFieldUpdateOperationsInput | string
+    tahunTerbit?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kategori?: BukuKategoriUpdateManyWithoutBukuNestedInput
   }
 
-  export type BukuScalarWhereInput = {
-    AND?: BukuScalarWhereInput | BukuScalarWhereInput[]
-    OR?: BukuScalarWhereInput[]
-    NOT?: BukuScalarWhereInput | BukuScalarWhereInput[]
-    id?: IntFilter<"Buku"> | number
-    judul?: StringFilter<"Buku"> | string
-    pengarang?: StringFilter<"Buku"> | string
-    penerbit?: StringFilter<"Buku"> | string
-    tahunTerbit?: IntFilter<"Buku"> | number
-    statusBukuId?: IntFilter<"Buku"> | number
-    createdAt?: DateTimeFilter<"Buku"> | Date | string
-    updatedAt?: DateTimeFilter<"Buku"> | Date | string
+  export type BukuUncheckedUpdateWithoutEksemplarBukuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    judul?: StringFieldUpdateOperationsInput | string
+    pengarang?: StringFieldUpdateOperationsInput | string
+    penerbit?: StringFieldUpdateOperationsInput | string
+    tahunTerbit?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kategori?: BukuKategoriUncheckedUpdateManyWithoutBukuNestedInput
+  }
+
+  export type PeminjamanUpsertWithWhereUniqueWithoutEksemplarInput = {
+    where: PeminjamanWhereUniqueInput
+    update: XOR<PeminjamanUpdateWithoutEksemplarInput, PeminjamanUncheckedUpdateWithoutEksemplarInput>
+    create: XOR<PeminjamanCreateWithoutEksemplarInput, PeminjamanUncheckedCreateWithoutEksemplarInput>
+  }
+
+  export type PeminjamanUpdateWithWhereUniqueWithoutEksemplarInput = {
+    where: PeminjamanWhereUniqueInput
+    data: XOR<PeminjamanUpdateWithoutEksemplarInput, PeminjamanUncheckedUpdateWithoutEksemplarInput>
+  }
+
+  export type PeminjamanUpdateManyWithWhereWithoutEksemplarInput = {
+    where: PeminjamanScalarWhereInput
+    data: XOR<PeminjamanUpdateManyMutationInput, PeminjamanUncheckedUpdateManyWithoutEksemplarInput>
+  }
+
+  export type UserCreateWithoutPeminjamanInput = {
+    name: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutPeminjamanInput = {
+    id?: number
+    name: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutPeminjamanInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPeminjamanInput, UserUncheckedCreateWithoutPeminjamanInput>
+  }
+
+  export type EksemplarBukuCreateWithoutPeminjamanInput = {
+    kodeEksemplar: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    buku: BukuCreateNestedOneWithoutEksemplarBukuInput
+  }
+
+  export type EksemplarBukuUncheckedCreateWithoutPeminjamanInput = {
+    id?: number
+    kodeEksemplar: string
+    bukuId: number
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EksemplarBukuCreateOrConnectWithoutPeminjamanInput = {
+    where: EksemplarBukuWhereUniqueInput
+    create: XOR<EksemplarBukuCreateWithoutPeminjamanInput, EksemplarBukuUncheckedCreateWithoutPeminjamanInput>
+  }
+
+  export type UserUpsertWithoutPeminjamanInput = {
+    update: XOR<UserUpdateWithoutPeminjamanInput, UserUncheckedUpdateWithoutPeminjamanInput>
+    create: XOR<UserCreateWithoutPeminjamanInput, UserUncheckedCreateWithoutPeminjamanInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPeminjamanInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPeminjamanInput, UserUncheckedUpdateWithoutPeminjamanInput>
+  }
+
+  export type UserUpdateWithoutPeminjamanInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutPeminjamanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EksemplarBukuUpsertWithoutPeminjamanInput = {
+    update: XOR<EksemplarBukuUpdateWithoutPeminjamanInput, EksemplarBukuUncheckedUpdateWithoutPeminjamanInput>
+    create: XOR<EksemplarBukuCreateWithoutPeminjamanInput, EksemplarBukuUncheckedCreateWithoutPeminjamanInput>
+    where?: EksemplarBukuWhereInput
+  }
+
+  export type EksemplarBukuUpdateToOneWithWhereWithoutPeminjamanInput = {
+    where?: EksemplarBukuWhereInput
+    data: XOR<EksemplarBukuUpdateWithoutPeminjamanInput, EksemplarBukuUncheckedUpdateWithoutPeminjamanInput>
+  }
+
+  export type EksemplarBukuUpdateWithoutPeminjamanInput = {
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    buku?: BukuUpdateOneRequiredWithoutEksemplarBukuNestedInput
+  }
+
+  export type EksemplarBukuUncheckedUpdateWithoutPeminjamanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    bukuId?: IntFieldUpdateOperationsInput | number
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BukuCreateWithoutKategoriInput = {
@@ -8430,9 +10512,10 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    statusBuku: StatusBukuCreateNestedOneWithoutBukuInput
+    eksemplarBuku?: EksemplarBukuCreateNestedManyWithoutBukuInput
   }
 
   export type BukuUncheckedCreateWithoutKategoriInput = {
@@ -8441,9 +10524,10 @@ export namespace Prisma {
     pengarang: string
     penerbit: string
     tahunTerbit: number
-    statusBukuId: number
+    jumlahBuku: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    eksemplarBuku?: EksemplarBukuUncheckedCreateNestedManyWithoutBukuInput
   }
 
   export type BukuCreateOrConnectWithoutKategoriInput = {
@@ -8485,9 +10569,10 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    statusBuku?: StatusBukuUpdateOneRequiredWithoutBukuNestedInput
+    eksemplarBuku?: EksemplarBukuUpdateManyWithoutBukuNestedInput
   }
 
   export type BukuUncheckedUpdateWithoutKategoriInput = {
@@ -8496,9 +10581,10 @@ export namespace Prisma {
     pengarang?: StringFieldUpdateOperationsInput | string
     penerbit?: StringFieldUpdateOperationsInput | string
     tahunTerbit?: IntFieldUpdateOperationsInput | number
-    statusBukuId?: IntFieldUpdateOperationsInput | number
+    jumlahBuku?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eksemplarBuku?: EksemplarBukuUncheckedUpdateManyWithoutBukuNestedInput
   }
 
   export type KategoriUpsertWithoutBukuInput = {
@@ -8525,11 +10611,83 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PeminjamanCreateManyUserInput = {
+    id?: number
+    eksemplarId: number
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PeminjamanUpdateWithoutUserInput = {
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eksemplar?: EksemplarBukuUpdateOneRequiredWithoutPeminjamanNestedInput
+  }
+
+  export type PeminjamanUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    eksemplarId?: IntFieldUpdateOperationsInput | number
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PeminjamanUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    eksemplarId?: IntFieldUpdateOperationsInput | number
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EksemplarBukuCreateManyBukuInput = {
+    id?: number
+    kodeEksemplar: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type BukuKategoriCreateManyBukuInput = {
     id?: number
     kategoriId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type EksemplarBukuUpdateWithoutBukuInput = {
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    peminjaman?: PeminjamanUpdateManyWithoutEksemplarNestedInput
+  }
+
+  export type EksemplarBukuUncheckedUpdateWithoutBukuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    peminjaman?: PeminjamanUncheckedUpdateManyWithoutEksemplarNestedInput
+  }
+
+  export type EksemplarBukuUncheckedUpdateManyWithoutBukuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    kodeEksemplar?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BukuKategoriUpdateWithoutBukuInput = {
@@ -8579,43 +10737,41 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BukuCreateManyStatusBukuInput = {
+  export type PeminjamanCreateManyEksemplarInput = {
     id?: number
-    judul: string
-    pengarang: string
-    penerbit: string
-    tahunTerbit: number
+    userId: number
+    tanggalPinjam?: Date | string
+    tanggalKembali: Date | string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type BukuUpdateWithoutStatusBukuInput = {
-    judul?: StringFieldUpdateOperationsInput | string
-    pengarang?: StringFieldUpdateOperationsInput | string
-    penerbit?: StringFieldUpdateOperationsInput | string
-    tahunTerbit?: IntFieldUpdateOperationsInput | number
+  export type PeminjamanUpdateWithoutEksemplarInput = {
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kategori?: BukuKategoriUpdateManyWithoutBukuNestedInput
+    user?: UserUpdateOneRequiredWithoutPeminjamanNestedInput
   }
 
-  export type BukuUncheckedUpdateWithoutStatusBukuInput = {
+  export type PeminjamanUncheckedUpdateWithoutEksemplarInput = {
     id?: IntFieldUpdateOperationsInput | number
-    judul?: StringFieldUpdateOperationsInput | string
-    pengarang?: StringFieldUpdateOperationsInput | string
-    penerbit?: StringFieldUpdateOperationsInput | string
-    tahunTerbit?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kategori?: BukuKategoriUncheckedUpdateManyWithoutBukuNestedInput
   }
 
-  export type BukuUncheckedUpdateManyWithoutStatusBukuInput = {
+  export type PeminjamanUncheckedUpdateManyWithoutEksemplarInput = {
     id?: IntFieldUpdateOperationsInput | number
-    judul?: StringFieldUpdateOperationsInput | string
-    pengarang?: StringFieldUpdateOperationsInput | string
-    penerbit?: StringFieldUpdateOperationsInput | string
-    tahunTerbit?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    tanggalPinjam?: DateTimeFieldUpdateOperationsInput | Date | string
+    tanggalKembali?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

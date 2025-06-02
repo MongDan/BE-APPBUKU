@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import prisma from "../db";
+import adminOnly from "../Middleware/adminOnly";
 
 const bukuKategori = new Hono();
 
@@ -53,7 +54,7 @@ bukuKategori.get("/:id", async (c) => {
 });
 
 // Membuat buku kategori
-bukuKategori.post("/", async (c) => {
+bukuKategori.post("/",adminOnly, async (c) => {
   try {
     const { idBuku, kategoriId } = await c.req.json();
 
@@ -82,7 +83,7 @@ bukuKategori.post("/", async (c) => {
 });
 
 // Mengupdate buku kategori
-bukuKategori.put("/:id", async (c) => {
+bukuKategori.put("/:id", adminOnly,async (c) => {
   try {
     const id = Number(c.req.param("id"));
     const { idBuku, kategoriId } = await c.req.json();
@@ -120,7 +121,7 @@ bukuKategori.put("/:id", async (c) => {
 });
 
 // Menghapus buku kategori
-bukuKategori.delete("/:id", async (c) => {
+bukuKategori.delete("/:id",adminOnly, async (c) => {
   try {
     const id = Number(c.req.param("id"));
 

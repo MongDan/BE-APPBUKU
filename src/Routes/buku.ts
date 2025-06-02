@@ -2,36 +2,53 @@ import { Hono } from "hono";
 import prisma from "../db";
 import adminOnly from "../Middleware/adminOnly";
 
+
 const buku = new Hono();
 
 // membuat buku
 buku.post("/", adminOnly, async (c) => {
   try {
-    const { judul, pengarang, penerbit, tahunTerbit, statusBukuId } =
+    const { judul, pengarang, penerbit, tahunTerbit, jumlahBuku } =
       await c.req.json();
 
-    // Validasi apakah userId dan statusBukuId valid
-    const statusBuku = await prisma.statusBuku.findUnique({
-      where: { id: statusBukuId }
-    });
+    const parsedTahunTerbit = parseInt(tahunTerbit);
+    const parsedJumlahBuku = parseInt(jumlahBuku);
 
-    if (!statusBuku) {
-      return c.json({ message: "User atau Status Buku tidak ditemukan" }, 404);
+    if (isNaN(parsedTahunTerbit) || isNaN(parsedJumlahBuku)) {
+      return c.json(
+        {
+          message: "Tahun terbit dan jumlah buku harus berupa angka yang valid."
+        },
+        400
+      );
     }
-
-    const dataBuku = await prisma.buku.create({
+    if (parsedJumlahBuku < 0) {
+      return c.json({ message: "Jumlah buku tidak boleh negatif." }, 400);
+    }
+    // Buat buku baru
+    const buku = await prisma.buku.create({
       data: {
         judul,
         pengarang,
         penerbit,
         tahunTerbit,
-        statusBukuId
+        jumlahBuku: parseInt(jumlahBuku)
       }
     });
 
+    // Buat eksemplar berdasarkan jumlah
+    const eksemplars = Array.from({ length: jumlahBuku }).map((_, i) => ({
+      kodeEksemplar: `BK-${buku.id}-${i + 1}`,
+      bukuId: buku.id
+    }));
+
+    await prisma.eksemplarBuku.createMany({
+      data: eksemplars
+    });
+
     return c.json({
-      message: "berhasil membuat buku",
-      data: dataBuku
+      message: "Buku dan eksemplar berhasil dibuat",
+      data: buku
     });
   } catch (error) {
     return c.json({ message: "Gagal membuat buku", error }, 500);
@@ -70,27 +87,15 @@ buku.get("/:kategoriId", async (c) => {
 // melihat semua buku
 buku.get("/", async (c) => {
   try {
-    const dataBuku = await prisma.buku.findMany({
-      include: {
-        statusBuku: {
-          select: {
-            nama: true
-          }
-        }
-      }
-    });
+    const dataBuku = await prisma.buku.findMany();
 
     if (!dataBuku || dataBuku.length === 0) {
-      return c.json({ message: "data buku kosong" }, 404);
+      return c.json({ message: "Data buku kosong" }, 404);
     }
-
-    return c.json(
-      {
-        message: "berhasil mendapatkan semua buku",
-        data: dataBuku
-      },
-      200
-    );
+    return c.json({
+      message: "berhasil mendapatkan semua buku",
+      data: dataBuku
+    });
   } catch (error) {
     return c.json({ message: "Gagal mendapatkan semua buku", error }, 500);
   }
@@ -122,35 +127,6 @@ buku.get("/:bukuId", async (c) => {
   }
 });
 
-// melihat buku berdasarkan Status (1 = tersedia , 2 = dipinjam/kosong, 3 = rusak)
-buku.get("/:statusBukuId", async (c) => {
-  try {
-    const statusBukuId = c.req.param("statusBukuId");
-    const dataBuku = await prisma.buku.findMany({
-      where: {
-        statusBukuId: Number(statusBukuId)
-      }
-    });
-
-    if (!dataBuku || dataBuku.length === 0) {
-      return c.json(
-        { message: "buku tidak ditemukan berdasarkan status" },
-        404
-      );
-    }
-
-    return c.json({
-      message: "berhasil mendapatkan buku berdasarkan status",
-      data: dataBuku
-    });
-  } catch (error) {
-    return c.json(
-      { message: "Gagal mendapatkan buku berdasarkan status", error },
-      500
-    );
-  }
-});
-
 // mengupdate buku
 buku.put("/:bukuId", adminOnly, async (c) => {
   try {
@@ -173,11 +149,7 @@ buku.put("/:bukuId", adminOnly, async (c) => {
 
     // Validasi apakah userId dan statusBukuId valid
     const user = await prisma.user.findUnique({ where: { id: userId } });
-    const statusBuku = await prisma.statusBuku.findUnique({
-      where: { id: statusBukuId }
-    });
-
-    if (!user || !statusBuku) {
+    if (!user) {
       return c.json({ message: "User atau Status Buku tidak ditemukan" }, 404);
     }
 
@@ -189,8 +161,7 @@ buku.put("/:bukuId", adminOnly, async (c) => {
         judul,
         pengarang,
         penerbit,
-        tahunTerbit,
-        statusBukuId
+        tahunTerbit
       }
     });
 
