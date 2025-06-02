@@ -7,7 +7,19 @@ eksemplar.get("/", async (c) => {
   try {
     const dataEksemplar = await prisma.eksemplarBuku.findMany({
       include: {
-        buku: true
+        buku: {
+          include: {
+            kategori: {
+              include: {
+                kategori: {
+                  select: {
+                    nama: true
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     });
 

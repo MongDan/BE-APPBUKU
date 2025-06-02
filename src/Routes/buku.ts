@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import prisma from "../db";
 import adminOnly from "../Middleware/adminOnly";
+import accessValidation from "../Middleware/md";
 
 
 const buku = new Hono();
@@ -179,7 +180,7 @@ buku.put("/:bukuId", adminOnly, async (c) => {
 });
 
 // menghapus buku
-buku.delete("/:bukuId", adminOnly, async (c) => {
+buku.delete("/:bukuId", accessValidation, adminOnly, async (c) => {
   try {
     const bukuId = c.req.param("bukuId");
 

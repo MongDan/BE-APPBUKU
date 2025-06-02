@@ -1,15 +1,28 @@
 import { Hono } from "hono";
 import prisma from "../db";
 import adminOnly from "../Middleware/adminOnly";
+import accessValidation from "../Middleware/md";
 
 const kategori = new Hono();
 
 // membuat kategori
-kategori.post("/", adminOnly ,  async (c) => {
+kategori.post("/", adminOnly, async (c) => {
   try {
     const { nama } = await c.req.json();
     if (!nama) {
       return c.json({ message: "Nama kategori wajib diisi" }, 400);
+    }
+    const existingKategori = await prisma.kategori.findFirst({
+      where: {
+        nama: {
+          equals: nama,
+          mode: "insensitive" // agar pencocokan huruf besar/kecil diabaikan
+        }
+      }
+    });
+
+    if (existingKategori) {
+      return c.json({ message: "Kategori sudah ada" }, 409); // 409 Conflict
     }
 
     const dataKategori = await prisma.kategori.create({
@@ -30,10 +43,13 @@ kategori.get("/", async (c) => {
   try {
     const dataKategori = await prisma.kategori.findMany();
 
-    return c.json({
-      message: "berhasil mendapatkan semua kategori",
-      data: dataKategori
-    }, 200);
+    return c.json(
+      {
+        message: "berhasil mendapatkan semua kategori",
+        data: dataKategori
+      },
+      200
+    );
   } catch (error) {
     return c.json({ message: "Gagal mengambil kategori", error }, 500);
   }
@@ -51,10 +67,13 @@ kategori.get("/:kategoriId", async (c) => {
       return c.json({ message: "Kategori tidak ditemukan" }, 404);
     }
 
-    return c.json({
-      message: "berhasil mendapatkan kategori",
-      data: dataKategori
-    }, 200);
+    return c.json(
+      {
+        message: "berhasil mendapatkan kategori",
+        data: dataKategori
+      },
+      200
+    );
   } catch (error) {
     return c.json({ message: "Gagal mengambil kategori", error }, 500);
   }
@@ -83,17 +102,20 @@ kategori.put("/:kategoriId", adminOnly, async (c) => {
       data: { nama }
     });
 
-    return c.json({
-      message: "berhasil mengupdate kategori",
-      data: dataKategori
-    }, 201);
+    return c.json(
+      {
+        message: "berhasil mengupdate kategori",
+        data: dataKategori
+      },
+      201
+    );
   } catch (error) {
     return c.json({ message: "Gagal mengupdate kategori", error }, 500);
   }
 });
 
 // menghapus kategori
-kategori.delete("/:kategoriId", adminOnly, async (c) => {
+kategori.delete("/:kategoriId", accessValidation, adminOnly, async (c) => {
   try {
     const kategoriId = Number(c.req.param("kategoriId"));
 
@@ -117,6 +139,5 @@ kategori.delete("/:kategoriId", adminOnly, async (c) => {
     return c.json({ message: "Gagal menghapus kategori", error }, 500);
   }
 });
-
 
 export default kategori;

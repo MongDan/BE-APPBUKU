@@ -38,10 +38,10 @@ model Buku {
   judul         String
   pengarang     String
   penerbit      String
-  eksemplarBuku EksemplarBuku[] // Relasi one-to-many dengan EksemplarBuku
+  eksemplarBuku EksemplarBuku[] 
   tahunTerbit   Int
   jumlahBuku    Int
-  kategori      BukuKategori[] // Relasi many-to-many melalui BukuKategori
+  kategori      BukuKategori[] 
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }

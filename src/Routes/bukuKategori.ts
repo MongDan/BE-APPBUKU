@@ -4,7 +4,6 @@ import adminOnly from "../Middleware/adminOnly";
 
 const bukuKategori = new Hono();
 
-
 // Mendapatkan semua buku kategori
 bukuKategori.get("/", async (c) => {
   try {
@@ -54,13 +53,21 @@ bukuKategori.get("/:id", async (c) => {
 });
 
 // Membuat buku kategori
-bukuKategori.post("/",adminOnly, async (c) => {
+bukuKategori.post("/", adminOnly, async (c) => {
   try {
     const { idBuku, kategoriId } = await c.req.json();
 
-    // Cek apakah idBuku atau kategoriId valid
-    const buku = await prisma.buku.findUnique({ where: { id: idBuku } });
-    const kategori = await prisma.kategori.findUnique({ where: { id: kategoriId } });
+    // Konversi ke number
+    const idBukuNumber = Number(idBuku);
+    const kategoriIdNumber = Number(kategoriId);
+
+    // Validasi apakah hasil konversi adalah angka valid
+    if (isNaN(idBukuNumber) || isNaN(kategoriIdNumber)) {
+      return c.json({ message: "ID Buku atau Kategori tidak valid" }, 400);
+    }
+
+    const buku = await prisma.buku.findUnique({ where: { id: idBukuNumber } });
+    const kategori = await prisma.kategori.findUnique({ where: { id: kategoriIdNumber } });
 
     if (!buku || !kategori) {
       return c.json({ message: "Buku atau Kategori tidak ditemukan" }, 404);
@@ -68,8 +75,8 @@ bukuKategori.post("/",adminOnly, async (c) => {
 
     const newBukuKategori = await prisma.bukuKategori.create({
       data: {
-        idBuku,
-        kategoriId
+        idBuku: idBukuNumber,
+        kategoriId: kategoriIdNumber
       }
     });
 
@@ -83,7 +90,7 @@ bukuKategori.post("/",adminOnly, async (c) => {
 });
 
 // Mengupdate buku kategori
-bukuKategori.put("/:id", adminOnly,async (c) => {
+bukuKategori.put("/:id", adminOnly, async (c) => {
   try {
     const id = Number(c.req.param("id"));
     const { idBuku, kategoriId } = await c.req.json();
@@ -97,7 +104,9 @@ bukuKategori.put("/:id", adminOnly,async (c) => {
     }
 
     const buku = await prisma.buku.findUnique({ where: { id: idBuku } });
-    const kategori = await prisma.kategori.findUnique({ where: { id: kategoriId } });
+    const kategori = await prisma.kategori.findUnique({
+      where: { id: kategoriId }
+    });
 
     if (!buku || !kategori) {
       return c.json({ message: "Buku atau Kategori tidak ditemukan" }, 404);
@@ -121,7 +130,7 @@ bukuKategori.put("/:id", adminOnly,async (c) => {
 });
 
 // Menghapus buku kategori
-bukuKategori.delete("/:id",adminOnly, async (c) => {
+bukuKategori.delete("/:id", adminOnly, async (c) => {
   try {
     const id = Number(c.req.param("id"));
 
@@ -145,6 +154,5 @@ bukuKategori.delete("/:id",adminOnly, async (c) => {
     return c.json({ message: "Gagal menghapus BukuKategori", error }, 500);
   }
 });
-
 
 export default bukuKategori;
