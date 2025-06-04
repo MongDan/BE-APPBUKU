@@ -16,34 +16,20 @@ import eksemplar from "./Routes/eksemplar";
 
 const app = new Hono();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://be-appbuku-production.up.railway.app",
-  // tambahkan domain frontend lain di sini jika ada
-];
-
 app.use(
   cors({
     origin: (origin) => {
-      if (!origin) return ""; // allow empty origin for non-browser tools like curl
-      if (allowedOrigins.includes(origin)) return origin;
-      return "";
+      if (
+        origin === "http://localhost:5173" ||
+        origin === "https://be-appbuku-production.up.railway.app"
+      ) {
+        return origin;
+      }
+      return null;
     },
-    credentials: true,
+    credentials: true
   })
 );
-
-app.options("*", (c) => {
-  const requestOrigin = c.req.header("Origin");
-  if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
-    c.header("Access-Control-Allow-Origin", requestOrigin);
-    c.header("Access-Control-Allow-Credentials", "true");
-    c.header("Access-Control-Allow-Headers", "Content-Type");
-    c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  }
-  return c.body(null, 204);
-});
-
 
 //  Routing dengan middleware autentikasi
 app.use("/user", accessValidation);
