@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import prisma from "./db";
+import { serve } from "@hono/node-server"
 
 // Import routes
 import user from "./Routes/user";
@@ -52,5 +53,12 @@ app.route("/peminjaman", peminjaman);
 
 app.use("/bukuKategori", accessValidation);
 app.route("/bukuKategori", bukuKategori);
+
+serve({
+  fetch: app.fetch,
+  port: 3000,
+})
+
+console.log("Server is running at http://localhost:3000")
 
 export default app;
