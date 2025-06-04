@@ -39,7 +39,10 @@ login.post("/", async (c) => {
       "Set-Cookie",
       `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=Lax`
     );
-    c.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    c.header(
+      "Access-Control-Allow-Origin",
+      "https://be-appbuku-production.up.railway.app"
+    );
     c.header("Access-Control-Allow-Credentials", "true");
 
     return c.json(

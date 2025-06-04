@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import prisma from "./db";
-import { serve } from "@hono/node-server"
+import { serve } from "@hono/node-server";
 
 // Import routes
 import user from "./Routes/user";
@@ -18,13 +18,16 @@ const app = new Hono();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://be-appbuku-production.up.railway.app",
     credentials: true
   })
 );
 
 app.options("*", (c) => {
-  c.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  c.header(
+    "Access-Control-Allow-Origin",
+    "https://be-appbuku-production.up.railway.app"
+  );
   c.header("Access-Control-Allow-Credentials", "true");
   c.header("Access-Control-Allow-Headers", "Content-Type");
   c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
@@ -43,7 +46,7 @@ app.route("/buku", buku);
 app.route("/buku/kategori", buku);
 app.route("/buku/statusBuku", buku);
 
-app.use("/kategori", accessValidation,);
+app.use("/kategori", accessValidation);
 app.route("/kategori", kategori);
 
 app.use("/eksemplarBuku", accessValidation);
@@ -56,9 +59,9 @@ app.route("/bukuKategori", bukuKategori);
 
 serve({
   fetch: app.fetch,
-  port: 3000,
-})
+  port: Number(process.env.PORT) || 3000 // 3000 fallback jika tidak ada
+});
 
-console.log("Server is running at http://localhost:3000")
+console.log("Server is running in production");
 
 export default app;
