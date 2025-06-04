@@ -1,5 +1,5 @@
 {
-  "name": "Pbuku",
+  "name": "pbuku",
   "scripts": {
     "dev": "bun run --hot src/index.ts"
   },
@@ -14,5 +14,19 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/jsonwebtoken": "^9.0.9"
-  }
+  },
+  "version": "1.0.0",
+  "description": "To install dependencies:\r ```sh\r bun install\r ```",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MongDan/BE-APPBUKU.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MongDan/BE-APPBUKU/issues"
+  },
+  "homepage": "https://github.com/MongDan/BE-APPBUKU#readme"
 }
