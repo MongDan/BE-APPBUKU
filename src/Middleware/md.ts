@@ -1,5 +1,5 @@
 import { MiddlewareHandler } from "hono";
-import { verify } from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import { getCookie } from "hono/cookie";
 import { UserPayload } from "./types";
 
@@ -8,6 +8,7 @@ const accessValidation: MiddlewareHandler<{
 }> = async (c, next) => {
   const token = await getCookie(c, "token");
   const secret = process.env.JWT_SECRET;
+  const verify = jwt.verify;
 
   if (!token) {
     return c.json({ message: "Token tidak ditemukan" }, 401);
