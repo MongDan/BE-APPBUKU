@@ -17,27 +17,33 @@ import eksemplar from "./Routes/eksemplar";
 const app = new Hono();
 
 const allowedOrigins = [
-  "http://localhost:5173", // dev
-  "https://be-appbuku-production.up.railway.app" // backend kamu sendiri
+  "http://localhost:5173",
+  "https://be-appbuku-production.up.railway.app",
+  // tambahkan domain frontend lain di sini jika ada
 ];
 
 app.use(
   cors({
-    origin: (origin) => (allowedOrigins.includes(origin!) ? origin : ""), // whitelist check
-    credentials: true
+    origin: (origin) => {
+      if (!origin) return ""; // allow empty origin for non-browser tools like curl
+      if (allowedOrigins.includes(origin)) return origin;
+      return "";
+    },
+    credentials: true,
   })
 );
 
 app.options("*", (c) => {
   const requestOrigin = c.req.header("Origin");
-  if (allowedOrigins.includes(requestOrigin!)) {
+  if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
     c.header("Access-Control-Allow-Origin", requestOrigin);
+    c.header("Access-Control-Allow-Credentials", "true");
+    c.header("Access-Control-Allow-Headers", "Content-Type");
+    c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
   }
-  c.header("Access-Control-Allow-Credentials", "true");
-  c.header("Access-Control-Allow-Headers", "Content-Type");
-  c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
   return c.body(null, 204);
 });
+
 
 //  Routing dengan middleware autentikasi
 app.use("/user", accessValidation);
