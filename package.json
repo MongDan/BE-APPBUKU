@@ -1,36 +1,36 @@
 {
-  "name": "pbuku",
+  "name": "lombatif",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "start": "node build/index.ts",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate deploy"
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc"
   },
   "dependencies": {
+    "@hono/node-server": "^1.14.3",
     "@prisma/client": "^6.6.0",
+    "abbrev": "^3.0.1",
     "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
+    "email-validator": "^2.0.4",
     "hono": "^4.7.7",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^6.6.0"
+    "npmlog": "^7.0.1"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "@types/jsonwebtoken": "^9.0.9"
+    "@types/bcrypt": "^5.0.2",
+    "@types/bun": "^1.2.10",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.2",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.6.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   },
-  "version": "1.0.0",
-  "description": "To install dependencies:\r ```sh\r bun install\r ```",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MongDan/BE-APPBUKU.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MongDan/BE-APPBUKU/issues"
-  },
-  "homepage": "https://github.com/MongDan/BE-APPBUKU#readme"
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
+  }
 }
