@@ -16,18 +16,23 @@ import eksemplar from "./Routes/eksemplar";
 
 const app = new Hono();
 
+const allowedOrigins = [
+  "http://localhost:5173", // dev
+  "https://be-appbuku-production.up.railway.app" // backend kamu sendiri
+];
+
 app.use(
   cors({
-    origin: "https://be-appbuku-production.up.railway.app",
+    origin: (origin) => (allowedOrigins.includes(origin!) ? origin : ""), // whitelist check
     credentials: true
   })
 );
 
 app.options("*", (c) => {
-  c.header(
-    "Access-Control-Allow-Origin",
-    "https://be-appbuku-production.up.railway.app"
-  );
+  const requestOrigin = c.req.header("Origin");
+  if (allowedOrigins.includes(requestOrigin!)) {
+    c.header("Access-Control-Allow-Origin", requestOrigin);
+  }
   c.header("Access-Control-Allow-Credentials", "true");
   c.header("Access-Control-Allow-Headers", "Content-Type");
   c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
@@ -59,9 +64,8 @@ app.route("/bukuKategori", bukuKategori);
 
 serve({
   fetch: app.fetch,
-  port: Number(process.env.PORT) || 3000 // 3000 fallback jika tidak ada
+  port: Number(process.env.PORT) || 3000
 });
 
 console.log("Server is running in production");
-
 export default app;
