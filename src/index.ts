@@ -59,5 +59,12 @@ serve({
   port: Number(process.env.PORT) || 3000
 });
 
-console.log("Server is running in production");
+console.log(
+  `Running on: ${
+    process.env.NODE_ENV === "production"
+      ? "https://be-appbuku-production.up.railway.app"
+      : "http://localhost:3000"
+  }`
+);
+
 export default app;

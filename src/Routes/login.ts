@@ -5,16 +5,27 @@ import prisma from "../db";
 
 const login = new Hono();
 
+const FRONTEND_ORIGIN = "https://booknest-client.vercel.app"; // Ganti sesuai frontend deploy URL kamu
+
+login.options("/", (c) => {
+  c.header("Access-Control-Allow-Origin", FRONTEND_ORIGIN);
+  c.header("Access-Control-Allow-Credentials", "true");
+  c.header("Access-Control-Allow-Headers", "Content-Type");
+  c.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  return c.body(null, 204);
+});
+
 login.post("/", async (c) => {
   try {
     const { email, password } = await c.req.json();
-    const dataLogin = await prisma.user.findUnique({
-      where: { email }
-    });
 
     if (!email || !password) {
       return c.json({ message: "Email dan password wajib diisi" }, 400);
     }
+
+    const dataLogin = await prisma.user.findUnique({
+      where: { email }
+    });
 
     if (!dataLogin) {
       return c.json({ message: "User tidak ditemukan" }, 404);
@@ -34,15 +45,14 @@ login.post("/", async (c) => {
     const expiresIn = 60 * 60; // 1 jam
     const token = jwt.sign(Payload, secretKey, { expiresIn });
 
-    // Simpan token ke cookie + atur header CORS
+    // Set-Cookie aman untuk cross-origin
     c.header(
       "Set-Cookie",
-      `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=Lax`
+      `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=None; Secure`
     );
-    c.header(
-      "Access-Control-Allow-Origin",
-      "https://be-appbuku-production.up.railway.app"
-    );
+
+    // Header CORS untuk response
+    c.header("Access-Control-Allow-Origin", FRONTEND_ORIGIN);
     c.header("Access-Control-Allow-Credentials", "true");
 
     return c.json(
