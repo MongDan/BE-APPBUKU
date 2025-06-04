@@ -1,8 +1,13 @@
 {
   "name": "pbuku",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
-  },
+  "dev": "ts-node src/index.ts",
+  "build": "tsc",
+  "start": "node build/index.js",      
+  "prisma:generate": "prisma generate",
+  "prisma:migrate": "prisma migrate deploy"
+},
+
   "dependencies": {
     "@prisma/client": "^6.6.0",
     "bcryptjs": "^3.0.2",
