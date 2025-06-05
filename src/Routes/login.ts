@@ -7,19 +7,6 @@ import { setCookie } from "hono/cookie";
 
 const login = new Hono();
 
-login.use(
-  "*",
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://lomba-tif.vercel.app",
-      "https://lomba-tif.my.id"
-    ],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowHeaders: ["Authorization", "Content-Type"],
-    credentials: true
-  })
-);
 
 login.post("/", async (c) => {
   try {
@@ -52,11 +39,11 @@ login.post("/", async (c) => {
     );
 
     // ✅ Set cookie HttpOnly + Secure
-     setCookie(c, "token", token, {
+    setCookie(c, "token", token, {
       httpOnly: true,
       secure: true, // Set to true if using HTTPS
       sameSite: "None",
-      maxAge: 60 * 60 * 24, // 1 day
+      maxAge: 60 * 60 * 24 // 1 day
     });
 
     return c.json({
