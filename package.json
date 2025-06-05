@@ -1,9 +1,16 @@
 {
   "name": "Pbuku",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "tsx src/index.ts",
     "build": "tsc"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",
@@ -27,9 +34,6 @@
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
-  "module": "src/index.ts",
-  "type": "module",
-  "private": true,
   "peerDependencies": {
     "typescript": "^5"
   }
