@@ -34,13 +34,6 @@ app.use(
   })
 );
 
-app.options("*", (c) => {
-  c.header("Access-Control-Allow-Origin", c.req.header("origin") || "*");
-  c.header("Access-Control-Allow-Credentials", "true");
-  c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH,OPTIONS");
-  c.header("Access-Control-Allow-Headers", "Authorization,Content-Type");
-  return c.body(null, 204);
-});
 
 //  Routing dengan middleware autentikasi
 app.use("/user/*", accessValidation);
