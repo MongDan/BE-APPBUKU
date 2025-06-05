@@ -19,12 +19,22 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: "http://localhost:5173", // atau array/fungsi jika kamu perlu multiple origin
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    origin: "http://localhost:5173",
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowHeaders: ["Authorization", "Content-Type"],
     credentials: true
   })
 );
+
+// WAJIB: handle preflight OPTIONS
+app.options("*", (c) => {
+  c.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  c.header("Access-Control-Allow-Credentials", "true");
+  c.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+  c.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
+  return c.body(null, 204);
+});
+
 
 // 💡 FIX: Tangani semua OPTIONS
 app.options("*", (c) => c.text("OK", 200));
