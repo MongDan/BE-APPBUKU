@@ -17,24 +17,30 @@ import eksemplar from "./Routes/eksemplar";
 
 const app = new Hono();
 
+// TERAPKAN MIDDLEWARE CORS SECARA GLOBAL DI SINI
 app.use(
-  "*", //
+  "*",
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://be-appbuku-production.up.railway.app"
-    ],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // OPTIONS penting untuk preflight
-    allowHeaders: [
-      "Authorization",
-      "Content-Type",
-      "X-Requested-With",
-      "Accept"
-    ],
+    origin: (origin) => {
+      const allowed = [
+        "http://localhost:5173",
+        "https://be-appbuku-production.up.railway.app",
+      ];
+      return allowed.includes(origin || "") ? origin : "";
+    },
     credentials: true,
-    maxAge: 86400
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowHeaders: ["Authorization", "Content-Type"],
   })
 );
+
+app.options("*", (c) => {
+  c.header("Access-Control-Allow-Origin", c.req.header("origin") || "*");
+  c.header("Access-Control-Allow-Credentials", "true");
+  c.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH,OPTIONS");
+  c.header("Access-Control-Allow-Headers", "Authorization,Content-Type");
+  return c.body(null, 204);
+});
 
 //  Routing dengan middleware autentikasi
 app.use("/user/*", accessValidation);
@@ -52,6 +58,8 @@ app.route("/kategori", kategori);
 app.use("/eksemplarBuku/*", accessValidation);
 app.route("/eksemplarBuku", eksemplar);
 
+// Untuk peminjaman, jika memerlukan accessValidation, tambahkan:
+// app.use("/peminjaman/*", accessValidation);
 app.route("/peminjaman", peminjaman);
 
 app.use("/bukuKategori/*", accessValidation);

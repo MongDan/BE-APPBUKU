@@ -25,44 +25,32 @@ login.post("/", async (c) => {
 
     const secretKey = process.env.JWT_SECRET;
     if (!secretKey) {
-      // Log error ini di server untuk debugging, jangan kirim detail ke klien
-      console.error("Kesalahan Server Internal: JWT_SECRET tidak ditemukan.");
-      return c.json(
-        { message: "Terjadi kesalahan konfigurasi pada server" },
-        500
-      );
+      return c.json({ message: "Secret key tidak ditemukan" }, 500);
     }
 
-    const expiresIn = 60 * 60; // 1 jam
+    const expiresIn = 60 * 60;
     const token = jwt.sign(
-      { email: dataLogin.email, id: dataLogin.id, role: dataLogin.role }, // Gunakan email dari dataLogin untuk konsistensi
+      { email, id: dataLogin.id, role: dataLogin.role },
       secretKey,
       { expiresIn }
     );
 
-    // Set cookie HttpOnly
+    // ✅ Set cookie HttpOnly + Secure
     c.header(
       "Set-Cookie",
       `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=None; Secure`
     );
 
-    // Kembalikan data user dan token di body respons
-    // Frontend mungkin memerlukan ini jika tidak bisa hanya mengandalkan cookie (misalnya untuk state management)
-    return c.json(
-      {
-        message: "Berhasil login",
-        data: {
-          id: dataLogin.id,
-          email: dataLogin.email,
-          role: dataLogin.role,
-          token: token // Kirim token juga di body
-        }
+    return c.json({
+      message: "Berhasil login",
+      data: {
+        id: dataLogin.id,
+        email: dataLogin.email,
+        role: dataLogin.role,
       },
-      200
-    );
+    });
   } catch (error) {
-    console.error("Error saat login:", error); // Log error sebenarnya di server
-    return c.json({ message: "Terjadi kesalahan internal pada server" }, 500);
+    return c.json({ message: "Internal Server Error", error }, 500);
   }
 });
 
