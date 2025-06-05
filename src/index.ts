@@ -18,21 +18,7 @@ import eksemplar from "./Routes/eksemplar";
 const app = new Hono();
 
 // TERAPKAN MIDDLEWARE CORS SECARA GLOBAL DI SINI
-app.use(
-  "*",
-  cors({
-    origin: (origin) => {
-      const allowed = [
-        "http://localhost:5173",
-        "https://be-appbuku-production.up.railway.app",
-      ];
-      return allowed.includes(origin || "") ? origin : "";
-    },
-    credentials: true,
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowHeaders: ["Authorization", "Content-Type"],
-  })
-);
+
 
 
 //  Routing dengan middleware autentikasi
