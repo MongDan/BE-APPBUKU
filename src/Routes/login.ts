@@ -7,12 +7,13 @@ import { cors } from "hono/cors";
 const login = new Hono();
 
 login.use(
+  // This middleware should apply to all routes and methods within this 'login' router
   "*",
   cors({
-    origin: "http://localhost:5173",
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowHeaders: ["Authorization", "Content-Type"],
-    credentials: true
+    origin: "http://localhost:5173", // ✅ Correctly specifies your frontend origin
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // ✅ Includes POST
+    allowHeaders: ["Authorization", "Content-Type"], // ✅ Allows necessary headers
+    credentials: true // ✅ Important if you're dealing with cookies/auth headers
   })
 );
 
