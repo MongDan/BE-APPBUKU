@@ -20,7 +20,7 @@ app.use(
   "*",
   cors({
     origin: "http://localhost:5173", // atau array/fungsi jika kamu perlu multiple origin
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowHeaders: ["Authorization", "Content-Type"],
     credentials: true
   })
