@@ -2,8 +2,19 @@ import { compare } from "bcryptjs";
 import { Hono } from "hono";
 import * as jwt from "jsonwebtoken";
 import prisma from "../db";
+import { cors } from "hono/cors";
 
 const login = new Hono();
+
+login.use(
+  "*",
+  cors({
+    origin: "http://localhost:5173",
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 login.post("/", async (c) => {
   try {
@@ -41,10 +52,6 @@ login.post("/", async (c) => {
       `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=None; Secure`
     );
 
-    // Tambahan header CORS (jika middleware tidak berhasil)
-    c.header("Access-Control-Allow-Origin", c.req.header("origin") || "*");
-    c.header("Access-Control-Allow-Credentials", "true");
-
     return c.json(
       {
         message: "Berhasil login",
@@ -60,6 +67,5 @@ login.post("/", async (c) => {
     return c.json({ message: "Internal Server Error", error }, 500);
   }
 });
-
 
 export default login;
