@@ -3,8 +3,19 @@ import prisma from "../db";
 import userOnly from "../Middleware/userOnly";
 import adminOnly from "../Middleware/adminOnly";
 import accessValidation from "../Middleware/md";
+import { cors } from "hono/cors";
 
 const peminjaman = new Hono();
+
+peminjaman.use(
+  "*",
+  cors({
+    origin: ["http://localhost:5173"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 peminjaman.post("/", accessValidation, userOnly, async (c) => {
   const user = c.get("user"); // dari session/middleware

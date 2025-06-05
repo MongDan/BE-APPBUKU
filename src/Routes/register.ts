@@ -1,10 +1,21 @@
 import { Hono } from "hono";
 import prisma from "../db";
 import {hash} from "bcryptjs";
+import { cors } from "hono/cors";
 
 const register = new Hono();
 
 const adminKey = process.env.ADMIN_SECRET;
+
+register.use(
+  "*",
+  cors({
+    origin: ["http://localhost:5173"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 register.post("/", async (c) => {
   try {

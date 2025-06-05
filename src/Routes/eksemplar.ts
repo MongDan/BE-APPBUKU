@@ -1,7 +1,18 @@
+import { cors } from "hono/cors";
 import prisma from "../db";
 import { Hono } from "hono";
 
 const eksemplar = new Hono();
+
+eksemplar.use(
+  "*",
+  cors({
+    origin: ["http://localhost:5173"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 eksemplar.get("/", async (c) => {
   try {

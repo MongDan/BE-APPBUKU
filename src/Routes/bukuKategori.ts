@@ -1,8 +1,18 @@
 import { Hono } from "hono";
 import prisma from "../db";
+import { cors } from "hono/cors";
 import adminOnly from "../Middleware/adminOnly";
 
 const bukuKategori = new Hono();
+bukuKategori.use(
+  "*",
+  cors({
+    origin: ["http://localhost:5173"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 // Mendapatkan semua buku kategori
 bukuKategori.get("/", async (c) => {

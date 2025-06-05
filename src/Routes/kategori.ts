@@ -2,8 +2,19 @@ import { Hono } from "hono";
 import prisma from "../db";
 import adminOnly from "../Middleware/adminOnly";
 import accessValidation from "../Middleware/md";
+import { cors } from "hono/cors";
 
 const kategori = new Hono();
+
+kategori.use(
+  "*",
+  cors({
+    origin: ["http://localhost:5173"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 // membuat kategori
 kategori.post("/", adminOnly, async (c) => {
