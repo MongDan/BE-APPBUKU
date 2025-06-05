@@ -17,19 +17,12 @@ import eksemplar from "./Routes/eksemplar";
 const app = new Hono();
 
 app.use(
+  "*",
   cors({
-    origin: (origin) => {
-      const allowedOrigins = [
-        "http://localhost:5173",
-        "https://be-appbuku-production.up.railway.app"
-      ];
-      if (!origin || allowedOrigins.includes(origin)) {
-        return origin;
-      }
-      return null;
-    },
+    origin: ["http://localhost:5173",],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
     credentials: true,
-    allowHeaders: ["Content-Type", "Authorization"],
   })
 );
 //  Routing dengan middleware autentikasi
