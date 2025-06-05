@@ -2,19 +2,8 @@ import { compare } from "bcryptjs";
 import { Hono } from "hono";
 import * as jwt from "jsonwebtoken";
 import prisma from "../db";
-import { cors } from "hono/cors";
 
 const login = new Hono();
-
-login.use(
-  "*",
-  cors({
-    origin: ["http://localhost:5173"],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowHeaders: ["Authorization", "Content-Type"],
-    credentials: true
-  })
-);
 
 login.post("/", async (c) => {
   try {
@@ -36,35 +25,44 @@ login.post("/", async (c) => {
 
     const secretKey = process.env.JWT_SECRET;
     if (!secretKey) {
-      return c.json({ message: "Secret key tidak ditemukan" }, 500);
+      // Log error ini di server untuk debugging, jangan kirim detail ke klien
+      console.error("Kesalahan Server Internal: JWT_SECRET tidak ditemukan.");
+      return c.json(
+        { message: "Terjadi kesalahan konfigurasi pada server" },
+        500
+      );
     }
 
-    const expiresIn = 60 * 60;
+    const expiresIn = 60 * 60; // 1 jam
     const token = jwt.sign(
-      { email, id: dataLogin.id, role: dataLogin.role },
+      { email: dataLogin.email, id: dataLogin.id, role: dataLogin.role }, // Gunakan email dari dataLogin untuk konsistensi
       secretKey,
       { expiresIn }
     );
 
-    // Set cookie
+    // Set cookie HttpOnly
     c.header(
       "Set-Cookie",
       `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=None; Secure`
     );
 
+    // Kembalikan data user dan token di body respons
+    // Frontend mungkin memerlukan ini jika tidak bisa hanya mengandalkan cookie (misalnya untuk state management)
     return c.json(
       {
         message: "Berhasil login",
         data: {
           id: dataLogin.id,
           email: dataLogin.email,
-          role: dataLogin.role
+          role: dataLogin.role,
+          token: token // Kirim token juga di body
         }
       },
       200
     );
   } catch (error) {
-    return c.json({ message: "Internal Server Error", error }, 500);
+    console.error("Error saat login:", error); // Log error sebenarnya di server
+    return c.json({ message: "Terjadi kesalahan internal pada server" }, 500);
   }
 });
 

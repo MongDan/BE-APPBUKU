@@ -1,12 +1,13 @@
 import { Hono } from "hono";
-import { cors } from "hono/cors";
+import { cors } from "hono/cors"; // Pastikan cors diimpor di sini
+// prisma dan serve tidak perlu diubah, jadi saya singkat untuk keringkasan
 import prisma from "./db";
 import { serve } from "@hono/node-server";
 
 // Import routes
 import user from "./Routes/user";
 import register from "./Routes/register";
-import login from "./Routes/login";
+import login from "./Routes/login"; // Router login Anda
 import buku from "./Routes/buku";
 import kategori from "./Routes/kategori";
 import bukuKategori from "./Routes/bukuKategori";
@@ -16,27 +17,44 @@ import eksemplar from "./Routes/eksemplar";
 
 const app = new Hono();
 
+app.use(
+  "*", //
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://be-appbuku-production.up.railway.app"
+    ],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // OPTIONS penting untuk preflight
+    allowHeaders: [
+      "Authorization",
+      "Content-Type",
+      "X-Requested-With",
+      "Accept"
+    ],
+    credentials: true,
+    maxAge: 86400
+  })
+);
+
 //  Routing dengan middleware autentikasi
-app.use("/user", accessValidation);
+app.use("/user/*", accessValidation);
 app.route("/user", user);
 
 app.route("/register", register);
-app.route("/login", login);
+app.route("/login", login); // Router login Anda tetap di-mount di sini
 
-app.use("/buku", accessValidation);
+app.use("/buku/*", accessValidation);
 app.route("/buku", buku);
-app.route("/buku/kategori", buku);
-app.route("/buku/statusBuku", buku);
 
-app.use("/kategori", accessValidation);
+app.use("/kategori/*", accessValidation);
 app.route("/kategori", kategori);
 
-app.use("/eksemplarBuku", accessValidation);
+app.use("/eksemplarBuku/*", accessValidation);
 app.route("/eksemplarBuku", eksemplar);
 
 app.route("/peminjaman", peminjaman);
 
-app.use("/bukuKategori", accessValidation);
+app.use("/bukuKategori/*", accessValidation);
 app.route("/bukuKategori", bukuKategori);
 
 serve({
@@ -47,8 +65,8 @@ serve({
 console.log(
   `Running on: ${
     process.env.NODE_ENV === "production"
-      ? "https://be-appbuku-production.up.railway.app"
-      : "http://localhost:3000"
+      ? "https://be-appbuku-production.up.railway.app" // Ini adalah URL publik backend
+      : `http://localhost:${Number(process.env.PORT) || 3000}` // Gunakan port yang sama dengan serve
   }`
 );
 
