@@ -219,7 +219,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:IRJBYBRDuIxxtyADKgZKIhGWOmQZeQwS@gondola.proxy.rlwy.net:36944/railway"
+        "value": "postgresql://postgres:hwbTyraOMGRasYnokXGvbFkeFOBQswex@trolley.proxy.rlwy.net:40925/railway"
       }
     }
   },

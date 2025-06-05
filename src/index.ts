@@ -19,14 +19,13 @@ const app = new Hono();
 
 // TERAPKAN MIDDLEWARE CORS SECARA GLOBAL DI SINI
 
-
 app.use(
-  '*',
+  "*",
   cors({
-    origin: 'http://localhost:5173', // Atau array origin
-    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowHeaders: ['Authorization', 'Content-Type'],
-    credentials: true,
+    origin: "http://localhost:5173", // Atau array origin
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
   })
 );
 //  Routing dengan middleware autentikasi

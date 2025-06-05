@@ -7,7 +7,6 @@ import { setCookie } from "hono/cookie";
 
 const login = new Hono();
 
-
 login.post("/", async (c) => {
   try {
     const { email, password } = await c.req.json();
@@ -55,7 +54,8 @@ login.post("/", async (c) => {
       }
     });
   } catch (error) {
-    return c.json({ message: "Internal Server Error", error }, 500);
+    console.error("Login error:", error); // Tambahkan ini
+    return c.json({ message: "Internal Server Error" }, 500);
   }
 });
 
