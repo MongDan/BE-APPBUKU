@@ -19,12 +19,16 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: "http://localhost:5173",
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    origin: "http://localhost:5173", // atau array/fungsi jika kamu perlu multiple origin
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowHeaders: ["Authorization", "Content-Type"],
-    credentials: true,
+    credentials: true
   })
 );
+
+// 💡 FIX: Tangani semua OPTIONS
+app.options("*", (c) => c.text("OK", 200));
+
 //  Routing dengan middleware autentikasi
 app.use("/user", accessValidation);
 app.route("/user", user);
