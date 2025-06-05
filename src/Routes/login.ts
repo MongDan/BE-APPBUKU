@@ -15,7 +15,7 @@ login.use(
       "https://lomba-tif.vercel.app",
       "https://lomba-tif.my.id"
     ],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowHeaders: ["Authorization", "Content-Type"],
     credentials: true
   })

@@ -6,7 +6,7 @@ import { UserPayload } from "./types";
 const accessValidation: MiddlewareHandler<{
   Variables: { user: UserPayload };
 }> = async (c, next) => {
-  const token = await getCookie(c, "token");
+  const token =  getCookie(c, "token");
   const secret = process.env.JWT_SECRET;
   const verify = jwt.verify;
 
