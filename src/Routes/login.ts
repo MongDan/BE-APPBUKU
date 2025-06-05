@@ -5,9 +5,7 @@ import prisma from "../db";
 
 const login = new Hono();
 
-login.options("/", (c) => {
-  return c.text("OK", 200);
-});
+
 
 login.post("/", async (c) => {
   try {
