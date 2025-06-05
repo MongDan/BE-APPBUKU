@@ -16,21 +16,38 @@ import eksemplar from "./Routes/eksemplar";
 
 const app = new Hono();
 
+// ✅ Global CORS Middleware
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:5173",],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    origin: (origin) => {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://be-appbuku-production.up.railway.app"
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        return origin;
+      }
+      return "";
+    },
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowHeaders: ["Authorization", "Content-Type"],
     credentials: true,
   })
 );
-//  Routing dengan middleware autentikasi
-app.use("/user", accessValidation);
-app.route("/user", user);
 
+// ✅ Global Preflight OPTIONS Handler
+app.options("*", (c) => {
+  return c.text("OK", 200);
+});
+
+// ✅ Route tanpa autentikasi
 app.route("/register", register);
 app.route("/login", login);
+
+// ✅ Route dengan autentikasi
+app.use("/user", accessValidation);
+app.route("/user", user);
 
 app.use("/buku", accessValidation);
 app.route("/buku", buku);
@@ -48,6 +65,7 @@ app.route("/peminjaman", peminjaman);
 app.use("/bukuKategori", accessValidation);
 app.route("/bukuKategori", bukuKategori);
 
+// ✅ Start server
 serve({
   fetch: app.fetch,
   port: Number(process.env.PORT) || 3000
