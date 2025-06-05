@@ -1,9 +1,8 @@
 import { compare } from "bcryptjs";
 import { Hono } from "hono";
+import { setCookie } from "hono/cookie";
 import jwt from "jsonwebtoken";
 import prisma from "../db";
-import { cors } from "hono/cors";
-import { setCookie } from "hono/cookie";
 
 const login = new Hono();
 
