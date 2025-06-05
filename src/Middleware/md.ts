@@ -1,5 +1,5 @@
 import { MiddlewareHandler } from "hono";
-import * as jwt from "jsonwebtoken";
+import  jwt from "jsonwebtoken";
 import { getCookie } from "hono/cookie";
 import { UserPayload } from "./types";
 

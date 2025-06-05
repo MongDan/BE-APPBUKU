@@ -1,6 +1,6 @@
 import { compare } from "bcryptjs";
 import { Hono } from "hono";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import prisma from "../db";
 import { cors } from "hono/cors";
 import { setCookie } from "hono/cookie";
