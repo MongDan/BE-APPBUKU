@@ -19,18 +19,19 @@ const app = new Hono();
 app.use(
   cors({
     origin: (origin) => {
-      if (
-        origin === "http://localhost:5173" ||
-        origin === "https://be-appbuku-production.up.railway.app"
-      ) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://be-appbuku-production.up.railway.app"
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
         return origin;
       }
       return null;
     },
-    credentials: true
+    credentials: true,
+    allowHeaders: ["Content-Type", "Authorization"],
   })
 );
-
 //  Routing dengan middleware autentikasi
 app.use("/user", accessValidation);
 app.route("/user", user);
