@@ -1,6 +1,6 @@
 import { MiddlewareHandler } from "hono";
 import { getCookie } from "hono/cookie";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const adminOnly: MiddlewareHandler = async (c, next) => {
   const user = getCookie(c, "token");
