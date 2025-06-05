@@ -2,8 +2,24 @@ import { compare } from "bcryptjs";
 import { Hono } from "hono";
 import * as jwt from "jsonwebtoken";
 import prisma from "../db";
+import { cors } from "hono/cors";
+import { setCookie } from "hono/cookie";
 
 const login = new Hono();
+
+login.use(
+  "*",
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://lomba-tif.vercel.app",
+      "https://lomba-tif.my.id"
+    ],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowHeaders: ["Authorization", "Content-Type"],
+    credentials: true
+  })
+);
 
 login.post("/", async (c) => {
   try {
@@ -36,18 +52,20 @@ login.post("/", async (c) => {
     );
 
     // ✅ Set cookie HttpOnly + Secure
-    c.header(
-      "Set-Cookie",
-      `token=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}; SameSite=None; Secure`
-    );
+     setCookie(c, "token", token, {
+      httpOnly: true,
+      secure: true, // Set to true if using HTTPS
+      sameSite: "None",
+      maxAge: 60 * 60 * 24, // 1 day
+    });
 
     return c.json({
       message: "Berhasil login",
       data: {
         id: dataLogin.id,
         email: dataLogin.email,
-        role: dataLogin.role,
-      },
+        role: dataLogin.role
+      }
     });
   } catch (error) {
     return c.json({ message: "Internal Server Error", error }, 500);
