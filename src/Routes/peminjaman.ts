@@ -50,7 +50,7 @@ peminjaman.post("/", accessValidation, userOnly, async (c) => {
         userId: user.id,
         eksemplarId,
         status: {
-          in: ["PENDING", "DIPINJAM"] // sesuaikan dengan enum status di database kamu
+          in: ["PENDING", "DIPINJAM"] 
         }
       }
     });
