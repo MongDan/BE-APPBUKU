@@ -18,7 +18,7 @@ peminjaman.use(
 );
 
 peminjaman.post("/", accessValidation, userOnly, async (c) => {
-  const user = c.get("user"); 
+  const user = c.get("user");
   if (user.role !== "USER") {
     return c.json({ message: "Hanya USER yang boleh meminjam" }, 403);
   }
@@ -43,6 +43,26 @@ peminjaman.post("/", accessValidation, userOnly, async (c) => {
 
     if (!eksemplar || eksemplar.status !== "TERSEDIA") {
       return c.json({ message: "Eksemplar tidak tersedia" }, 400);
+    }
+
+    const existing = await prisma.peminjaman.findFirst({
+      where: {
+        userId: user.id,
+        eksemplarId,
+        status: {
+          in: ["PENDING", "DIPINJAM"] // sesuaikan dengan enum status di database kamu
+        }
+      }
+    });
+
+    if (existing) {
+      return c.json(
+        {
+          message:
+            "Anda sudah memiliki permintaan aktif atau sedang meminjam eksemplar ini"
+        },
+        400
+      );
     }
 
     // Buat peminjaman
@@ -73,32 +93,31 @@ peminjaman.get("/riwayat", accessValidation, async (c) => {
   const isAdmin = user.role === "ADMIN";
 
   const data = await prisma.peminjaman.findMany({
-  where: isAdmin
-    ? {} // admin lihat semua
-    : { userId: user.id }, // user hanya lihat miliknya
-  include: {
-    user: {
-      select: {
-        name: true,
-        email: true
-      }
-    },
-    eksemplar: {
-      select: {
-        kodeEksemplar: true,
-        buku: {
-          select: {
-            judul: true
+    where: isAdmin
+      ? {} // admin lihat semua
+      : { userId: user.id }, // user hanya lihat miliknya
+    include: {
+      user: {
+        select: {
+          name: true,
+          email: true
+        }
+      },
+      eksemplar: {
+        select: {
+          kodeEksemplar: true,
+          buku: {
+            select: {
+              judul: true
+            }
           }
         }
       }
+    },
+    orderBy: {
+      createdAt: "desc"
     }
-  },
-  orderBy: {
-    createdAt: "desc"
-  }
-});
-
+  });
 
   return c.json({ data });
 });
