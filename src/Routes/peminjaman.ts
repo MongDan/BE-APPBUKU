@@ -18,7 +18,7 @@ peminjaman.use(
 );
 
 peminjaman.post("/", accessValidation, userOnly, async (c) => {
-  const user = c.get("user"); // dari session/middleware
+  const user = c.get("user"); 
   if (user.role !== "USER") {
     return c.json({ message: "Hanya USER yang boleh meminjam" }, 403);
   }
@@ -73,33 +73,32 @@ peminjaman.get("/riwayat", accessValidation, async (c) => {
   const isAdmin = user.role === "ADMIN";
 
   const data = await prisma.peminjaman.findMany({
-    where: {
-      ...(isAdmin
-        ? { status: "SELESAI" } // admin hanya lihat yang selesai
-        : { userId: user.id }) // user lihat miliknya sendiri
+  where: isAdmin
+    ? {} // admin lihat semua
+    : { userId: user.id }, // user hanya lihat miliknya
+  include: {
+    user: {
+      select: {
+        name: true,
+        email: true
+      }
     },
-    include: {
-      user: {
-        select: {
-          name: true,
-          email: true
-        }
-      },
-      eksemplar: {
-        select: {
-          kodeEksemplar: true,
-          buku: {
-            select: {
-              judul: true
-            }
+    eksemplar: {
+      select: {
+        kodeEksemplar: true,
+        buku: {
+          select: {
+            judul: true
           }
         }
       }
-    },
-    orderBy: {
-      createdAt: "desc"
     }
-  });
+  },
+  orderBy: {
+    createdAt: "desc"
+  }
+});
+
 
   return c.json({ data });
 });
