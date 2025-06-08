@@ -3,7 +3,6 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import prisma from "../db";
 
-
 const eksemplar = new Hono();
 
 eksemplar.use(
@@ -62,20 +61,35 @@ eksemplar.delete("/:id", async (c) => {
   try {
     // 2. Lakukan proses hapus
     const deletedEksemplar = await prisma.eksemplarBuku.delete({
-      where: { id: id },
+      where: { id: id }
     });
 
     return c.json({
       message: "Eksemplar berhasil dihapus secara permanen.",
-      data: deletedEksemplar,
+      data: deletedEksemplar
     });
-
   } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError && error.code === 'P2025') {
-      return c.json({ message: `Eksemplar dengan ID ${id} tidak ditemukan.` }, 404); // Not Found
+    if (error instanceof PrismaClientKnownRequestError) {
+      // 3. Tangani jika data tidak ditemukan
+      if (error.code === "P2025") {
+        return c.json(
+          { message: `Eksemplar dengan ID ${id} tidak ditemukan.` },
+          404
+        ); // Not Found
+      }
+      // 4. (FIX) Tangani jika data digunakan di tabel lain
+      else if (error.code === "P2003") {
+        return c.json(
+          {
+            message:
+              "Gagal menghapus. Eksemplar ini masih terhubung dengan data lain (misalnya data peminjaman)."
+          },
+          409
+        ); // Conflict
+      }
     }
 
-    // 4. Tangani error server lainnya dengan aman
+    // 5. Tangani error server lainnya dengan aman
     console.error("Gagal menghapus eksemplar:", error); // Log error di server
     return c.json({ message: "Terjadi kesalahan internal pada server." }, 500); // Internal Server Error
   }
