@@ -2,6 +2,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import prisma from "../db";
+import { Prisma } from "../generated/prisma/client";
 
 const eksemplar = new Hono();
 
@@ -52,14 +53,14 @@ eksemplar.get("/", async (c) => {
 });
 
 eksemplar.delete("/:id", async (c) => {
-  // 1. Validasi bahwa ID adalah angka yang valid
+  // Validasi bahwa ID adalah angka yang valid
   const id = parseInt(c.req.param("id"));
   if (isNaN(id)) {
     return c.json({ message: "ID tidak valid, harus berupa angka." }, 400); // Bad Request
   }
 
   try {
-    // 2. Lakukan proses hapus
+    // Lakukan proses hapus
     const deletedEksemplar = await prisma.eksemplarBuku.delete({
       where: { id: id }
     });
@@ -69,15 +70,16 @@ eksemplar.delete("/:id", async (c) => {
       data: deletedEksemplar
     });
   } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      // 3. Tangani jika data tidak ditemukan
+    // 2. GUNAKAN 'Prisma.PrismaClientKnownRequestError' UNTUK PENGECEKAN
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      // Tangani jika data tidak ditemukan
       if (error.code === "P2025") {
         return c.json(
           { message: `Eksemplar dengan ID ${id} tidak ditemukan.` },
           404
         ); // Not Found
       }
-      // 4. (FIX) Tangani jika data digunakan di tabel lain
+      // Tangani jika data digunakan di tabel lain
       else if (error.code === "P2003") {
         return c.json(
           {
@@ -89,7 +91,7 @@ eksemplar.delete("/:id", async (c) => {
       }
     }
 
-    // 5. Tangani error server lainnya dengan aman
+    // Tangani semua error tak terduga lainnya
     console.error("Gagal menghapus eksemplar:", error); // Log error di server
     return c.json({ message: "Terjadi kesalahan internal pada server." }, 500); // Internal Server Error
   }
