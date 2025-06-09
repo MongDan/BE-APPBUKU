@@ -60,34 +60,47 @@ eksemplar.delete("/:id", async (c) => {
   }
 
   try {
-    // Lakukan proses hapus
+
+    const eksemplar = await prisma.eksemplarBuku.findUnique({
+      where: { id: id },
+    });
+
+    if (!eksemplar) {
+      return c.json(
+        { message: `Eksemplar dengan ID ${id} tidak ditemukan.` },
+        404
+      ); // Not Found
+    }
+
+    const deletableStatuses = ["SELESAI", "TERSEDIA"];
+
+    if (!deletableStatuses.includes(eksemplar.status)) {
+      return c.json(
+        {
+          message: `Gagal menghapus. Hanya eksemplar berstatus "SELESAI" atau "TERSEDIA" yang boleh dihapus. Status saat ini: ${eksemplar.status}.`,
+        },
+        400 // Bad Request
+      );
+    }
     const deletedEksemplar = await prisma.eksemplarBuku.delete({
-      where: { id: id }
+      where: { id: id },
     });
 
     return c.json({
       message: "Eksemplar berhasil dihapus secara permanen.",
-      data: deletedEksemplar
+      data: deletedEksemplar,
     });
   } catch (error) {
-    // 2. GUNAKAN 'Prisma.PrismaClientKnownRequestError' UNTUK PENGECEKAN
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // Tangani jika data tidak ditemukan
-      if (error.code === "P2025") {
-        return c.json(
-          { message: `Eksemplar dengan ID ${id} tidak ditemukan.` },
-          404
-        ); // Not Found
-      }
-      // Tangani jika data digunakan di tabel lain
-      else if (error.code === "P2003") {
+      // Tangani jika data digunakan di tabel lain (misal: data peminjaman)
+      if (error.code === "P2003") {
         return c.json(
           {
             message:
-              "Gagal menghapus. Eksemplar ini masih terhubung dengan data lain (misalnya data peminjaman)."
+              "Gagal menghapus. Eksemplar ini masih terhubung dengan data lain (misalnya data peminjaman).",
           },
-          409
-        ); // Conflict
+          409 // Conflict
+        );
       }
     }
 
