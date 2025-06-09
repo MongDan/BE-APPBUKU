@@ -62,7 +62,8 @@ export const Status: {
   PENDING: 'PENDING',
   DITOLAK: 'DITOLAK',
   PENDING_KEMBALI: 'PENDING_KEMBALI',
-  SELESAI: 'SELESAI'
+  SELESAI: 'SELESAI',
+  DIARSIPKAN: 'DIARSIPKAN'
 };
 
 export type Status = (typeof Status)[keyof typeof Status]

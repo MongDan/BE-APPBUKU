@@ -194,7 +194,8 @@ exports.Status = exports.$Enums.Status = {
   PENDING: 'PENDING',
   DITOLAK: 'DITOLAK',
   PENDING_KEMBALI: 'PENDING_KEMBALI',
-  SELESAI: 'SELESAI'
+  SELESAI: 'SELESAI',
+  DIARSIPKAN: 'DIARSIPKAN'
 };
 
 exports.Prisma.ModelName = {
