@@ -20,6 +20,7 @@ enum Status {
   DITOLAK
   PENDING_KEMBALI
   SELESAI
+  DIARSIPKAN
 }
 
 model User {
