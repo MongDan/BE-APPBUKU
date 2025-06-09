@@ -22,7 +22,7 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: "http://localhost:5173", // Atau array origin
+    origin: ["http://localhost:5173", "https://fend-buku.vercel.app"], // Atau array origin
     allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowHeaders: ["Authorization", "Content-Type"],
     credentials: true
