@@ -61,6 +61,7 @@ model EksemplarBuku {
   status        Status       @default(TERSEDIA)
   buku          Buku         @relation(fields: [bukuId], references: [id])
   peminjaman    Peminjaman[] // new: optional, for reverse relation
+  isArchived    Boolean      @default(false)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 }

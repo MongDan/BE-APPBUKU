@@ -150,6 +150,7 @@ exports.Prisma.EksemplarBukuScalarFieldEnum = {
   kodeEksemplar: 'kodeEksemplar',
   bukuId: 'bukuId',
   status: 'status',
+  isArchived: 'isArchived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

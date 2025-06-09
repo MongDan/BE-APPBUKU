@@ -4916,6 +4916,7 @@ export namespace Prisma {
     kodeEksemplar: string | null
     bukuId: number | null
     status: $Enums.Status | null
+    isArchived: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4925,6 +4926,7 @@ export namespace Prisma {
     kodeEksemplar: string | null
     bukuId: number | null
     status: $Enums.Status | null
+    isArchived: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4934,6 +4936,7 @@ export namespace Prisma {
     kodeEksemplar: number
     bukuId: number
     status: number
+    isArchived: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4955,6 +4958,7 @@ export namespace Prisma {
     kodeEksemplar?: true
     bukuId?: true
     status?: true
+    isArchived?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4964,6 +4968,7 @@ export namespace Prisma {
     kodeEksemplar?: true
     bukuId?: true
     status?: true
+    isArchived?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4973,6 +4978,7 @@ export namespace Prisma {
     kodeEksemplar?: true
     bukuId?: true
     status?: true
+    isArchived?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5069,6 +5075,7 @@ export namespace Prisma {
     kodeEksemplar: string
     bukuId: number
     status: $Enums.Status
+    isArchived: boolean
     createdAt: Date
     updatedAt: Date
     _count: EksemplarBukuCountAggregateOutputType | null
@@ -5097,6 +5104,7 @@ export namespace Prisma {
     kodeEksemplar?: boolean
     bukuId?: boolean
     status?: boolean
+    isArchived?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     buku?: boolean | BukuDefaultArgs<ExtArgs>
@@ -5109,6 +5117,7 @@ export namespace Prisma {
     kodeEksemplar?: boolean
     bukuId?: boolean
     status?: boolean
+    isArchived?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     buku?: boolean | BukuDefaultArgs<ExtArgs>
@@ -5119,6 +5128,7 @@ export namespace Prisma {
     kodeEksemplar?: boolean
     bukuId?: boolean
     status?: boolean
+    isArchived?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     buku?: boolean | BukuDefaultArgs<ExtArgs>
@@ -5129,11 +5139,12 @@ export namespace Prisma {
     kodeEksemplar?: boolean
     bukuId?: boolean
     status?: boolean
+    isArchived?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type EksemplarBukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kodeEksemplar" | "bukuId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["eksemplarBuku"]>
+  export type EksemplarBukuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kodeEksemplar" | "bukuId" | "status" | "isArchived" | "createdAt" | "updatedAt", ExtArgs["result"]["eksemplarBuku"]>
   export type EksemplarBukuInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     buku?: boolean | BukuDefaultArgs<ExtArgs>
     peminjaman?: boolean | EksemplarBuku$peminjamanArgs<ExtArgs>
@@ -5157,6 +5168,7 @@ export namespace Prisma {
       kodeEksemplar: string
       bukuId: number
       status: $Enums.Status
+      isArchived: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["eksemplarBuku"]>
@@ -5588,6 +5600,7 @@ export namespace Prisma {
     readonly kodeEksemplar: FieldRef<"EksemplarBuku", 'String'>
     readonly bukuId: FieldRef<"EksemplarBuku", 'Int'>
     readonly status: FieldRef<"EksemplarBuku", 'Status'>
+    readonly isArchived: FieldRef<"EksemplarBuku", 'Boolean'>
     readonly createdAt: FieldRef<"EksemplarBuku", 'DateTime'>
     readonly updatedAt: FieldRef<"EksemplarBuku", 'DateTime'>
   }
@@ -8339,6 +8352,7 @@ export namespace Prisma {
     kodeEksemplar: 'kodeEksemplar',
     bukuId: 'bukuId',
     status: 'status',
+    isArchived: 'isArchived',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8459,6 +8473,13 @@ export namespace Prisma {
    * Reference to a field of type 'Status[]'
    */
   export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -8681,6 +8702,7 @@ export namespace Prisma {
     kodeEksemplar?: StringFilter<"EksemplarBuku"> | string
     bukuId?: IntFilter<"EksemplarBuku"> | number
     status?: EnumStatusFilter<"EksemplarBuku"> | $Enums.Status
+    isArchived?: BoolFilter<"EksemplarBuku"> | boolean
     createdAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
     updatedAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
     buku?: XOR<BukuScalarRelationFilter, BukuWhereInput>
@@ -8692,6 +8714,7 @@ export namespace Prisma {
     kodeEksemplar?: SortOrder
     bukuId?: SortOrder
     status?: SortOrder
+    isArchived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     buku?: BukuOrderByWithRelationInput
@@ -8706,6 +8729,7 @@ export namespace Prisma {
     NOT?: EksemplarBukuWhereInput | EksemplarBukuWhereInput[]
     bukuId?: IntFilter<"EksemplarBuku"> | number
     status?: EnumStatusFilter<"EksemplarBuku"> | $Enums.Status
+    isArchived?: BoolFilter<"EksemplarBuku"> | boolean
     createdAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
     updatedAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
     buku?: XOR<BukuScalarRelationFilter, BukuWhereInput>
@@ -8717,6 +8741,7 @@ export namespace Prisma {
     kodeEksemplar?: SortOrder
     bukuId?: SortOrder
     status?: SortOrder
+    isArchived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: EksemplarBukuCountOrderByAggregateInput
@@ -8734,6 +8759,7 @@ export namespace Prisma {
     kodeEksemplar?: StringWithAggregatesFilter<"EksemplarBuku"> | string
     bukuId?: IntWithAggregatesFilter<"EksemplarBuku"> | number
     status?: EnumStatusWithAggregatesFilter<"EksemplarBuku"> | $Enums.Status
+    isArchived?: BoolWithAggregatesFilter<"EksemplarBuku"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"EksemplarBuku"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"EksemplarBuku"> | Date | string
   }
@@ -9079,6 +9105,7 @@ export namespace Prisma {
   export type EksemplarBukuCreateInput = {
     kodeEksemplar: string
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     buku: BukuCreateNestedOneWithoutEksemplarBukuInput
@@ -9090,6 +9117,7 @@ export namespace Prisma {
     kodeEksemplar: string
     bukuId: number
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     peminjaman?: PeminjamanUncheckedCreateNestedManyWithoutEksemplarInput
@@ -9098,6 +9126,7 @@ export namespace Prisma {
   export type EksemplarBukuUpdateInput = {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     buku?: BukuUpdateOneRequiredWithoutEksemplarBukuNestedInput
@@ -9109,6 +9138,7 @@ export namespace Prisma {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     bukuId?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     peminjaman?: PeminjamanUncheckedUpdateManyWithoutEksemplarNestedInput
@@ -9119,6 +9149,7 @@ export namespace Prisma {
     kodeEksemplar: string
     bukuId: number
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9126,6 +9157,7 @@ export namespace Prisma {
   export type EksemplarBukuUpdateManyMutationInput = {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9135,6 +9167,7 @@ export namespace Prisma {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     bukuId?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9513,6 +9546,11 @@ export namespace Prisma {
     not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type BukuScalarRelationFilter = {
     is?: BukuWhereInput
     isNot?: BukuWhereInput
@@ -9523,6 +9561,7 @@ export namespace Prisma {
     kodeEksemplar?: SortOrder
     bukuId?: SortOrder
     status?: SortOrder
+    isArchived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9537,6 +9576,7 @@ export namespace Prisma {
     kodeEksemplar?: SortOrder
     bukuId?: SortOrder
     status?: SortOrder
+    isArchived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9546,6 +9586,7 @@ export namespace Prisma {
     kodeEksemplar?: SortOrder
     bukuId?: SortOrder
     status?: SortOrder
+    isArchived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9563,6 +9604,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumStatusFilter<$PrismaModel>
     _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -9873,6 +9922,10 @@ export namespace Prisma {
     set?: $Enums.Status
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type BukuUpdateOneRequiredWithoutEksemplarBukuNestedInput = {
     create?: XOR<BukuCreateWithoutEksemplarBukuInput, BukuUncheckedCreateWithoutEksemplarBukuInput>
     connectOrCreate?: BukuCreateOrConnectWithoutEksemplarBukuInput
@@ -10083,6 +10136,11 @@ export namespace Prisma {
     not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
     in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
@@ -10091,6 +10149,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumStatusFilter<$PrismaModel>
     _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type PeminjamanCreateWithoutUserInput = {
@@ -10155,6 +10221,7 @@ export namespace Prisma {
   export type EksemplarBukuCreateWithoutBukuInput = {
     kodeEksemplar: string
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     peminjaman?: PeminjamanCreateNestedManyWithoutEksemplarInput
@@ -10164,6 +10231,7 @@ export namespace Prisma {
     id?: number
     kodeEksemplar: string
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     peminjaman?: PeminjamanUncheckedCreateNestedManyWithoutEksemplarInput
@@ -10226,6 +10294,7 @@ export namespace Prisma {
     kodeEksemplar?: StringFilter<"EksemplarBuku"> | string
     bukuId?: IntFilter<"EksemplarBuku"> | number
     status?: EnumStatusFilter<"EksemplarBuku"> | $Enums.Status
+    isArchived?: BoolFilter<"EksemplarBuku"> | boolean
     createdAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
     updatedAt?: DateTimeFilter<"EksemplarBuku"> | Date | string
   }
@@ -10430,6 +10499,7 @@ export namespace Prisma {
   export type EksemplarBukuCreateWithoutPeminjamanInput = {
     kodeEksemplar: string
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     buku: BukuCreateNestedOneWithoutEksemplarBukuInput
@@ -10440,6 +10510,7 @@ export namespace Prisma {
     kodeEksemplar: string
     bukuId: number
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10493,6 +10564,7 @@ export namespace Prisma {
   export type EksemplarBukuUpdateWithoutPeminjamanInput = {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     buku?: BukuUpdateOneRequiredWithoutEksemplarBukuNestedInput
@@ -10503,6 +10575,7 @@ export namespace Prisma {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     bukuId?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10654,6 +10727,7 @@ export namespace Prisma {
     id?: number
     kodeEksemplar: string
     status?: $Enums.Status
+    isArchived?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10668,6 +10742,7 @@ export namespace Prisma {
   export type EksemplarBukuUpdateWithoutBukuInput = {
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     peminjaman?: PeminjamanUpdateManyWithoutEksemplarNestedInput
@@ -10677,6 +10752,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     peminjaman?: PeminjamanUncheckedUpdateManyWithoutEksemplarNestedInput
@@ -10686,6 +10762,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     kodeEksemplar?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
