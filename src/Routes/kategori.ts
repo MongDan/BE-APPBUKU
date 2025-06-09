@@ -125,30 +125,4 @@ kategori.put("/:kategoriId", adminOnly, async (c) => {
   }
 });
 
-// menghapus kategori
-kategori.delete("/:kategoriId", accessValidation, adminOnly, async (c) => {
-  try {
-    const kategoriId = Number(c.req.param("kategoriId"));
-
-    const checkKategori = await prisma.kategori.findUnique({
-      where: { id: kategoriId }
-    });
-
-    if (!checkKategori) {
-      return c.json({ message: "Kategori tidak ditemukan" }, 404);
-    }
-
-    const dataKategori = await prisma.kategori.delete({
-      where: { id: kategoriId }
-    });
-
-    return c.json({
-      message: "berhasil menghapus kategori",
-      data: dataKategori
-    });
-  } catch (error) {
-    return c.json({ message: "Gagal menghapus kategori", error }, 500);
-  }
-});
-
 export default kategori;
