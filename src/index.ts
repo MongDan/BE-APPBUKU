@@ -28,6 +28,15 @@ app.use(
     credentials: true
   })
 );
+app.get("/", (c) => {
+  return c.json(
+    {
+      status: "success",
+      message: "WELCOME TO BOOKNEST API🔥😁"
+    },
+    200
+  );
+});
 
 //  Routing dengan middleware autentikasi
 app.use("/user/*", accessValidation);
